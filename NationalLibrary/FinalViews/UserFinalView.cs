@@ -2,7 +2,6 @@
 
 namespace NationalLibrary.FinalViews
 {
-
     public class UserFinalView
     {
         public string FiscalCode { get; set; }

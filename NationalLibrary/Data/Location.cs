@@ -5,12 +5,11 @@ namespace NationalLibrary.Data
 	public class Location
 	{
 		#region Variables
-		[Key]
-		private Guid locationGuid;
+		
 		[Required]
-		private char scaffhold;
+		private string scaffhold;
 		[Required]
-		private char shelf;
+		private string shelf;
 		[Required]
 		private int position;
 		[Required]
@@ -22,7 +21,7 @@ namespace NationalLibrary.Data
 		{
 			
 		}
-		public Location(Guid locationGuid, string room, char schaffold, char shelf, int position, Book book)
+		public Location(Guid locationGuid, string room, string schaffold, string shelf, int position, Book book)
 		{
 			LocationGuid = locationGuid;
 			Room = room;
@@ -31,13 +30,14 @@ namespace NationalLibrary.Data
 			Position = position;
 			Book = book;
 		}
-		#endregion
+        #endregion
 
-		#region Properties
-		public Guid LocationGuid { get; set; }
+        #region Properties
+        [Key]
+        public Guid LocationGuid { get; set; }
 		public string Room { get => room; set { room = DataController.CheckStrings(value, "stanza"); } }
-		public char Schaffold { get => scaffhold; set { scaffhold = DataController.CheckScaffholdOrShelf(value, "scaffale"); } }
-		public char Shelf { get => shelf; set { shelf = DataController.CheckScaffholdOrShelf(value, "ripiano"); } }
+		public string Schaffold { get => scaffhold; set { scaffhold = DataController.CheckScaffholdOrShelf(value, "scaffale"); } }
+		public string Shelf { get => shelf; set { shelf = DataController.CheckScaffholdOrShelf(value, "ripiano"); } }
 		public int Position { get => position; set { position = value; } }
 		#endregion
 

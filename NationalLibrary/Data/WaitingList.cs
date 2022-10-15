@@ -9,16 +9,16 @@ namespace NationalLibrary.Data
         public Guid WaitingGuid { get; set; }
 
         // Relation User 1-N Waiting List(FK)
+        [Required]
         public string FiscalCodeFK { get; set; }
         [ForeignKey("FiscalCodeFK")]
-        public User User { get; set; }
-
-        // Relation Book 1-1 WaitiList(FK)
-        public string ISBN { get; set; }
-        public Book Book { get; set; }
+        public Person Person { get; set; }
 
         public DateTime RequiredOn { get; set; }
 
 
+        // Relation Book N-N WaitiList
+        public ICollection<Book> Books { get; set; }
+        public List<WaitingList_Book> WaitingList_Books { get; set; }
     }
 }

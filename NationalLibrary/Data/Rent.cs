@@ -9,9 +9,10 @@ namespace NationalLibrary.Data
         public Guid RentGuid { get; set; }
 
         // Relation User 1-N Rent(FK)
+        [Required]
         public string FiscalCodeFK { get; set; }
         [ForeignKey("FiscalCodeFK")]
-        public User User { get; set; }
+        public Person Person { get; set; }
 
         // Relation Book 1-N Rent(FK)
         public Guid BookGuidFK { get; set; }
