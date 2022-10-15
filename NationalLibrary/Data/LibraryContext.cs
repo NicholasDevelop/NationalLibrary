@@ -71,7 +71,5 @@ public class LibraryContext : DbContext
                             j.HasKey(t => new { t.WaitingGuid, t.BookGuid });
                         }
                     );
-                    
-                    
     }
 }
