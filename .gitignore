@@ -1,7 +1,7 @@
 .vs/
-NationalLibrary/obj/
-NationalLibrary/bin/
+NationalLibrary/obj/*
+NationalLibrary/bin/*
 NationalLibrary/obj
 NationalLibrary/bin
-NationalLibrary/Migrations/
+NationalLibrary/Migrations/*
 NationalLibrary/Migrations
