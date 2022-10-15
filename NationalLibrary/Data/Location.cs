@@ -25,7 +25,7 @@ namespace NationalLibrary.Data
 		{
 			LocationGuid = locationGuid;
 			Room = room;
-			Scaffhold = scaffhold;
+			Schaffold = schaffold;
 			Shelf = shelf;
 			Position = position;
 			Book = book;
