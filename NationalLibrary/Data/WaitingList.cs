@@ -14,7 +14,7 @@ namespace NationalLibrary.Data
         public User User { get; set; }
 
         // Relation Book 1-1 WaitiList(FK)
-        public GUid BookGuid { get; set; }
+        public string ISBN { get; set; }
         public Book Book { get; set; }
 
         public DateTime RequiredOn { get; set; }

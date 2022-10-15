@@ -37,10 +37,10 @@ public class LibraryContext : DbContext
             .HasForeignKey<Person>(u => u.FiscalCode);
 
         // Relation Book 1-1 Rent(FK)
-        modelBuilder.Entity<Book>()
-            .HasOne(b => b.Rent)
-            .WithOne(r => r.Book)
-            .HasForeignKey<Book>(r => r.BookGuid);
+        // modelBuilder.Entity<Book>()
+        //     .HasOne(b => b.Rent)
+        //     .WithOne(r => r.Book)
+        //     .HasForeignKey<Book>(r => r.BookGuid);
 
         // Relation Book 1-1 WaitingList(FK)
         modelBuilder.Entity<Book>()

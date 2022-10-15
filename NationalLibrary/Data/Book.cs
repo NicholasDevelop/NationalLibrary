@@ -15,14 +15,14 @@ namespace NationalLibrary.Data
         public string Presentation { get; set; }
         public string Genre { get; set; }
 
-        // Relation Book 1-1 Rent(FK)
-        public Rent Rent { get; get; }
+        // Relation Book 1-N Rent(FK)
+        public List<Rent> Rents { get; set; }
 
         // Relation Book 1-1 WaitingList(FK)
         public WaitingList WaitingList { get; set; }
 
         // Relation Location 1-1 Book(FK)
-        public GUid LocationGuidFK { get; set; }
+        public Guid LocationGuidFK { get; set; }
         public Location Location { get; set; }
 
     }

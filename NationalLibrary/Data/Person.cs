@@ -14,6 +14,8 @@ namespace NationalLibrary.Data
 		public string Surname { get; set; }
 		public string MobilePhone { get; set; }
 		public string Email { get; set; }
+		public DateTime Birthday { get; set; }
+
 
 		// Relation Document 1-1 Person(FK)
 		public string DocumentNumberFK { get; set; }
