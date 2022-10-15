@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\black\\source\\repos\\Blazar Academy\\Progetti\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj": {}
+    "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\black\\source\\repos\\Blazar Academy\\Progetti\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj": {
+    "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\black\\source\\repos\\Blazar Academy\\Progetti\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
         "projectName": "NationalLibrary",
-        "projectPath": "C:\\Users\\black\\source\\repos\\Blazar Academy\\Progetti\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
-        "packagesPath": "C:\\Users\\black\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\black\\source\\repos\\Blazar Academy\\Progetti\\NationalLibrary\\NationalLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
+        "packagesPath": "C:\\Users\\Mattia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\black\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mattia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -78,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -33,7 +33,7 @@ namespace NationalLibrary.Metodi
                            Type = x.Type,
                            Name = x.Name,
                            Surname = x.Surname,
-                           MobilePhone = x.MobilePhone
+                           MobilePhone = x.MobilePhone,
                            Birthday = x.Birthday,
                            Email = x.Email,
                            City = b.City,
