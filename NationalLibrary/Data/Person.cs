@@ -31,7 +31,7 @@ namespace NationalLibrary.Data
         public string DocumentNumberFK { get; set; }
 		public Document Document { get; set; }
 
-		// Relation Person 1-1 User(FK)
+		// Relation Person(FK) 1-1 User
 		public User User { get; set; }
 
         // Relation Person 1-N Rent(FK)

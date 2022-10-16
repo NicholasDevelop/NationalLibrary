@@ -36,7 +36,8 @@ public class LibraryContext : DbContext
                     .HasOne(p => p.User)
                     .WithOne(u => u.Person)
                     .HasForeignKey<User>(u => u.FiscalCode)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.ClientCascade);
 
         // Relation Book 1-1 Rent(FK)
         //modelBuilder.Entity<Book>()
