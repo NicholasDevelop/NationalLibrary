@@ -19,6 +19,9 @@ namespace NationalLibrary.Data
 			ExpireOn = expireOn;
 		}
 
+		
+		public Document() { }
+
         #region Properties
         [Key]
         public string DocumentNumber { get => documentNumber; set { documentNumber = DataController.CheckDocumentNumber(value); } }

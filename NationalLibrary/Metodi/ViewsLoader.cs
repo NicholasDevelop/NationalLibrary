@@ -1,4 +1,5 @@
-﻿using NationalLibrary.Data;
+﻿using Microsoft.AspNetCore.Http.Features;
+using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System.Globalization;
 
@@ -71,5 +72,33 @@ namespace NationalLibrary.Metodi
 
             return booksview;
         }
-    }
+
+        public static IQueryable<RentFinalView> ViewsLoader_Rents()
+        {
+            var rentsview = from x in ctx.Books
+                            join a in ctx.Rents on x.BookGuid equals a.BookGuidFK
+                            join b in ctx.WaitingList_Books on x.BookGuid equals b.BookGuid
+                            join c in ctx.WaitingLists on b.WaitingGuid equals c.WaitingGuid
+
+
+
+
+                            // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
+                            select new RentFinalView
+                            {
+                                BookGuid = x.BookGuid,
+                                RentGuid = a.RentGuid,
+                                Title = x.Title,
+                                CoverImg = x.CoverImg,
+                                FiscalCode = a.FiscalCodeFK,
+                                RequiredOn = c.RequiredOn,
+                                WithdrawOn = a.WithdrawnOn,
+                                ReturnedOn = a.ReturnedOn,
+                                ISBN = b.ISBN
+
+                            };
+
+            return rentsview;
+        }
+    } 
 }
