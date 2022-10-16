@@ -2013,23 +2013,39 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\emanu\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\Mattia\\.nuget\\packages\\": {},
+>>>>>>> ed258a2f05e6cc90e2b4fa473bd9ff6dd2387870
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\emanu\\source\\repos\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
       "projectName": "NationalLibrary",
       "projectPath": "C:\\Users\\emanu\\source\\repos\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
       "packagesPath": "C:\\Users\\emanu\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\emanu\\source\\repos\\NationalLibrary\\NationalLibrary\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
+      "projectName": "NationalLibrary",
+      "projectPath": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\NationalLibrary.csproj",
+      "packagesPath": "C:\\Users\\Mattia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mattia\\Documents\\GitHub\\NationalLibrary\\NationalLibrary\\obj\\",
+>>>>>>> ed258a2f05e6cc90e2b4fa473bd9ff6dd2387870
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\emanu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\Mattia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ed258a2f05e6cc90e2b4fa473bd9ff6dd2387870
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2038,6 +2054,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2090,7 +2107,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

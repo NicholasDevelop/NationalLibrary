@@ -12,13 +12,7 @@ namespace NationalLibrary.Data
         
         public string Username { get; set; }
         public string Password { get; set; }
-        public string UserType { get; set; }
+        public string Email { get; set; }
 
-
-        // Relation User 1-N Rent(FK)
-        public List<Rent> Rents { get; set; }
-
-        // Relation User 1-N Waiting List (FK)
-        public List<WaitingList> WaitingLists { get; set; }
     }
 }

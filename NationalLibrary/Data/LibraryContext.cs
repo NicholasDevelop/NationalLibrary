@@ -3,21 +3,23 @@ using NationalLibrary.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 public class LibraryContext : DbContext
 {
-    public LibraryContext() : base() {
+    public LibraryContext(DbContextOptions options) : base(options) {
 
     }
 
-    public DbSet<Document> Documents { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<Document> Documents { get; set; }
     public DbSet<Residence> Residences { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Rent> Rents { get; set; }
     public DbSet<WaitingList> WaitingLists { get; set; }
+    //public DbSet<WaitingList_Book> WaitingList_Books { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Location> Locations { get; set; }
 
@@ -26,27 +28,23 @@ public class LibraryContext : DbContext
     {
         // Relation Document 1-1 Person(FK)
         modelBuilder.Entity<Document>()
-            .HasOne(d => d.Person)
-            .WithOne(p => p.Document)
-            .HasForeignKey<Person>(d => d.DocumentNumberFK);
+                    .HasOne(d => d.Person)
+                    .WithOne(p => p.Document)
+                    .HasForeignKey<Person>(d => d.DocumentNumberFK)
+                    .IsRequired();
 
         // Relation Person 1-1 User(FK)
         modelBuilder.Entity<Person>()
-            .HasOne(p => p.User)
-            .WithOne(u => u.Person)
-            .HasForeignKey<Person>(u => u.FiscalCode);
+                    .HasOne(p => p.User)
+                    .WithOne(u => u.Person)
+                    .HasForeignKey<User>(u => u.FiscalCode)
+                    .IsRequired();
 
         // Relation Book 1-1 Rent(FK)
-        modelBuilder.Entity<Book>()
-            .HasOne(b => b.Rent)
-            .WithOne(r => r.Book)
-            .HasForeignKey<Book>(r => r.BookGuid);
-
-        // Relation Book 1-1 WaitingList(FK)
-        modelBuilder.Entity<Book>()
-                    .HasOne(b => b.WaitingList)
-                    .WithOne(w => w.Book)
-                    .HasForeignKey<Book>(r => r.BookGuid);
+        //modelBuilder.Entity<Book>()
+        //            .HasOne(b => b.Rent)
+        //            .WithOne(r => r.Book)
+        //            .HasForeignKey<Book>(r => r.BookGuid);
 
         // Relation Location 1-1 Book(FK)
         modelBuilder.Entity<Location>()
@@ -54,5 +52,24 @@ public class LibraryContext : DbContext
                     .WithOne(b => b.Location)
                     .HasForeignKey<Book>(b => b.LocationGuidFK);
 
+        // Relation WaitingList N-N Book
+        // (WaitingList 1-N WaitingList_Book N-1 Book)
+        modelBuilder.Entity<WaitingList>()
+                    .HasMany(b => b.Books)
+                    .WithMany(b => b.WaitingLists)
+                    .UsingEntity<WaitingList_Book>(
+                        k => k
+                            .HasOne(wb => wb.WaitingList)
+                            .WithMany(w => w.WaitingList_Books)
+                            .HasForeignKey(wb => wb.WaitingGuid),
+                        k => k
+                            .HasOne(wb => wb.Book)
+                            .WithMany(b => b.WaitingList_Books)
+                            .HasForeignKey(wb => wb.BookGuid),
+                        j =>
+                        {
+                            j.HasKey(t => new { t.WaitingGuid, t.BookGuid });
+                        }
+                    );
     }
 }
