@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 public class LibraryContext : DbContext
 {
-    public LibraryContext(DbContextOptions options) : base(options) {
-
-    }
+    public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
+    { }
 
     public DbSet<Person> People { get; set; }
     public DbSet<Document> Documents { get; set; }
@@ -19,11 +18,10 @@ public class LibraryContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Rent> Rents { get; set; }
     public DbSet<WaitingList> WaitingLists { get; set; }
-    //public DbSet<WaitingList_Book> WaitingList_Books { get; set; }
+    public DbSet<WaitingList_Book> WaitingList_Books { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Location> Locations { get; set; }
 
-    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Relation Document 1-1 Person(FK)
@@ -54,23 +52,6 @@ public class LibraryContext : DbContext
 
         // Relation WaitingList N-N Book
         // (WaitingList 1-N WaitingList_Book N-1 Book)
-        /*modelBuilder.Entity<WaitingList>()
-                    .HasMany(b => b.Books)
-                    .WithMany(b => b.WaitingLists)
-                    .UsingEntity<WaitingList_Book>(
-                        k => k
-                            .HasOne(wb => wb.WaitingList)
-                            .WithMany(w => w.WaitingList_Books)
-                            .HasForeignKey(wb => wb.WaitingGuid),
-                        k => k
-                            .HasOne(wb => wb.Book)
-                            .WithMany(b => b.WaitingList_Books)
-                            .HasForeignKey(wb => wb.BookGuid),
-                        j =>
-                        {
-                            j.HasKey(t => new { t.WaitingGuid, t.BookGuid });
-                        }
-                    );*/
 
         modelBuilder.Entity<WaitingList_Book>()
             .HasKey(wb => new { wb.WaitingGuid, wb.BookGuid });

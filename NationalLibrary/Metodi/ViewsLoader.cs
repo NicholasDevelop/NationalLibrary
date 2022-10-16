@@ -6,16 +6,12 @@ using System.Globalization;
 
 namespace NationalLibrary.Metodi
 {
-
-
     public class ViewsLoaders
     {
-        public static LibraryContext ctx = new LibraryContext();
-
+        private static readonly LibraryContext ctx;
 
         public static IQueryable<UserFinalView> ViewsLoader_Users()
         {
-
 
             var usersview = from x in ctx.People  // seleziona tutto nella lista CONTACTS presente in CONTEXT
                             join a in ctx.Users on x.FiscalCode equals a.FiscalCode
@@ -31,7 +27,7 @@ namespace NationalLibrary.Metodi
                                 Type = x.Type,
                                 Name = x.Name,
                                 Surname = x.Surname,
-                                Birthday = x.Birthday,
+                                BirthDate = x.BirthDate,
                                 Email = a.Email,
                                 City = b.City,
                                 Street = b.Street,
@@ -63,7 +59,7 @@ namespace NationalLibrary.Metodi
                                 Title = x.Title,
                                 Author = x.Author,
                                 PublishingHouse = x.PublishingHouse,
-                                Avaiable = x.Avaiable,
+                                Available = x.Available,
                                 Presentation = x.Presentation,
                                 Genre = x.Genre,
                                 CoverImg = x.CoverImg,

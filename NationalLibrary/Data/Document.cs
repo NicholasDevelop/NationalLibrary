@@ -6,11 +6,8 @@ namespace NationalLibrary.Data
 	{
 		#region Variables
 		private string documentNumber;
-		[Required]
 		private string documentType;
-		[Required]
 		private string releasedBy;
-		[Required]
 		private DateTime expireOn;
 		#endregion
 
@@ -25,9 +22,12 @@ namespace NationalLibrary.Data
         #region Properties
         [Key]
         public string DocumentNumber { get => documentNumber; set { documentNumber = DataController.CheckDocumentNumber(value); } }
-		public string DocumentType { get => documentType; set => documentType = value; }
-		public string ReleasedBy { get => releasedBy; set { releasedBy = DataController.CheckStrings(value, "autore"); } }
-		public DateTime ExpireOn { get => expireOn; set => expireOn = value; }
+        [Required]
+        public string DocumentType { get => documentType; set => documentType = value; }
+        [Required]
+        public string ReleasedBy { get => releasedBy; set { releasedBy = DataController.CheckStrings(value, "autore"); } }
+        [Required]
+        public DateTime ExpireOn { get => expireOn; set => expireOn = value; }
 		#endregion
 
 		// Document 1-1 Person

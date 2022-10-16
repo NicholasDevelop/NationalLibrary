@@ -6,13 +6,9 @@ namespace NationalLibrary.Data
 	{
 		#region Variables
 		
-		[Required]
 		private string scaffhold;
-		[Required]
 		private string shelf;
-		[Required]
 		private int position;
-		[Required]
 		private string room;
 		#endregion
 
@@ -38,7 +34,7 @@ namespace NationalLibrary.Data
 		public string Room { get => room; set { room = DataController.CheckStrings(value, "stanza"); } }
 		public string Schaffold { get => scaffhold; set { scaffhold = DataController.CheckScaffholdOrShelf(value, "scaffale"); } }
 		public string Shelf { get => shelf; set { shelf = DataController.CheckScaffholdOrShelf(value, "ripiano"); } }
-		public int Position { get => position; set { position = value; } }
+		public int? Position { get => position; set { position = value; } }
 		#endregion
 
 		// Relation Location 1-1 Book(FK)

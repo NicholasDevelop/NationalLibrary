@@ -8,7 +8,7 @@ namespace NationalLibrary.Data
         public Guid AddressGuid { get; set; }
         public string City { get ;set;}  
         public string Street { get; set; }
-        public int CAP { get; set; }
+        public int? CAP { get; set; }
         public string Province { get; set; }
         
         // Relation Residence 1-N Person

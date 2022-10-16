@@ -9,11 +9,16 @@ namespace NationalLibrary.Data
 
 		[Key]
 		public string FiscalCode { get; set; }
+        [Required]
         public string Type { get; set; }
+        [Required]
         public string Name { get => name; set { name = DataController.CheckStrings(value, "Nome"); } }
-		public string Surname { get; set; }
+        [Required]
+        public string Surname { get; set; }
+        [Required]
 		public string MobilePhone { get; set; }
-		public DateTime Birthday { get; set; }
+        [Required]
+        public DateTime BirthDate { get; set; }
 
         public string FCRelatedTO { get; set; }
 

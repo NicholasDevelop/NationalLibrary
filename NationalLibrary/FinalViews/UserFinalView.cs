@@ -9,12 +9,12 @@ namespace NationalLibrary.FinalViews
         public string Name { get; set; }
         public string Surname { get; set; }
         public string MobilePhone { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public string Email { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public int CAP { get; set; }
+        public int? CAP { get; set; }
         public string Province { get; set; }
         public string DocumentNumber { get; set; }
         public string DocumentType { get; set; }
