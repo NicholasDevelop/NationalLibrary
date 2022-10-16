@@ -102,9 +102,9 @@ namespace NationalLibrary.Metodi
 
         }
 
-        public static void ModifyContact 
+        public static void EditUser 
         (
-            string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
+            string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo,
             string City, string Street, int CAP, string Province,
             string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
             string Email, string Username, string Password
@@ -122,6 +122,7 @@ namespace NationalLibrary.Metodi
             a.Surname = Surname;
             a.MobilePhone = MobilePhone;
             a.BirthDate = BirthDate;
+            a.FCRelatedTO = FCRelatedTo;
             b[0].City = City;
             b[0].Street = Street;
             b[0].CAP = CAP;
