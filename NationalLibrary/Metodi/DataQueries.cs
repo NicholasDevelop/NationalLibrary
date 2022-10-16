@@ -74,7 +74,7 @@ namespace NationalLibrary.Metodi
 
         {
            // ctx = new LibraryContext();
-            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO};
+            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now};
                 newuser.Residence  = new Residence() { City = City, Street = Street, CAP = CAP, Province = Province, AddressGuid = Guid.NewGuid() };
                 newuser.Document   = new Document() { DocumentNumber = DocumentNumber, DocumentType = DocumentType, ReleasedBy = ReleasedBy, ExpireOn = ExpireOn};
                 newuser.User       = new User() {Email = Email, Username = Username, Password = Password};
@@ -97,7 +97,7 @@ namespace NationalLibrary.Metodi
         )
 
         {
-            var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO };
+            var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate,SignUpDate = DateTime.Now, FCRelatedTO = FCRelatedTO };
             newuser.Document = new Document() { DocumentNumber = DocumentNumber };
 
             // DA TESTARE !!!

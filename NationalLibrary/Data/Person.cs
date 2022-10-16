@@ -19,6 +19,7 @@ namespace NationalLibrary.Data
 		public string MobilePhone { get; set; }
         [Required]
         public DateTime BirthDate { get; set; }
+        public DateTime SignUpDate { get; set; }
 
         public string FCRelatedTO { get; set; }
 

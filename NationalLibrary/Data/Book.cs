@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace NationalLibrary.Data
 {
@@ -20,6 +21,11 @@ namespace NationalLibrary.Data
         public string Genre { get; set; }
         [Required]
         public string CoverImg { get; set; }
+        [Required]
+        public DateTime BuyDate { get; set; }
+        [Required]
+        public string Price { get; set; }
+
 
         // Relation Book 1-N Rent(FK)
         public List<Rent> Rents { get; set; }
