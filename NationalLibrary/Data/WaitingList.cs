@@ -18,7 +18,7 @@ namespace NationalLibrary.Data
 
 
         // Relation Book N-N WaitiList
-        public ICollection<Book> Books { get; set; }
+        //public ICollection<Book> Books { get; set; }
         public List<WaitingList_Book> WaitingList_Books { get; set; }
     }
 }

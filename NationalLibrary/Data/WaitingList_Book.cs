@@ -11,7 +11,5 @@ namespace NationalLibrary.Data
         public Guid BookGuid { get; set; }
         public Book Book { get; set; }
 
-
-
     }
 }

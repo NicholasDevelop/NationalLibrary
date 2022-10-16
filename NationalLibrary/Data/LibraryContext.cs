@@ -71,5 +71,19 @@ public class LibraryContext : DbContext
                             j.HasKey(t => new { t.WaitingGuid, t.BookGuid });
                         }
                     );*/
+
+        modelBuilder.Entity<WaitingList_Book>()
+            .HasKey(wb => new { wb.WaitingGuid, wb.BookGuid });
+
+        modelBuilder.Entity<WaitingList_Book>()
+            .HasOne(wb => wb.WaitingList)
+            .WithMany(wl => wl.WaitingList_Books)
+            .HasForeignKey(wb => wb.WaitingGuid);
+
+        modelBuilder.Entity<WaitingList_Book>()
+            .HasOne(wb => wb.Book)
+            .WithMany(b => b.WaitingList_Books)
+            .HasForeignKey(wb => wb.BookGuid);
+
     }
 }
