@@ -1,12 +1,15 @@
 ﻿using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
+using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 
 namespace NationalLibrary.Metodi
 {
     public class DataQueries
     {
-        private static readonly LibraryContext ctx;
+//        private static readonly LibraryContext ctx;
+        
+
 
         //public static List<RentFinalView> RentFinalViewList()
         //{
@@ -66,18 +69,23 @@ namespace NationalLibrary.Metodi
             string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
             string City, string Street, int CAP, string Province,
             string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-            string Email, string Username, string Password, string FCRelatedTO
+            string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx
         )
 
         {
-            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO};
+           // ctx = new LibraryContext();
+            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO};
                 newuser.Residence  = new Residence() { City = City, Street = Street, CAP = CAP, Province = Province, AddressGuid = Guid.NewGuid() };
                 newuser.Document   = new Document() { DocumentNumber = DocumentNumber, DocumentType = DocumentType, ReleasedBy = ReleasedBy, ExpireOn = ExpireOn};
                 newuser.User       = new User() {Email = Email, Username = Username, Password = Password};
 
-
+            //Trace.WriteLine(newuser);
+            //Trace.WriteLine(newuser.Residence);
             // DA TESTARE !!!
             ctx.People.Add(newuser);
+            ctx.Users.Add(newuser.User);
+            ctx.Documents.Add(newuser.Document);
+            ctx.Residences.Add(newuser.Residence);
             ctx.SaveChanges();
         }
 
@@ -85,41 +93,43 @@ namespace NationalLibrary.Metodi
         (
             string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
             string DocumentNumber,
-            string FCRelatedTO
+            string FCRelatedTO, LibraryContext ctx
         )
 
         {
-            var newuser             = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO };
-                newuser.Document    = new Document() { DocumentNumber = DocumentNumber };
+            var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO };
+            newuser.Document = new Document() { DocumentNumber = DocumentNumber };
 
             // DA TESTARE !!!
             ctx.People.Add(newuser);
             ctx.SaveChanges();
         }
-        public static void DeleteUser(string FiscalCode)
+        public static void DeleteUser(string FiscalCode, LibraryContext ctx)
         {
             //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
 
+            User   view2 = ctx.Users.Where (u => u.FiscalCode == FiscalCode).ToList()[0];
             Person view = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            ctx.Users.Remove(view2);
             ctx.People.Remove(view);
 
             ctx.SaveChanges();
 
         }
 
-        public static void EditUser 
+        public static void EditUser
         (
             string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo,
             string City, string Street, int CAP, string Province,
             string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-            string Email, string Username, string Password
+            string Email, string Username, string Password, LibraryContext ctx
         )
         {
 
-            Person              a = ctx.People.Where        (u => u.FiscalCode == FiscalCode).ToList()[0];
-            List<Residence>     b = ctx.Residences.Where    (u => a.AddressGuidFK == u.AddressGuid).ToList();
-            List<Document>      c = ctx.Documents.Where     (u => a.DocumentNumberFK == u.DocumentNumber).ToList();
-            List<User>          d = ctx.Users.Where         (u => a.FiscalCode == u.FiscalCode).ToList();
+            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            List<Residence> b = ctx.Residences.Where(u => a.AddressGuidFK == u.AddressGuid).ToList();
+            List<Document> c = ctx.Documents.Where(u => a.DocumentNumberFK == u.DocumentNumber).ToList();
+            List<User> d = ctx.Users.Where(u => a.FiscalCode == u.FiscalCode).ToList();
 
             a.FiscalCode = FiscalCode;
             a.Type = Type;
@@ -139,7 +149,7 @@ namespace NationalLibrary.Metodi
             d[0].Email = Email;
             d[0].Username = Username;
             d[0].Password = Password;
-        
+
             ctx.SaveChanges();
 
 

@@ -11,7 +11,8 @@ public class LibraryContext : DbContext
 {
     public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
     { }
-
+    public LibraryContext() : base()
+    { }
     public DbSet<Person> People { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<Residence> Residences { get; set; }
