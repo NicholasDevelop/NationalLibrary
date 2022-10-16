@@ -77,7 +77,7 @@ namespace NationalLibrary.Data
 			string a = password ?? throw new ArgumentNullException("Inserisci una password");
 			Regex rgx = new Regex("^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&-]).{8,}$");
 			if (!rgx.IsMatch(password))
-				throw new Exception("La password deve avere almeno un numero, un carattere maiuscolo e deve contenere almeno 8 caratteri")
+				throw new Exception("La password deve avere almeno un numero, un carattere maiuscolo e deve contenere almeno 8 caratteri");
 			return password;
         }
 
