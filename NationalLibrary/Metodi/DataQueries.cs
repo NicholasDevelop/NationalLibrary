@@ -21,8 +21,8 @@ namespace NationalLibrary.Metodi
         //    return a;
         //}
 
-
-        // LISTE COMPLETE
+     
+        //////////////////        LISTE COMPLETE         \\\\\\\\\\\\\\\\\\\\\
         public static List<RentFinalView> RentFinalViewList()
         {
             List<RentFinalView> a = new List<RentFinalView>();
@@ -53,19 +53,24 @@ namespace NationalLibrary.Metodi
             return a;
         }
 
-        // QUERY SU UTENTE
+        // QUERY DI RICERCA
 
-        //QUERY INSERT
+
+
+
+
+
+        //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
         public static void InsertUser
         (
             string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
             string City, string Street, int CAP, string Province,
             string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-            string Email, string Username, string Password
+            string Email, string Username, string Password, string FCRelatedTO
         )
 
         {
-            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate};
+            var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO};
                 newuser.Residence  = new Residence() { City = City, Street = Street, CAP = CAP, Province = Province, AddressGuid = Guid.NewGuid() };
                 newuser.Document   = new Document() { DocumentNumber = DocumentNumber, DocumentType = DocumentType, ReleasedBy = ReleasedBy, ExpireOn = ExpireOn};
                 newuser.User       = new User() {Email = Email, Username = Username, Password = Password};
