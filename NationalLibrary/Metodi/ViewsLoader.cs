@@ -1,86 +1,79 @@
-﻿//using NationalLibrary.Data;
-//using NationalLibrary.FinalViews;
-//using System.Globalization;
+﻿using NationalLibrary.Data;
+using NationalLibrary.FinalViews;
+using System.Globalization;
 
 
 
-//namespace NationalLibrary.Metodi
-//{
-    
-
-//    public class ViewsLoaders
-//    {
-//        public static LibraryContext ctx = new LibraryContext();
+namespace NationalLibrary.Metodi
+{
 
 
-//        public static IQueryable<UserFinalView> ViewsLoader_Users()
-//        {
+    public class ViewsLoaders
+    {
+        public static LibraryContext ctx = new LibraryContext();
 
 
-//            var usersview = from x in ctx.People  // seleziona tutto nella lista CONTACTS presente in CONTEXT
-//                            join a in ctx.Users on x.FiscalCode equals a.FiscalCode
-//                            join b in ctx.Residences on x.AddressGuidFK equals b.AddressGuid
-//                            join c in ctx.Documents on x.DocumentNumberFK equals c.DocumentNumber
-//                            // In pratica joino solo i dati dove x.qualcosa (la select iniziale) è uguale alla FK del dato stesso
+        public static IQueryable<UserFinalView> ViewsLoader_Users()
+        {
 
 
-//                       // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
-//                       select new UserFinalView
-//                       {
-//                           FiscalCode = x.FiscalCode,
-//                           Type = x.Type,
-//                           Name = x.Name,
-//                           Surname = x.Surname,
-//                           Type = x.Type,
-//                           Birthday = x.Birthday,
-//                           Email = a.Email,
-//                           City = b.City,
-//                           Street = b.Street,
-//                           CAP = b.CAP,
-//                           Province = b.Province,
-//                           DocumentNumber = c.DocumentNumber,
-//                           DocumentType = c.DocumentType,
-//                           ReleasedBy = c.ReleasedBy,
-//                           ExpiredOn = c.ExpireOn,
-//                           Username = a.Username,
-//                           Password = a.Password
-
-//                       };
-
-//            return usersview;
-//        }
-
-//        public static IQueryable<UserFinalView> ViewsLoader_Books()
-//        {
-//            var booksview = from x in ctx.Books  // seleziona tutto nella lista CONTACTS presente in CONTEXT
-//                            join a in ctx.Locations on x.LocationGuidFK equals a.LocationGuid
-//                            // In pratica joino solo i dati dove x.qualcosa (la select iniziale) è uguale alla FK del dato stesso
+            var usersview = from x in ctx.People  // seleziona tutto nella lista CONTACTS presente in CONTEXT
+                            join a in ctx.Users on x.FiscalCode equals a.FiscalCode
+                            join b in ctx.Residences on x.AddressGuidFK equals b.AddressGuid
+                            join c in ctx.Documents on x.DocumentNumberFK equals c.DocumentNumber
+                            // In pratica joino solo i dati dove x.qualcosa (la select iniziale) è uguale alla FK del dato stesso
 
 
-//                            // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
-//                            select new UserFinalView
-//                            {
-//                                Book = x.FiscalCode,
-//                                Type = x.Type,
-//                                Name = x.Name,
-//                                Surname = x.Surname,
-//                                Birthday = x.Birthday,
-//                                Email = x.Email,
-//                                City = b.City,
-//                                Street = b.Street,
-//                                CAP = b.CAP,
-//                                Province = b.Province,
-//                                DocumentNumber = c.DocumentNumber,
-//                                DocumentType = c.DocumentType,
-//                                ReleasedBy = c.ReleasedBy,
-//                                ExpiredOn = c.ExpireOn,
-//                                Username = a.Username,
-//                                UserType = a.UserType,
-//                                Password = a.Password
+                            // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
+                            select new UserFinalView
+                            {
+                                FiscalCode = x.FiscalCode,
+                                Type = x.Type,
+                                Name = x.Name,
+                                Surname = x.Surname,
+                                Birthday = x.Birthday,
+                                Email = a.Email,
+                                City = b.City,
+                                Street = b.Street,
+                                CAP = b.CAP,
+                                Province = b.Province,
+                                DocumentNumber = c.DocumentNumber,
+                                DocumentType = c.DocumentType,
+                                ReleasedBy = c.ReleasedBy,
+                                ExpiredOn = c.ExpireOn,
+                                Username = a.Username,
+                                Password = a.Password
 
-//                            };
+                            };
 
-//            return booksview;
-//        }
-//    }
-//}
+            return usersview;
+        }
+
+        public static IQueryable<BookFinalView> ViewsLoader_Books()
+        {
+            var booksview = from x in ctx.Books  // seleziona tutto nella lista CONTACTS presente in CONTEXT
+                            join a in ctx.Locations on x.LocationGuidFK equals a.LocationGuid
+                            // In pratica joino solo i dati dove x.qualcosa (la select iniziale) è uguale alla FK del dato stesso
+
+
+                            // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
+                            select new BookFinalView
+                            {
+                                BookGuid = x.BookGuid,
+                                Title = x.Title,
+                                Author = x.Author,
+                                PublishingHouse = x.PublishingHouse,
+                                Avaiable = x.Avaiable,
+                                Presentation = x.Presentation,
+                                Genre = x.Genre,
+                                CoverImg = x.CoverImg,
+                                Room = a.Room,
+                                Scaffhold = a.Schaffold,
+                                Position = a.Position
+
+                            };
+
+            return booksview;
+        }
+    }
+}

@@ -3,17 +3,17 @@
     public class BookFinalView
     {
 
-        Guid BookGuid { get; set; }
-        string Title { get; set; }
-        string Author { get; set; }
-        string PublishingHouse { get; set; }
-        bool Avaiable { get; set; }
-        string Presentation { get; set; }
-        string Genre { get; set; }
-        string CoverImg { get; set; }
-        string Room { get; set; }
-        char Scaffhold { get; set; }
-        char Shelf { get; set; }
-        int Position { get; set; }
+        public Guid BookGuid { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string PublishingHouse { get; set; }
+        public bool Avaiable { get; set; }
+        public string Presentation { get; set; }
+        public string Genre { get; set; }
+        public string CoverImg { get; set; }
+        public string Room { get; set; }
+        public string Scaffhold { get; set; }
+        public string Shelf { get; set; }
+        public int Position { get; set; }
     }
 }

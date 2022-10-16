@@ -15,6 +15,7 @@ namespace NationalLibrary.Data
         public Person Person { get; set; }
 
         public DateTime RequiredOn { get; set; }
+        public DateTime? ReceivedOn { get; set; }
 
 
         // Relation Book N-N WaitiList
