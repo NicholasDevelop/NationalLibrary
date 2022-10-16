@@ -1,4 +1,4 @@
-﻿namespace NationalLibrary.Data
+﻿namespace NationalLibrary.FinalViews
 {
     public class AvaiabilityFinalView
     {
