@@ -54,7 +54,7 @@ public class LibraryContext : DbContext
 
         // Relation WaitingList N-N Book
         // (WaitingList 1-N WaitingList_Book N-1 Book)
-        modelBuilder.Entity<WaitingList>()
+        /*modelBuilder.Entity<WaitingList>()
                     .HasMany(b => b.Books)
                     .WithMany(b => b.WaitingLists)
                     .UsingEntity<WaitingList_Book>(
@@ -70,6 +70,6 @@ public class LibraryContext : DbContext
                         {
                             j.HasKey(t => new { t.WaitingGuid, t.BookGuid });
                         }
-                    );
+                    );*/
     }
 }
