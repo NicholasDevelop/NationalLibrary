@@ -60,18 +60,14 @@ namespace NationalLibrary.Metodi
 
 
 
-
-
-
         //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
         public static void InsertUser
-        (
-            string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
-            string City, string Street, int CAP, string Province,
-            string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-            string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx
-        )
-
+            (
+                string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
+                string City, string Street, int CAP, string Province,
+                string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
+                string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx
+            )
         {
            // ctx = new LibraryContext();
             var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now};

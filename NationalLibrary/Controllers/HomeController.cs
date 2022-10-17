@@ -8,7 +8,6 @@ namespace NationalLibrary.Controllers
 {
     public class HomeController : Controller
     {
-
         private readonly ILogger<HomeController> _logger;
         private readonly LibraryContext ctx;
         public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
@@ -21,12 +20,12 @@ namespace NationalLibrary.Controllers
         {
 
             DataQueries.InsertUser
-        (
-             "A", "A", "A", "A", "A", DateTime.Now,
-             "A", "A", 1, "A",
-             "AA11111AA", "A", "A", DateTime.Now,
-             "AA11111AA", "A", "A", String.Empty, ctx
-        );
+            (
+                 "A", "A", "A", "A", "A", DateTime.Now,
+                 "A", "A", 1, "A",
+                 "AA11111AA", "A", "A", DateTime.Now,
+                 "AA11111AA", "A", "A", String.Empty, ctx
+            );
             DataQueries.UserFinalViewList();
             //DataQueries.DeleteUser("A", ctx);
 

@@ -81,8 +81,6 @@ namespace NationalLibrary.Metodi
                             join c in ctx.WaitingLists on b.WaitingGuid equals c.WaitingGuid
 
 
-
-
                             // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
                             select new RentFinalView
                             {
@@ -100,5 +98,7 @@ namespace NationalLibrary.Metodi
 
             return rentsview;
         }
+
+
     } 
 }
