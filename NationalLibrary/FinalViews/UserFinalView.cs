@@ -11,6 +11,7 @@ namespace NationalLibrary.FinalViews
         public string Surname { get; set; }
         public string MobilePhone { get; set; }
         public DateTime BirthDate { get; set; }
+        public DateTime? SignUpDate { get; set; }
 
         // Residence
         public string City { get; set; }
@@ -28,8 +29,6 @@ namespace NationalLibrary.FinalViews
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
-        public DateTime? RegisterDate { get; set; }
 
 
     }

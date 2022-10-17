@@ -30,6 +30,7 @@ namespace NationalLibrary.Metodi
                                 Name = x.Name,
                                 Surname = x.Surname,
                                 BirthDate = x.BirthDate,
+                                SignUpDate = x.SignUpDate,
                                 Email = a.Email,
                                 City = b.City,
                                 Street = b.Street,
@@ -40,8 +41,7 @@ namespace NationalLibrary.Metodi
                                 ReleasedBy = c.ReleasedBy,
                                 ExpiredOn = c.ExpireOn,
                                 Username = a.Username,
-                                Password = a.Password,
-                                RegisterDate = a.RegisterDate,
+                                Password = a.Password
                             };
 
             return usersview;
