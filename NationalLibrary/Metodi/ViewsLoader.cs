@@ -81,8 +81,6 @@ namespace NationalLibrary.Metodi
                             join c in ctx.WaitingLists on b.WaitingGuid equals c.WaitingGuid
 
 
-
-
                             // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
                             select new RentFinalView
                             {
@@ -100,5 +98,37 @@ namespace NationalLibrary.Metodi
 
             return rentsview;
         }
+
+        public static List<RentFinalView> RentFinalViewList()
+        {
+            List<RentFinalView> a = new List<RentFinalView>();
+            foreach (var item in ViewsLoaders.ViewsLoader_Rents())
+            {
+                a.Add(item);
+            }
+            return a;
+        }
+
+        public static List<UserFinalView> UserFinalViewList()
+        {
+            List<UserFinalView> a = new List<UserFinalView>();
+            foreach (var item in ViewsLoaders.ViewsLoader_Users())
+            {
+                a.Add(item);
+            }
+            return a;
+        }
+
+        public static List<BookFinalView> BookFinalViewList()
+        {
+            List<BookFinalView> a = new List<BookFinalView>();
+            foreach (var item in ViewsLoaders.ViewsLoader_Books())
+            {
+                a.Add(item);
+            }
+            return a;
+        }
+
+
     } 
 }
