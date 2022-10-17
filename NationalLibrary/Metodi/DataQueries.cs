@@ -1,5 +1,6 @@
 ﻿using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
+using System;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 
@@ -8,13 +9,7 @@ namespace NationalLibrary.Metodi
     public class DataQueries
     { 
         //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
-        public static void InsertUser
-            (
-                string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
-                string City, string Street, int CAP, string Province,
-                string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-                string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx
-            )
+        public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,string City, string Street, int CAP, string Province,string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
         {
            // ctx = new LibraryContext();
             var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now};
@@ -31,13 +26,7 @@ namespace NationalLibrary.Metodi
             ctx.Residences.Add(newuser.Residence);
             ctx.SaveChanges();
         }
-
-        public static void InsertTutorUser
-        (
-            string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,
-            string DocumentNumber,
-            string FCRelatedTO, LibraryContext ctx
-        )
+        public static void InsertTutorUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,string DocumentNumber,string FCRelatedTO, LibraryContext ctx)
 
         {
             var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate,SignUpDate = DateTime.Now, FCRelatedTO = FCRelatedTO };
@@ -59,14 +48,7 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-
-        public static void EditUser
-        (
-            string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo,
-            string City, string Street, int CAP, string Province,
-            string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,
-            string Email, string Username, string Password, LibraryContext ctx
-        )
+        public static void EditUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo,string City, string Street, int CAP, string Province,string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,string Email, string Username, string Password, LibraryContext ctx)
         {
 
             Person          a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
@@ -100,15 +82,10 @@ namespace NationalLibrary.Metodi
 
         }
 
-        //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\
 
-        public static void InsertBook
-        (
-            Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, string Coverimg,
-            DateTime BuyDate, string Price,
 
-            string Room, string Scaffhold, int Position, string Shelf, LibraryContext ctx
-        )
+        //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, string Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int Position, string Shelf, LibraryContext ctx)
 
         {
             var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price };
@@ -119,7 +96,6 @@ namespace NationalLibrary.Metodi
             ctx.Locations.Add(newbook.Location);
             ctx.SaveChanges();
         }
-
         public static void DeleteBook(Guid BookGuid, LibraryContext ctx)
         {
             //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
@@ -130,13 +106,7 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-
-        public static void EditBook
-        (
-            Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,
-            string Coverimg, string Room, string Scaffhold, string Shelf, int Position,
-            LibraryContext ctx
-        )
+        public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,string Coverimg, string Room, string Scaffhold, string Shelf, int Position,LibraryContext ctx)
         {
 
             Book            a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
@@ -161,6 +131,41 @@ namespace NationalLibrary.Metodi
 
         }
 
+
+        //////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
+
+        {
+            var newrent          = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode, WithdrawnOn = DateTime.Now };
+
+            ctx.Rents.Add(newrent);
+            ctx.SaveChanges();
+        }
+        public static void DeleteRent(Guid RentGuid, LibraryContext ctx)
+        {
+            //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
+
+            Rent rent = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
+            ctx.Rents.Remove(rent);
+
+            ctx.SaveChanges();
+
+        }
+        public static void ReturnRent(Guid RentGuid, DateTime ReturnedOn, LibraryContext ctx)
+        {
+
+            Rent           a = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
+            List<Book>     b = ctx.Books.Where(u => u.BookGuid == a.BookGuidFK).ToList();
+
+            a.ReturnedOn = ReturnedOn;
+            b[0].Available = true;
+
+            ctx.SaveChanges();
+
+
+
+
+        }
 
 
 

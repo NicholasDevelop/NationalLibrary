@@ -21,10 +21,10 @@ namespace NationalLibrary.Controllers
 
             //DataQueries.InsertUser
             //(
-            //     "A", "A", "A", "A", "A", DateTime.Now,
-            //     "A", "A", 1, "A",
-            //     "AA11111AA", "A", "A", DateTime.Now,
-            //     "AA11111AA", "A", "A", String.Empty, ctx
+            //"ABSCNL03A03M849U", "Admin", "Brian", "Romagnoli", "3339998888", new DateTime(1996,10,19),
+            //"Genova", "Via Dante Alighieri 8", 20040, "GE",
+            //"AA00000BB", "C.I.", "Genova", new DateTime(2030,03,25),
+            //"brianromagnoli1@gmail.com", "Admin", "Admin", String.Empty, ctx
             //);
             //DataQueries.UserFinalViewList();
             //DataQueries.DeleteUser("A", ctx);
