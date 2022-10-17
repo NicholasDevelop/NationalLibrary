@@ -1,8 +1,160 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/homePage.css">
+    <link href="~/fontawesome/font-awesome/css/fontawesome.css" rel="stylesheet">
+    <link href="~/fontawesome/font-awesome/css/brands.css" rel="stylesheet">
+    <link href="~/fontawesome/font-awesome/css/solid.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style></style>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="first-header-container">
+                <img src="~/img/LogoFinale.svg" alt="">
+                <div class="login">
+                    <button>Login</button>
+                </div>
+            </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            <div class="second-header-container">
+                <nav>
+                    <a href="#" class="nav-item">
+                        <img src="svgs/regular/house.svg" alt="">
+                        <h4>HOME</h4>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-regular fa-magnifying-glass"></i>
+                        <h4>I NOSTRI LIBRI</h4>
+                    </a>
+                </nav>
+
+                <div class="social-link">
+                    <a href="#" class="social-container facebook">
+                        <img src="svgs/brands/facebook-f.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container instagram">
+                        <img src="svgs/brands/instagram.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container twitter">
+                        <img src="svgs/brands/twitter.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <!-- Our-Info Section -->
+        <section id="our-info">
+            <div class="carousel-container">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/img/img-carousel1.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/img/img-carousel2.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/img/img-carousel3.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/img/img-carousel4.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/img/img-carousel5.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="library-info">
+                <h2>PER TUTTA LA STAGIONE AUTUNNALE SEGUIREMO I SEGUENTI ORARI:</h2>
+                <h3><span>Lunedì - Domenica:</span> 09.30 - 12.30 / 15.30 - 19.30</h3>
+
+                <p><span><img src="svgs/solid/location-dot.svg" alt=""></span> Corso Umberto I n.96</p>
+                <p><span><img src="svgs/solid/building.svg" alt=""></span> 20321 Milano (MI)</p>
+                <p><span><img src="svgs/solid/phone-flip.svg" alt=""></span> 0362 286582</p>
+                <p><span><img src="svgs/solid/envelope.svg" alt=""></span> milano@nationallibrary.it</p>
+            </div>
+        </section>
+
+        <!-- More-Rented Section -->
+        <section id="more-rented">
+            <div class="more-rented-container">
+                <h1>I LIBRI PIU' NOLEGGIATI DELLA SETTIMANA</h1>
+                <div class="card-container">
+                    <a href="#" class="card">
+                        <p>10</p>
+                        <img src="~/img/img-carousel5.jpg" alt="">
+                        <h3>Harry Potter (Edizione Castello)</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book-News Section -->
+        <section id="book-news">
+            <div class="book-news-container">
+                <h1>LE NOVITA'</h1>
+                <div class="card-container">
+                    <a href="#" class="card">
+                        <img src="~/img/img-carousel5.jpg" alt="">
+                        <h3>Harry Potter (Edizione Castello)</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-first-container">
+                <h2>NationlLibrary</h2>
+
+                <div class="social-link">
+                    <a href="#" class="social-container facebook">
+                        <img src="svgs/brands/facebook-f.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container instagram">
+                        <img src="svgs/brands/instagram.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container twitter">
+                        <img src="svgs/brands/twitter.svg" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-second-container">
+                <p>Obblighi informativi per le erogazioni pubbliche: gli aiuti di Stato e gli aiuti de minimis ricevuti dalla nostra impresa sono contenuti nel Registro nazionale degli aiuti di Stato di cui all’art. 52 della L. 234/2012</p>
+                <p>Sede legale: Via Giuseppe Verdi 8 20090 – Assago (MI) - Tel. +39 02 28315600 - Fax +39 02 28315601 - Cap. Soc. 200.000 € i.v. - R.E.A. 1947014 - C.F/P.IVA 07250620965</p>
+                <p>Sede operativa: Via Alessandro Volta 4 20090 – Buccinasco (MI) - Tel. +39 0228315600 - Fax. +39 0228315601</p>
+                <p><span>www.nationallibrary.it</span> E-mail: info@nationallibrary.it</p>
+                <p>Copyright © 2022 <span>www.nationllibrary.it</span> - all rights reserved</p>
+            </div>
+        </footer>
+    </main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
