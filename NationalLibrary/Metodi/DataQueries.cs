@@ -126,10 +126,10 @@ namespace NationalLibrary.Metodi
         )
         {
 
-            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            Person          a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
             List<Residence> b = ctx.Residences.Where(u => a.AddressGuidFK == u.AddressGuid).ToList();
-            List<Document> c = ctx.Documents.Where(u => a.DocumentNumberFK == u.DocumentNumber).ToList();
-            List<User> d = ctx.Users.Where(u => a.FiscalCode == u.FiscalCode).ToList();
+            List<Document>  c = ctx.Documents.Where(u => a.DocumentNumberFK == u.DocumentNumber).ToList();
+            List<User>      d = ctx.Users.Where(u => a.FiscalCode == u.FiscalCode).ToList();
 
             a.FiscalCode = FiscalCode;
             a.Type = Type;
@@ -156,6 +156,72 @@ namespace NationalLibrary.Metodi
 
 
         }
+
+        //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\
+
+        public static void InsertBook
+        (
+            Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, string Coverimg,
+            DateTime BuyDate, string Price,
+
+            string Room, string Scaffhold, int Position, string Shelf, LibraryContext ctx
+        )
+
+        {
+            var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price };
+                newbook.Location =  new Location() { Room = Room, Schaffold = Scaffhold, Shelf = Shelf, Position = Position };
+
+
+            ctx.Books.Add(newbook);
+            ctx.Locations.Add(newbook.Location);
+            ctx.SaveChanges();
+        }
+
+        public static void DeleteBook(Guid BookGuid, LibraryContext ctx)
+        {
+            //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
+
+            Book    view = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
+            ctx.Books.Remove(view);
+
+            ctx.SaveChanges();
+
+        }
+
+        public static void EditBook
+        (
+            Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,
+            string Coverimg, string Room, string Scaffhold, string Shelf, int Position,
+            LibraryContext ctx
+        )
+        {
+
+            Book            a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
+            List<Location>  b = ctx.Locations.Where(u => u.LocationGuid == a.LocationGuidFK).ToList();
+
+            a.Title = Title;
+            a.Author = Author;
+            a.PublishingHouse = PublishingHouse;
+            a.Available = Available;
+            a.Presentation = Presentation;
+            a.Genre = Genre;
+            a.CoverImg = Coverimg;
+            b[0].Room = Room;
+            b[0].Schaffold = Scaffhold;
+            b[0].Shelf = Shelf;
+            b[0].Position = Position;
+
+            ctx.SaveChanges();
+
+
+
+
+        }
+
+
+
+
+
 
     }
 
