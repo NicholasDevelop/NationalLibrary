@@ -19,14 +19,14 @@ namespace NationalLibrary.Controllers
         public IActionResult Index()
         {
 
-            DataQueries.InsertUser
-            (
-                 "A", "A", "A", "A", "A", DateTime.Now,
-                 "A", "A", 1, "A",
-                 "AA11111AA", "A", "A", DateTime.Now,
-                 "AA11111AA", "A", "A", String.Empty, ctx
-            );
-            DataQueries.UserFinalViewList();
+            //DataQueries.InsertUser
+            //(
+            //     "A", "A", "A", "A", "A", DateTime.Now,
+            //     "A", "A", 1, "A",
+            //     "AA11111AA", "A", "A", DateTime.Now,
+            //     "AA11111AA", "A", "A", String.Empty, ctx
+            //);
+            //DataQueries.UserFinalViewList();
             //DataQueries.DeleteUser("A", ctx);
 
 

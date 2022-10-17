@@ -6,60 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace NationalLibrary.Metodi
 {
     public class DataQueries
-    {
-//        private static readonly LibraryContext ctx;
-        
-
-
-        //public static List<RentFinalView> RentFinalViewList()
-        //{
-        //    List<RentFinalView> a = new List<RentFinalView>();
-        //    foreach (var item in ViewsLoaders.ViewsLoader_Rents())
-        //    {
-        //        if (item.Title == "stronzo")
-        //        {
-        //            a.Add(item);
-        //        }
-        //    }
-        //    return a;
-        //}
-
-     
-        //////////////////        LISTE COMPLETE         \\\\\\\\\\\\\\\\\\\\\
-        public static List<RentFinalView> RentFinalViewList()
-        {
-            List<RentFinalView> a = new List<RentFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Rents())
-            {
-                a.Add(item);
-            }
-            return a;
-        }
-
-        public static List<UserFinalView> UserFinalViewList()
-        {
-            List<UserFinalView> a = new List<UserFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Users())
-            {
-                a.Add(item);
-            }
-            return a;
-        }
-
-        public static List<BookFinalView> BookFinalViewList()
-        {
-            List<BookFinalView> a = new List<BookFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Books())
-            {
-                a.Add(item);
-            }
-            return a;
-        }
-
-        // QUERY DI RICERCA
-
-
-
+    { 
         //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
         public static void InsertUser
             (
