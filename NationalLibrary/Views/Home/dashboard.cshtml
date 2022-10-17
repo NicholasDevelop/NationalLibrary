@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="~/css/dashboard.css">
     <link href="~/fontawesome/font-awesome/css/fontawesome.css" rel="stylesheet">
     <link href="~/fontawesome/font-awesome/css/brands.css" rel="stylesheet">
     <link href="~/fontawesome/font-awesome/css/solid.css" rel="stylesheet">
@@ -31,15 +31,15 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#Dashboard" id="dashboard" onclick="addClass('dashboard')">
-                                <img width="24px" style="margin-right: 4px;" height="24px" src="~/svgs/regular/house.svg"
+                            <a class="nav-link active" href="#Dashboard" id="dashboardAnchor" onclick="addClass('dashboard')">
+                                <img width="24px" style="margin-right: 4px;" height="24px" src="~/fontawesome/svgs/regular/house.svg"
                                      alt="" srcset="">
                                 Dashboard <span class="sr-only"></span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="magazine" href="#Magazine" onclick="addClass('magazine')">
-                                <img src="~/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
+                            <a class="nav-link" id="magazineAnchor" href="#Magazine" onclick="addClass('magazine')">
+                                <img src="~/fontawesome/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
                                      srcset="">
                                 Magazzino
                             </a>
@@ -47,11 +47,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
-                                     src="~/svgs/regular/user-plus.svg" alt="" srcset="">
+                                     src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
                                 Aggiungi dipendente
                             </a>
                         </li>
-                        </h6>
                     </ul>
                 </div>
             </nav>
@@ -129,7 +128,7 @@
                     <h1 style="margin-top: 2px;">Dashboard</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/svgs/solid/calendar-days.svg"
+                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                        alt="" srcset="">
                     </h2>
                     <div class="graph-container">
@@ -138,7 +137,7 @@
                                 <div class="icons-chart">
                                     <img class="icons"
                                          style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
+                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
                                 </div>
                                 <div class="data-info">
                                     <h4>Libri Noleggiati</h4>
@@ -148,7 +147,7 @@
                             </div>
                             <div class="graph-data">
                                 <div class="arrow-right">
-                                    <img onclick="showData('books')" id="books" src="svgs/solid/arrow-right-long.svg"
+                                    <img onclick="showData('books')" id="books" src="~/fontawesome/svgs/solid/arrow-right-long.svg"
                                          width="16px" alt="" srcset="">
                                 </div>
                                 <div class="graph">
@@ -162,7 +161,7 @@
                             <div class="graph-data">
                                 <div class="icons-chart" style="background-color: rgb(224, 115, 115);">
                                     <img class="icons" style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
+                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
                                 </div>
                                 <div class="data-info">
                                     <h4>Utenti Iscritti</h4>
@@ -172,7 +171,7 @@
                             </div>
                             <div class="graph-data">
                                 <div class="arrow-right">
-                                    <img onclick="showData('users')" id="users" src="svgs/solid/arrow-right-long.svg"
+                                    <img onclick="showData('users')" id="users" src="~/fontawesome/svgs/solid/arrow-right-long.svg"
                                          width="16px" alt="" srcset="">
                                 </div>
                                 <div class="graph" style="background-color: rgb(224, 115, 115);">
@@ -187,7 +186,7 @@
                                 <div class="icons-chart" style="background-color: rgb(95, 201, 95);">
                                     <img class="icons"
                                          style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
+                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
                                 </div>
                                 <div class="data-info">
                                     <h4>Libri comprati</h4>
@@ -198,7 +197,7 @@
                             <div class="graph-data">
                                 <div class="arrow-right">
                                     <img onclick="showData('buyedBooks')" id="buyedBooks"
-                                         src="svgs/solid/arrow-right-long.svg" width="16px" alt="" srcset="">
+                                         src="~/fontawesome/svgs/solid/arrow-right-long.svg" width="16px" alt="" srcset="">
                                 </div>
                                 <div class="graph" style="background-color: rgb(95, 201, 95);">
                                     <div class="graph" style="background-color: white; width: 60px; height: 60px;">
@@ -236,86 +235,9 @@
                     <h1 style="margin-top: 2px;">Magazzino</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/svgs/solid/calendar-days.svg"
+                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                        alt="" srcset="">
                     </h2>
-                    <div class="graph-container">
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart">
-                                    <img class="icons"
-                                         style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Libri Noleggiati</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('books')" id="books" src="svgs/solid/arrow-right-long.svg"
-                                         width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart" style="background-color: rgb(224, 115, 115);">
-                                    <img class="icons" style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Utenti Iscritti</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('users')" id="users" src="svgs/solid/arrow-right-long.svg"
-                                         width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph" style="background-color: rgb(224, 115, 115);">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart" style="background-color: rgb(95, 201, 95);">
-                                    <img class="icons"
-                                         style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Libri comprati</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('buyedBooks')" id="buyedBooks"
-                                         src="svgs/solid/arrow-right-long.svg" width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph" style="background-color: rgb(95, 201, 95);">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="table-container">
                         <h2 id="waiting-list">Lista D'Attesa</h2>
                         <table>
@@ -339,6 +261,7 @@
         </div>
         <div id="pippo">
             <h1>@Model.Username</h1>
+            <h1>@Model.Email</h1>
         </div>
     </div>
     <script>
@@ -347,14 +270,14 @@
         var popupbuyedBooks = document.getElementById("popupBuyedBooks");
         function addClass(navItem) {
             if (navItem == "magazine") {
-                dashboard.classList.remove("active");
-                magazine.classList.add("active");
+                dashboardAnchor.classList.remove("active");
+                magazineAnchor.classList.add("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.remove("hidden");
             }
             else {
-                magazine.classList.remove("active");
-                dashboard.classList.add("active");
+                magazineAnchor.classList.remove("active");
+                dashboardAnchor.classList.add("active");
                 document.getElementById("Dashboard").classList.remove("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
             }

@@ -19,15 +19,14 @@ namespace NationalLibrary.Controllers
 
 		public IActionResult Index()
 		{
-			DataQueries.InsertUser
-			(
-			"ABSCNL03A03M849U", "Admin", "Brian", "Romagnoli", "3339998888", new DateTime(1996,10,19),
-			"Genova", "Via Dante Alighieri 8", 20040, "GE",
-			"AA00000BB", "C.I.", "Genova", new DateTime(2030,03,25),
-			"brianromagnoli1@gmail.com", "Admin", "Admin", String.Empty, ctx
-			);
-			ViewsLoaders.UserFinalViewList(ctx);
-			DataQueries.DeleteUser("A", ctx);
+			//DataQueries.InsertUser
+			//(
+			//"ABSCNL03A03M849U", "Admin", "Brian", "Romagnoli", "3339998888", new DateTime(1996,10,19),
+			//"Genova", "Via Dante Alighieri 8", 20040, "GE",
+			//"AA00000BB", "C.I.", "Genova", new DateTime(2030,03,25),
+			//"brianromagnoli1@gmail.com", "Admin", "Admin", String.Empty, ctx
+			//);
+			//ViewsLoaders.UserFinalViewList(ctx);
 			return View();
 		}
 
@@ -37,11 +36,21 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult dashboard(User user)
 		{
-			if (string.IsNullOrEmpty(ViewsLoaders.getUserType(user.Username, user.Password, ctx)))
+			string type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
+			if (string.IsNullOrEmpty(type))
 			{
 				throw new Exception("Utente non esistente");
 			}
-			return View();
+			switch (type)
+			{
+				case "Admin":
+					return View(user);
+				case "User":
+					return View(user);
+				case "Librarian":
+					return View(user);
+			}
+			return View("Index");
 		}
 		public IActionResult Privacy()
 		{

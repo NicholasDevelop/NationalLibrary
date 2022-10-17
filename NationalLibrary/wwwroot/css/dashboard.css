@@ -67,12 +67,12 @@ a {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
 
 #container {
@@ -110,11 +110,11 @@ li {
     border-left: 5px solid transparent;
 }
 
-.nav-link.active {
-    border-left: 5px solid rgb(115, 64, 255);
-    padding-left: 5px;
-    background: linear-gradient(to right, rgb(194, 172, 255), rgb(230, 220, 255));
-}
+    .nav-link.active {
+        border-left: 5px solid rgb(115, 64, 255);
+        padding-left: 5px;
+        background: linear-gradient(to right, rgb(194, 172, 255), rgb(230, 220, 255));
+    }
 
 #Dashboard {
     height: 100vh;
@@ -126,12 +126,12 @@ li {
     float: right;
 }
 
-#Dashboard.hidden {
-    position: relative;
-    transform: translateX(-1300px);
-    z-index: -100;
-    float: right;
-}
+    #Dashboard.hidden {
+        position: relative;
+        transform: translateX(-1300px);
+        z-index: -100;
+        float: right;
+    }
 
 #Magazine.hidden {
     position: fixed;
@@ -280,7 +280,7 @@ td {
     border-radius: 100rem;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: blue;
-}
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: blue;
+    }
