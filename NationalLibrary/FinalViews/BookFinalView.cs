@@ -10,7 +10,7 @@
         public bool Available { get; set; }
         public string Presentation { get; set; }
         public string Genre { get; set; }
-        public string CoverImg { get; set; }
+        public byte[] CoverImg { get; set; }
         public string Price { get; set; }
         public DateTime BuyDate { get; set; }
         public string Room { get; set; }

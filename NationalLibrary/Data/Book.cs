@@ -20,7 +20,7 @@ namespace NationalLibrary.Data
         [Required]
         public string Genre { get; set; }
         [Required]
-        public string CoverImg { get; set; }
+        public byte[] CoverImg { get; set; }
         [Required]
         public DateTime BuyDate { get; set; }
         [Required]

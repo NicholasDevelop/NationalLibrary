@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.WebEncoders.Testing;
 using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System.Globalization;
@@ -39,8 +40,8 @@ namespace NationalLibrary.Metodi
                                 ReleasedBy = c.ReleasedBy,
                                 ExpiredOn = c.ExpireOn,
                                 Username = a.Username,
-                                Password = a.Password
-
+                                Password = a.Password,
+                                RegisterDate = a.RegisterDate,
                             };
 
             return usersview;
@@ -149,5 +150,33 @@ namespace NationalLibrary.Metodi
             return myList;
         }
 
-    } 
+        // Controllo dei dati di login e restituzione del tipo utente
+        public static string getUserType (string username, string password, LibraryContext ctx)
+        {
+            string type = String.Empty;
+            foreach(var item in UserFinalViewList(ctx))
+            {
+                if (item.Username.ToString().ToLower() == username.ToString().ToLower() &&
+                    item.Password.ToString() == password.ToString())
+                {
+                    type = item.Type;
+                }
+            }
+            return type;
+        }
+
+        // Controlla se nel database è già presente un username, datone uno in ingresso
+        public static bool checkUsername(string username, LibraryContext ctx)
+        {
+            bool check = false;
+            foreach(var item in UserFinalViewList(ctx))
+            {
+                if (item.Username.ToLower() == username.ToLower())
+                {
+                    check = true;
+                }
+            }
+            return check;
+        }
+    }
 }
