@@ -64,7 +64,7 @@ namespace NationalLibrary.Metodi
                                 Available = x.Available,
                                 Presentation = x.Presentation,
                                 Genre = x.Genre,
-                                CoverImg = x.CoverImg,
+                                CoverImg= x.CoverImg,
                                 Room = a.Room,
                                 Scaffhold = a.Schaffold,
                                 Position = a.Position
