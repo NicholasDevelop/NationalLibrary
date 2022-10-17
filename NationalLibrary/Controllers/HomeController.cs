@@ -19,7 +19,10 @@ namespace NationalLibrary.Controllers
 
 		public IActionResult Index()
 		{
-			//DataQueries.EditUser("ABSDEL03A03M849U")
+			DataQueries.EditUser("ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996, 10, 19), String.Empty,
+			"Siena", "Via Dante Alighieri 8", 20040, "SI",
+			"AA01890BB", "C.I.", "Siena", new DateTime(2030, 03, 25),
+			"mattiaromagnoli1@gmail.com", "RomansLibrarian", "password", ctx);
 			//DataQueries.InsertUser
 			//(
 			//"ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996,10,19),

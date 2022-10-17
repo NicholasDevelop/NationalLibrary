@@ -123,24 +123,20 @@ li {
     z-index: 0;
     transition: 1.8s all;
     position: relative;
-    float: right;
 }
 
     #Dashboard.hidden {
         position: relative;
         transform: translateX(-1300px);
         z-index: -100;
-        float: right;
     }
 
 #Magazine.hidden {
     position: fixed;
     top: 1000px;
-    float: right;
 }
 
 #Magazine {
-    float: right;
     height: 100vh;
     top: 0px;
     position: fixed;
