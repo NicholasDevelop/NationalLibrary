@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NationalLibrary.Data;
-using NationalLibrary.Metodi;
 using NationalLibrary.Models;
 using System.Diagnostics;
 
@@ -10,11 +8,9 @@ namespace NationalLibrary.Controllers
     {
 
         private readonly ILogger<HomeController> _logger;
-        private readonly LibraryContext ctx;
-        public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this.ctx = ctx;
         }
 
         public IActionResult Index()
@@ -28,7 +24,6 @@ namespace NationalLibrary.Controllers
             //     "AA11111AA", "A", "A", String.Empty, ctx
             //);
 
-            DataQueries.DeleteUser("A", ctx);
 
 
 
@@ -36,6 +31,14 @@ namespace NationalLibrary.Controllers
             return View();
         }
 
+        public IActionResult loginPage()
+        {
+            return View();
+        }
+        public IActionResult dashboard()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
