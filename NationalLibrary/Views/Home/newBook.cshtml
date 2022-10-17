@@ -1,0 +1,85 @@
+﻿@model NationalLibrary.Data.Book
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/newBook.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <main>
+        <div class="title-container">
+            <img src="/img/libri-antichi.jpg" alt="">
+            <h1 class="newbook-title">Aggiungi un nuovo libro</h1>
+        </div>
+
+        <div class="container">
+            <div class="sub-container">
+                <form class="form-book" action="" method="post">
+                    <div class="label-container">
+                        <!-- Titolo -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">@Model.Title</span>
+                        </label>
+                        <!-- ISBN -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">ISBN</span>
+                        </label>
+                    </div>
+
+                    <div class="label-container">
+                        <!-- Autore -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">@Model.Author</span>
+                        </label>
+                        <!-- Casa Editrice -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">@Model.PublishingHouse</span>
+                        </label>
+                    </div>
+
+                    <div class="label-container">
+                        <!-- Copie in possesso -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">Copie in possesso</span>
+                        </label>
+                        <!-- Copie disponibili -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">Copie disponibili</span>
+                        </label>
+                    </div>
+
+                    <div class="label-container">
+                        <!-- Presentazione -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">@Model.Presentation</span>
+                        </label>
+                        <!-- Genere -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" "/>
+                            <span class="placeholder">@Model.Genre</span>
+                        </label>
+                    </div>
+
+                    <!-- Immagine di copertina -->
+                    <label for="" class="label-file">Scegli l'immagine di cover:</label>
+                    <input type="file" class="input-file">
+
+                    <div class="button-container">
+                        <Button class="special-button red" type="submit" name="submitEmployee">Torna Indietro</Button>
+                        <Button class="special-button" type="submit" name="submitEmployee">Aggiungi</Button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>

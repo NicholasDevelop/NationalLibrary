@@ -19,12 +19,13 @@ namespace NationalLibrary.Controllers
 
 		public IActionResult Index()
 		{
+			//DataQueries.EditUser("ABSDEL03A03M849U")
 			//DataQueries.InsertUser
 			//(
-			//"ABSCNL03A03M849U", "Admin", "Brian", "Romagnoli", "3339998888", new DateTime(1996,10,19),
-			//"Genova", "Via Dante Alighieri 8", 20040, "GE",
-			//"AA00000BB", "C.I.", "Genova", new DateTime(2030,03,25),
-			//"brianromagnoli1@gmail.com", "Admin", "Admin", String.Empty, ctx
+			//"ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996,10,19),
+			//"Siena", "Via Dante Alighieri 8", 20040, "SI",
+			//"AA01890BB", "C.I.", "Siena", new DateTime(2030,03,25),
+			//"mattiaromagnoli1@gmail.com", "Romans", "password", String.Empty, ctx
 			//);
 			//ViewsLoaders.UserFinalViewList(ctx);
 			return View();
@@ -33,6 +34,10 @@ namespace NationalLibrary.Controllers
 		public IActionResult loginPage()
 		{
 			return View();
+		}
+		public IActionResult userDashboard(User user)
+		{
+			return View(user);
 		}
 		public IActionResult dashboard(User user)
 		{
@@ -46,7 +51,7 @@ namespace NationalLibrary.Controllers
 				case "Admin":
 					return View(user);
 				case "User":
-					return View(user);
+					return RedirectToAction("userDashboard", user);
 				case "Librarian":
 					return View(user);
 			}

@@ -1,4 +1,5 @@
-﻿
+﻿@*@model NationalLibrary.FinalView.BookFinalView
+*@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -105,13 +106,15 @@
         <section id="more-rented">
             <div class="more-rented-container">
                 <h1>I LIBRI PIU' NOLEGGIATI DELLA SETTIMANA</h1>
+                @for(int i = 1; i <= 10; i++){
                 <div class="card-container">
                     <a href="#" class="card">
-                        <p>10</p>
+                        <p>@i</p>
                         <img src="~/img/img-carousel5.jpg" alt="">
                         <h3>Harry Potter (Edizione Castello)</h3>
                     </a>
                 </div>
+                }
             </div>
         </section>
 
