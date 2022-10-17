@@ -9,9 +9,9 @@ namespace NationalLibrary.Metodi
 {
     public class ViewsLoaders
     {
-        private static readonly LibraryContext ctx;
+        //private static readonly LibraryContext ctx;
 
-        public static IQueryable<UserFinalView> ViewsLoader_Users()
+        public static IQueryable<UserFinalView> ViewsLoader_Users(LibraryContext ctx)
         {
 
             var usersview = from x in ctx.People  // seleziona tutto nella lista CONTACTS presente in CONTEXT
@@ -46,7 +46,7 @@ namespace NationalLibrary.Metodi
             return usersview;
         }
 
-        public static IQueryable<BookFinalView> ViewsLoader_Books()
+        public static IQueryable<BookFinalView> ViewsLoader_Books(LibraryContext ctx)
         {
             var booksview = from x in ctx.Books  // seleziona tutto nella lista CONTACTS presente in CONTEXT
                             join a in ctx.Locations on x.LocationGuidFK equals a.LocationGuid
@@ -73,7 +73,7 @@ namespace NationalLibrary.Metodi
             return booksview;
         }
 
-        public static IQueryable<RentFinalView> ViewsLoader_Rents()
+        public static IQueryable<RentFinalView> ViewsLoader_Rents(LibraryContext ctx)
         {
             var rentsview = from x in ctx.Books
                             join a in ctx.Rents on x.BookGuid equals a.BookGuidFK
@@ -99,36 +99,55 @@ namespace NationalLibrary.Metodi
             return rentsview;
         }
 
-        public static List<RentFinalView> RentFinalViewList()
+        public static List<RentFinalView> RentFinalViewList(LibraryContext ctx)
         {
             List<RentFinalView> a = new List<RentFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Rents())
+            foreach (var item in ViewsLoaders.ViewsLoader_Rents(ctx))
             {
                 a.Add(item);
             }
             return a;
         }
 
-        public static List<UserFinalView> UserFinalViewList()
+        public static List<UserFinalView> UserFinalViewList(LibraryContext ctx)
         {
             List<UserFinalView> a = new List<UserFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Users())
+            foreach (var item in ViewsLoaders.ViewsLoader_Users(ctx))
             {
                 a.Add(item);
             }
             return a;
         }
 
-        public static List<BookFinalView> BookFinalViewList()
+        public static List<BookFinalView> BookFinalViewList(LibraryContext ctx)
         {
             List<BookFinalView> a = new List<BookFinalView>();
-            foreach (var item in ViewsLoaders.ViewsLoader_Books())
+            foreach (var item in ViewsLoaders.ViewsLoader_Books(ctx))
             {
                 a.Add(item);
             }
             return a;
         }
 
+        // Numero di libri comprati dalla biblioteca questo mese
+        public static List<BookFinalView> MonthBookBought(LibraryContext ctx)
+        {
+            var thismonth = DateTime.Now.ToString("MM yyyy");
+            var month = thismonth.Split(' ')[0];
+            var year = thismonth.Split(' ')[1];
+
+            List<BookFinalView> myList = new List<BookFinalView>();
+
+            foreach (var item in BookFinalViewList(ctx))
+            {
+                var date = item.BuyDate.ToString().Split(' ')[0];
+                if (date.Split('/')[1] == month && date.Split('/')[2] == year)
+                {
+                    myList.Add(item);
+                }
+            }
+            return myList;
+        }
 
     } 
 }
