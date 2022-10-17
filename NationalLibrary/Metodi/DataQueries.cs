@@ -136,9 +136,13 @@ namespace NationalLibrary.Metodi
         public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
 
         {
+            // Inserisco nuovo affitto
             var newrent          = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode, WithdrawnOn = DateTime.Now };
-
             ctx.Rents.Add(newrent);
+
+            // Modifico Available del libro
+            Book        a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
+            a.Available = false;
             ctx.SaveChanges();
         }
         public static void DeleteRent(Guid RentGuid, LibraryContext ctx)
@@ -151,13 +155,13 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-        public static void ReturnRent(Guid RentGuid, DateTime ReturnedOn, LibraryContext ctx)
+        public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
         {
 
             Rent           a = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
             List<Book>     b = ctx.Books.Where(u => u.BookGuid == a.BookGuidFK).ToList();
 
-            a.ReturnedOn = ReturnedOn;
+            a.ReturnedOn = DateTime.Now;
             b[0].Available = true;
 
             ctx.SaveChanges();

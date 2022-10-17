@@ -11,6 +11,8 @@
         public string Presentation { get; set; }
         public string Genre { get; set; }
         public string CoverImg { get; set; }
+        public string Price { get; set; }
+        public DateTime BuyDate { get; set; }
         public string Room { get; set; }
         public string Scaffhold { get; set; }
         public string Shelf { get; set; }
