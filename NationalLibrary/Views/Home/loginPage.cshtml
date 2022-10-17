@@ -1,4 +1,6 @@
-﻿<head>
+﻿@model NationalLibrary.Data.User
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +10,15 @@
 <body>
     <div class="container">
         <img src="~/img/BackgroundUserLogin.svg" alt="">
-        <form action="" method="post">
+        <form asp-action="Login" asp-controller="Home" method="post">
             <img src="~/img/loginIcon.png" alt="">
             <label class="custom-field">
-                <input type="text" placeholder=" " />
+                <input asp-for="@Model.Username" type="text" placeholder=" " />
                 <span class="placeholder">Inserisci Username</span>
             </label>
 
             <label class="custom-field">
-                <input type="text" placeholder=" " />
+                <input asp-for="@Model.Password" type="text" placeholder=" " />
                 <span class="placeholder">Inserisci Password</span>
             </label>
             <Button class="special-button" type="submit" name="submitEmployee">Accedi</Button>

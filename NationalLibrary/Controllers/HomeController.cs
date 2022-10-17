@@ -7,14 +7,15 @@ namespace NationalLibrary.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly LibraryContext ctx;
+		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
         {
             _logger = logger;
+            this.ctx = ctx;
         }
 
         public IActionResult Index()
         {
-
             //DataQueries.InsertUser
             //(
             //"ABSCNL03A03M849U", "Admin", "Brian", "Romagnoli", "3339998888", new DateTime(1996,10,19),
@@ -24,10 +25,6 @@ namespace NationalLibrary.Controllers
             //);
             //DataQueries.UserFinalViewList();
             //DataQueries.DeleteUser("A", ctx);
-
-
-
-
             return View();
         }
 
