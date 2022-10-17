@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NationalLibrary.Models;
+﻿using EmptyMVCProject.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace NationalLibrary.Controllers
+namespace EmptyMVCProject.Controllers
 {
     public class HomeController : Controller
     {
