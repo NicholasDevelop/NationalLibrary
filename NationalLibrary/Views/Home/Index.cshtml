@@ -111,7 +111,9 @@
                     <a href="#" class="card">
                         <p>@i</p>
                         @*<img src="@Model.CoverImg[i]" alt="">*@
-                        @*<h3>@Model.Title[i]</h3>*@
+                        <div class="card-description">
+                            @*<h3>@Model.Title[i]</h3>*@
+                        </div>
                     </a>
                     }
                 </div>
@@ -126,7 +128,9 @@
                     @for (int i = 1; i <= 5; i++){
                     <a href="#" class="card">
                         @*<img src="@Model.CoverImg[i]" alt="">*@
-                        @*<h3>@Model.Title[i]</h3>*@
+                        <div class="card-description">
+                            @*<h3>@Model.Title[i]</h3>*@
+                        </div>
                     </a>
                     }
                 </div>
