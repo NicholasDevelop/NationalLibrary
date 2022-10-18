@@ -1,0 +1,98 @@
+﻿@model NationalLibrary.Data.Book
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/viewBook.css">
+    <link href="~/fontawesome/font-awesome/css/fontawesome.css" rel="stylesheet">
+    <link href="~/fontawesome/font-awesome/css/brands.css" rel="stylesheet">
+    <link href="~/fontawesome/font-awesome/css/solid.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="first-header-container">
+                <img src="~/img/LogoFinale.svg" alt="">
+                <div class="login">
+                    <button>Login</button>
+                </div>
+            </div>
+
+            <div class="second-header-container">
+                <nav>
+                    <a href="#" class="nav-item">
+                        <img src="~/fontawesome/svgs/regular/house.svg" alt="">
+                        <h4>HOME</h4>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-regular fa-magnifying-glass"></i>
+                        <h4>I NOSTRI LIBRI</h4>
+                    </a>
+                </nav>
+
+                <div class="social-link">
+                    <a href="#" class="social-container facebook">
+                        <img src="~/fontawesome/svgs/brands/facebook-f.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container instagram">
+                        <img src="~/fontawesome/svgs/brands/instagram.svg" alt="">
+                    </a>
+                    <a href="#" class="social-container twitter">
+                        <img src="~/fontawesome/svgs/brands/twitter.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <div class="container">
+            <div class="sub-container">
+                <img src="/img/libri-antichi.jpg" alt="">
+                <div class="book-info">
+                    <h1 class="title">Titolo</h1>
+                    <p class="author">Autore: <span></span></p>
+                    <p class="genre">Genere: <span></span></p>
+                    <p class="publishing-house">Casa editrice: <span></span></p>
+                    <p class="n-copies">Copie disponibili: <span></span></p>
+                    <p class="story">Trama: <span></span></p>
+                    <button>Prenota ora*</button>
+                </div>
+            </div>
+
+            <p class="legend">*Se non ci sono più copie disponibili in libreria verrai messo in lista di attesa ed avvisato non appena il libro sarà nuovamente disponibile.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-first-container">
+            <h2>NationlLibrary</h2>
+
+            <div class="social-link">
+                <a href="#" class="social-container facebook">
+                    <img src="~/fontawesome/svgs/brands/facebook-f.svg" alt="">
+                </a>
+                <a href="#" class="social-container instagram">
+                    <img src="~/fontawesome/svgs/brands/instagram.svg" alt="">
+                </a>
+                <a href="#" class="social-container twitter">
+                    <img src="~/fontawesome/svgs/brands/twitter.svg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-second-container">
+            <p>Obblighi informativi per le erogazioni pubbliche: gli aiuti di Stato e gli aiuti de minimis ricevuti dalla nostra impresa sono contenuti nel Registro nazionale degli aiuti di Stato di cui all’art. 52 della L. 234/2012</p>
+            <p>Sede legale: Via Giuseppe Verdi 8 20090 – Assago (MI) - Tel. +39 02 28315600 - Fax +39 02 28315601 - Cap. Soc. 200.000 € i.v. - R.E.A. 1947014 - C.F/P.IVA 07250620965</p>
+            <p>Sede operativa: Via Alessandro Volta 4 20090 – Buccinasco (MI) - Tel. +39 0228315600 - Fax. +39 0228315601</p>
+            <p><span>www.nationallibrary.it</span> E-mail: info@nationallibrary.it</p>
+            <p>Copyright © 2022 <span>www.nationllibrary.it</span> - all rights reserved</p>
+        </div>
+    </footer>
+</body>
