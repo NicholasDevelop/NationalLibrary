@@ -151,15 +151,16 @@ namespace NationalLibrary.Metodi
         }
 
         // Controllo dei dati di login e restituzione del tipo utente
-        public static string getUserType (string username, string password, LibraryContext ctx)
+        public static UserFinalView getUserType (string username, string password, LibraryContext ctx)
         {
-            string type = String.Empty;
+            UserFinalView type = new UserFinalView();
+            type.Type = String.Empty;
             foreach(var item in UserFinalViewList(ctx))
             {
                 if (item.Username.ToString().ToLower() == username.ToString().ToLower() &&
                     item.Password.ToString() == password.ToString())
                 {
-                    type = item.Type;
+                    type = item;
                 }
             }
             return type;

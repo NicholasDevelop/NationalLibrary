@@ -19,10 +19,10 @@ namespace NationalLibrary.Controllers
 
 		public IActionResult Index()
 		{
-			DataQueries.EditUser("ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996, 10, 19), String.Empty,
-			"Siena", "Via Dante Alighieri 8", 20040, "SI",
-			"AA01890BB", "C.I.", "Siena", new DateTime(2030, 03, 25),
-			"mattiaromagnoli1@gmail.com", "RomansLibrarian", "password", ctx);
+			//DataQueries.EditUser("ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996, 10, 19), String.Empty,
+			//"Siena", "Via Dante Alighieri 8", 20040, "SI",
+			//"AA01890BB", "C.I.", "Siena", new DateTime(2030, 03, 25),
+			//"mattiaromagnoli1@gmail.com", "RomansLibrarian", "password", ctx);
 			//DataQueries.InsertUser
 			//(
 			//"ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1996,10,19),
@@ -42,21 +42,22 @@ namespace NationalLibrary.Controllers
 		{
 			return View(user);
 		}
-		public IActionResult dashboard(User user)
+		public IActionResult dashboard(UserFinalView user)
 		{
-			string type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
-			if (string.IsNullOrEmpty(type))
+			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
+			if (string.IsNullOrEmpty(type.Type))
 			{
 				throw new Exception("Utente non esistente");
 			}
-			switch (type)
+			Console.WriteLine(type.Email);
+			switch (type.Type)
 			{
 				case "Admin":
-					return View(user);
+					return View(type);
 				case "User":
-					return RedirectToAction("userDashboard", user);
+					return RedirectToAction("userDashboard", type);
 				case "Librarian":
-					return View(user);
+					return View(type);
 			}
 			return View("Index");
 		}
