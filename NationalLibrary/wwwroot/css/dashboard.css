@@ -125,22 +125,47 @@ li {
     position: relative;
 }
 
-    #Dashboard.hidden {
+#Dashboard.hidden {
         position: relative;
         transform: translateX(-1300px);
         z-index: -100;
     }
-
+/*~*/
 #Magazine.hidden {
-    position: fixed;
-    top: 1000px;
+    /* z-index: -1; */
+    position: absolute;
+    /* top: unset; */
+    /* left: 88px; */
+    float: left;
+    transform: translateX(1470px);
 }
 
 #Magazine {
     height: 100vh;
     top: 0px;
-    position: fixed;
-    transition: 1.8s all;
+    position: absolute;
+    transform: translateX(0px);
+    transition: 1.8s all
+}
+#Employee.hidden {
+    /* z-index: -1; */
+    position: absolute;
+    /* top: unset; */
+    /* left: 88px; */
+    float: left;
+    transform: translateX(1470px);
+}
+#Employee {
+    width:63%;
+    height: 100vh;
+    top: 0px;
+    position: absolute;
+    transform: translateX(0px);
+    transition: 1.8s all
+}
+#Employee:not(.hidden) ~ #Magazine.hidden {
+    position: absolute;
+    transform: translateX(-1470px);
 }
 
 main {

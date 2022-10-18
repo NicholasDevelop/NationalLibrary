@@ -29,7 +29,7 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-action="dashboard" asp-controller="Home" id="dashboardAnchor" onclick="addClass('dashboard')">
+                            <a class="nav-link active" href="#Dashboard" id="dashboardAnchor" onclick="addClass('dashboard')">
                                 <img width="24px" style="margin-right: 4px;" height="24px" src="~/fontawesome/svgs/regular/house.svg"
                                      alt="" srcset="">
                                 Dashboard <span class="sr-only"></span>
@@ -43,10 +43,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="addEmployee">
+                            <a class="nav-link" href="#Employee" id="employeeAnchor" onclick="addClass('employee')">
                                 <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
                                      src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
-                                Aggiungi dipendente
+                                Dipendenti
                             </a>
                         </li>
                     </ul>
@@ -256,6 +256,36 @@
 
 
             </div>
+            <div id="Employee" class="hidden">
+                <!-- Popup -->
+                <!-- Inizio Main -->
+                <main>
+                    <h1 style="margin-top: 2px;">Dipendenti</h1>
+
+                    <h2 id="date">
+                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                       alt="" srcset="">
+                    </h2>
+                    <div class="table-container">
+                        <h2 id="waiting-list">Lista Dei Dipendenti</h2>
+                        <table>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Numero</th>
+                                <th>Email</th>
+                                <th>Città</th>
+                                <th>Via</th>
+                                <th>Provincia</th>
+                                <th>CAP</th>
+                            </tr>
+                        </table>
+
+                    </div>
+                </main>
+
+
+            </div>
         </div>
         <div class="transition-Container">
             <div id="admin-line">
@@ -265,35 +295,35 @@
             <div class="transitions">
                 <div class="transition">
                     <div>
-                        <h5>Transizione: </h5>
+                        <h5>Transazione: </h5>
                         <h5>Totale speso: </h5>
                     </div>
                     <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                 </div>
                 <div class="transition">
                     <div>
-                        <h5>Transizione: </h5>
+                        <h5>Transazione: </h5>
                         <h5>Totale speso: </h5>
                     </div>
                     <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                 </div>
                 <div class="transition">
                     <div>
-                        <h5>Transizione: </h5>
+                        <h5>Transazione: </h5>
                         <h5>Totale speso: </h5>
                     </div>
                     <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                 </div>
                 <div class="transition">
                     <div>
-                        <h5>Transizione: </h5>
+                        <h5>Transazione: </h5>
                         <h5>Totale speso: </h5>
                     </div>
                     <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                 </div>
                 <div class="transition">
                     <div>
-                        <h5>Transizione: </h5>
+                        <h5>Transazione: </h5>
                         <h5>Totale speso: </h5>
                     </div>
                     <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
@@ -308,15 +338,27 @@
         function addClass(navItem) {
             if (navItem == "magazine") {
                 dashboardAnchor.classList.remove("active");
+                employeeAnchor.classList.remove("active");
                 magazineAnchor.classList.add("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.remove("hidden");
+                document.getElementById("Employee").classList.add("hidden");
             }
-            else {
+            else if(navItem == "dashboard"){
                 magazineAnchor.classList.remove("active");
                 dashboardAnchor.classList.add("active");
+                employeeAnchor.classList.remove("active");
                 document.getElementById("Dashboard").classList.remove("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
+                document.getElementById("Employee").classList.add("hidden");
+            }
+            else{
+                employeeAnchor.classList.add("active");
+                dashboardAnchor.classList.remove("active");
+                magazineAnchor.classList.remove("active");
+                document.getElementById("Dashboard").classList.add("hidden");
+                document.getElementById("Magazine").classList.add("hidden");
+                document.getElementById("Employee").classList.remove("hidden");
             }
         }
         function hideData(dataToHide) {
