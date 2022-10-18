@@ -250,6 +250,50 @@ td {
     font-size: 14px;
 }
 
+.transition-Container {
+    display: grid;
+    grid-template-rows: 5% 5% auto 2%;
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 85%;
+}
+
+#admin-line {
+    align-self: flex-end;
+    justify-self: end;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+    #admin-line img {
+        cursor: pointer;
+        margin-left: 5px;
+        border-radius: 100rem;
+        border: 1px solid black;
+    }
+
+.transitions {
+    margin-top: 20px;
+    display: grid;
+    grid-template-rows: 15% 15% 15% 15% 15%;
+    row-gap: 5%;
+}
+
+.transition {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    border-radius: 100rem;
+    background-color: whitesmoke;
+}
+
+    .transition div {
+        display: grid;
+        grid-template-rows: 50% 50%;
+    }
+
 ::-webkit-scrollbar {
     width: 5px;
     height: 10%;

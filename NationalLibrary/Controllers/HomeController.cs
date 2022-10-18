@@ -33,6 +33,10 @@ namespace NationalLibrary.Controllers
 			//ViewsLoaders.UserFinalViewList(ctx);
 			return View();
 		}
+		public IActionResult addEmployee()
+		{
+			return View();
+		}
 
 		public IActionResult loginPage()
 		{

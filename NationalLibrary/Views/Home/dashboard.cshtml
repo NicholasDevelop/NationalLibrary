@@ -1,5 +1,12 @@
 ﻿@model NationalLibrary.FinalViews.UserFinalView
 
+@{
+    var parms = new Dictionary<string, string>
+            {
+                { Model.Username, Model.Password },
+            };
+}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +38,7 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#Dashboard" id="dashboardAnchor" onclick="addClass('dashboard')">
+                            <a class="nav-link active" asp-action="dashboard" asp-controller="Home" id="dashboardAnchor" onclick="addClass('dashboard')">
                                 <img width="24px" style="margin-right: 4px;" height="24px" src="~/fontawesome/svgs/regular/house.svg"
                                      alt="" srcset="">
                                 Dashboard <span class="sr-only"></span>
@@ -45,7 +52,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="Home" asp-all-route-data="parms" asp-action="addEmployee">
                                 <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
                                      src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
                                 Aggiungi dipendente
@@ -259,9 +266,48 @@
 
             </div>
         </div>
-        <div id="pippo">
-            <h1>@Model.Username</h1>
-            <h1>@Model.Email</h1>
+        <div class="transition-Container">
+            <div id="admin-line">
+                <h4>Benvenuto @Model.Name</h4><img style="width: 32px" src="~/img/admin.svg" alt="">
+            </div>
+            <h3 style="justify-self: center; align-self: center;">Ecco le ultime transazioni</h3>
+            <div class="transitions">
+                <div class="transition">
+                    <div>
+                        <h5>Transizione: </h5>
+                        <h5>Totale speso: </h5>
+                    </div>
+                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
+                </div>
+                <div class="transition">
+                    <div>
+                        <h5>Transizione: </h5>
+                        <h5>Totale speso: </h5>
+                    </div>
+                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
+                </div>
+                <div class="transition">
+                    <div>
+                        <h5>Transizione: </h5>
+                        <h5>Totale speso: </h5>
+                    </div>
+                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
+                </div>
+                <div class="transition">
+                    <div>
+                        <h5>Transizione: </h5>
+                        <h5>Totale speso: </h5>
+                    </div>
+                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
+                </div>
+                <div class="transition">
+                    <div>
+                        <h5>Transizione: </h5>
+                        <h5>Totale speso: </h5>
+                    </div>
+                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
+                </div>
+            </div>
         </div>
     </div>
     <script>
