@@ -19,8 +19,9 @@ namespace NationalLibrary.Data
 
 
         // Relation WaitingList(FK) N-1 ISBNList
+        [Required]
         public string ISBNFK { get; set; }
-        [ForeignKey("ISBNFK)")]
+        [ForeignKey("ISBNFK")]
         public ISBNList ISBNList { get; set; }
     }
 }

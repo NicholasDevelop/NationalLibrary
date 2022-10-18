@@ -302,31 +302,39 @@ namespace NationalLibrary.Metodi
             InsertRent(BookGuid, FiscalCode, ctx);
         }
 
-        //////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
-        
-        //public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode,LibraryContext ctx)
-        //{
-        //    List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
+        ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
+
+        public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
+        {
+            List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
 
 
-        //    Person              p = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
-        //    List<WaitingList>   w = ctx.WaitingLists.Where(u => u.FiscalCodeFK == p.FiscalCode).ToList();
-        //    List<Rent>          r = ctx.Rents.Where(u => u.FiscalCodeFK == FiscalCode).ToList();
-        //    List<Book>          b = ctx.Books.Where(u => u.BookGuid == r.BookGuid).ToList();
+            Person p = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            List<WaitingList> w = ctx.WaitingLists.Where(u => u.FiscalCodeFK == p.FiscalCode).ToList();
+            //Rent r = ctx.Rents.Where(u => u.FiscalCodeFK == FiscalCode).ToList()[0];
 
 
-        //    return lista;
-           
-        //}
 
-        //Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
-        //List<Book> c = ctx.Books.Where(u => u.ISBNFK == ISBN).ToList();
-        //string FC = a.FiscalCodeFK;
-        //Guid BG = c[0].BookGuid;
-        //a.State = StateUpdate;
+            string Name = p.Name;
 
-        //        InsertRent(BG, FC, ctx);
+            for (int e = 0; e < w.Count; e++)
+            {
+                ISBNList l = ctx.ISBNLists.Where(u => u.ISBN == w[e].ISBNFK).ToList()[0];
+                List<Book> b = ctx.Books.Where(u => u.ISBNFK == l.ISBN).ToList();
+                foreach(var item in b)
+                {
+                    if (item.Available)
+                    {
 
+                        string Title = item.Title;
+                        lista.Add(new WaitingBookStatusFinalView(Name, Title));
+                    }
+                }
+
+            }
+            return lista;
+
+        }
 
 
     }
