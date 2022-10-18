@@ -1,13 +1,4 @@
-﻿@model NationalLibrary.FinalViews.UserFinalView
-
-@{
-    var parms = new Dictionary<string, string>
-            {
-                { Model.Username, Model.Password },
-            };
-}
-
-<head>
+﻿<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-all-route-data="parms" asp-action="addEmployee">
+                            <a class="nav-link" asp-controller="Home" asp-action="addEmployee">
                                 <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
                                      src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
                                 Aggiungi dipendente
