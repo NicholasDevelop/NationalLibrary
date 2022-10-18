@@ -75,14 +75,13 @@
             <h2>NationlLibrary</h2>
 
             <div class="social-link">
-                <a href="#" class="social-container facebook">
-                    <img src="~/fontawesome/svgs/brands/facebook-f.svg" alt="">
+                <a asp-controller="Home" asp-action="index" class="nav-item">
+                    <img src="~/fontawesome/svgs/regular/house.svg" alt="">
+                    <h4>HOME</h4>
                 </a>
-                <a href="#" class="social-container instagram">
-                    <img src="~/fontawesome/svgs/brands/instagram.svg" alt="">
-                </a>
-                <a href="#" class="social-container twitter">
-                    <img src="~/fontawesome/svgs/brands/twitter.svg" alt="">
+                <a asp-controller="Home" asp-action="bookList" class="nav-item">
+                    <i class="fa-regular fa-magnifying-glass"></i>
+                    <h4>I NOSTRI LIBRI</h4>
                 </a>
             </div>
         </div>

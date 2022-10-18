@@ -15,7 +15,7 @@
     <header>
         <div class="header-container">
             <div class="first-header-container">
-                <img src="img/LogoFinale.svg" alt="">
+                <img src="~/img/LogoFinale.svg" alt="">
                 <div class="login">
                     <button>Login</button>
                 </div>
@@ -23,11 +23,11 @@
 
             <div class="second-header-container">
                 <nav>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Home" asp-action="index" class="nav-item">
                         <img src="~/fontawesome/svgs/regular/house.svg" alt="">
                         <h4>HOME</h4>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Home" asp-action="bookList" class="nav-item">
                         <i class="fa-regular fa-magnifying-glass"></i>
                         <h4>I NOSTRI LIBRI</h4>
                     </a>
