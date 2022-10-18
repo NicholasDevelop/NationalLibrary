@@ -1,5 +1,5 @@
-﻿@*@model NationalLibrary.FinalView.BookFinalView
-*@
+﻿@model NationalLibrary.Data.Book
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -110,8 +110,8 @@
                     @for(int i = 1; i <= 10; i++){
                     <a href="#" class="card">
                         <p>@i</p>
-                        <img src="~/img/img-carousel5.jpg" alt="">
-                        <h3>Harry Potter (Edizione Castello)</h3>
+                        @*<img src="@Model.CoverImg[i]" alt="">*@
+                        @*<h3>@Model.Title[i]</h3>*@
                     </a>
                     }
                 </div>
@@ -125,8 +125,8 @@
                 <div class="card-container">
                     @for (int i = 1; i <= 5; i++){
                     <a href="#" class="card">
-                        <img src="~/img/img-carousel5.jpg" alt="">
-                        <h3>Harry Potter (Edizione Castello)</h3>
+                        @*<img src="@Model.CoverImg[i]" alt="">*@
+                        @*<h3>@Model.Title[i]</h3>*@
                     </a>
                     }
                 </div>

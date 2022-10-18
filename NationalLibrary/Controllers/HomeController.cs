@@ -34,15 +34,21 @@ namespace NationalLibrary.Controllers
 			return View();
 		}
 
-		public IActionResult loginPage()
+		public IActionResult loginPage(Book book)
 		{
-			return View();
+			return View(book);
 		}
 		public IActionResult userDashboard(User user)
 		{
 			return View(user);
 		}
-		public IActionResult dashboard(UserFinalView user)
+
+        public IActionResult viewBook(Book book)
+        {
+            return View(book);
+        }
+
+        public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
 			if (string.IsNullOrEmpty(type.Type))
