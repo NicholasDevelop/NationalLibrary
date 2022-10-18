@@ -3,6 +3,7 @@ using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System;
 using System.Diagnostics;
+using System.IO.Pipelines;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
@@ -11,7 +12,7 @@ namespace NationalLibrary.Metodi
     public class DataQueries
     { 
         //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
-        public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,string City, string Street, int CAP, string Province,string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
+        public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate,string City, string Street, int? CAP, string Province,string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn,string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
         {
            // ctx = new LibraryContext();
             var newuser            = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname,Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now};
@@ -32,10 +33,13 @@ namespace NationalLibrary.Metodi
 
         {
             var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate,SignUpDate = DateTime.Now, FCRelatedTO = FCRelatedTO };
-            newuser.Document = new Document() { DocumentNumber = DocumentNumber };
+                newuser.Document = new Document() { DocumentNumber = DocumentNumber };
+                newuser.Residence = new Residence() { AddressGuid = Guid.NewGuid() };
 
             // DA TESTARE !!!
             ctx.People.Add(newuser);
+            ctx.Residences.Add(newuser.Residence);
+            ctx.Documents.Add(newuser.Document);
             ctx.SaveChanges();
         }
         public static void DeleteUser(string FiscalCode, LibraryContext ctx)
@@ -87,7 +91,7 @@ namespace NationalLibrary.Metodi
 
 
         //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, byte[] Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int Position, string Shelf,string ISBN, LibraryContext ctx)
+        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, byte[] Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int? Position, string Shelf,string ISBN, LibraryContext ctx)
 
         {
             var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price, ISBNFK = ISBN};
@@ -206,16 +210,16 @@ namespace NationalLibrary.Metodi
             a.Available = false;
             ctx.SaveChanges();
         }
-        public static void DeleteRent(Guid RentGuid, LibraryContext ctx)
-        {
-            //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
+        //public static void DeleteRent(Guid RentGuid, LibraryContext ctx)
+        //{
+        //    //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
 
-            Rent rent = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
-            ctx.Rents.Remove(rent);
+        //    Rent rent = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
+        //    ctx.Rents.Remove(rent);
 
-            ctx.SaveChanges();
+        //    ctx.SaveChanges();
 
-        }
+        //}
         public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
         {
 
@@ -241,22 +245,38 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-        public static void UpdateRequestState(Guid RequestGuid ,string StateUpdate, LibraryContext ctx)
+        public static void UpdateRequestState(Guid RequestGuid ,string StateUpdate, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
         {
-            Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
-            a.State = StateUpdate;
-
             if(StateUpdate == "Accettata")
             {
+                bool check = CheckISBNExsist(ISBN, ctx);
 
-                
+                if (!check)
+                {
+                    InsertISBN(ISBN, ctx);
+                }
+
+                InsertBook(Title, Author, PublishingHouse, Available, Presentation, Genre, Coverimg, BuyDate, Price, Room, Scaffhold, Position, Shelf, ISBN, ctx);
+
+                Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+                string FC = a.FiscalCodeFK;
+                a.State = StateUpdate;
+
+                InsertWaiting(FC, ISBN, ctx);
+                ctx.SaveChanges();
+
+            }
+            else
+            {
+                Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+                a.State = StateUpdate;
+                ctx.SaveChanges();
 
             }
 
-            ctx.SaveChanges();
+            
 
         }
-
 
         //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
@@ -284,8 +304,28 @@ namespace NationalLibrary.Metodi
 
         //////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
         
-        //public static List
+        //public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode,LibraryContext ctx)
+        //{
+        //    List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
 
+
+        //    Person              p = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+        //    List<WaitingList>   w = ctx.WaitingLists.Where(u => u.FiscalCodeFK == p.FiscalCode).ToList();
+        //    List<Rent>          r = ctx.Rents.Where(u => u.FiscalCodeFK == FiscalCode).ToList();
+        //    List<Book>          b = ctx.Books.Where(u => u.BookGuid == r.BookGuid).ToList();
+
+
+        //    return lista;
+           
+        //}
+
+        //Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+        //List<Book> c = ctx.Books.Where(u => u.ISBNFK == ISBN).ToList();
+        //string FC = a.FiscalCodeFK;
+        //Guid BG = c[0].BookGuid;
+        //a.State = StateUpdate;
+
+        //        InsertRent(BG, FC, ctx);
 
 
 
