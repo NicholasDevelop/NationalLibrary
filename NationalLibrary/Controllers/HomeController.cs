@@ -65,7 +65,12 @@ namespace NationalLibrary.Controllers
 			return View(book);
 		}
 
-		public IActionResult insertEmployee(UserFinalView user)
+		public IActionResult bookList(Book book)
+        {
+            return View(book);
+        }
+
+        public IActionResult insertEmployee(UserFinalView user)
 		{
 			Console.WriteLine(user.Name);
 			Console.WriteLine(user.Username);
