@@ -1,8 +1,10 @@
-﻿using NationalLibrary.Data;
+﻿using Microsoft.AspNetCore.Components.RenderTree;
+using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace NationalLibrary.Metodi
 {
@@ -88,13 +90,22 @@ namespace NationalLibrary.Metodi
         public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, byte[] Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int Position, string Shelf,string ISBN, LibraryContext ctx)
 
         {
-            var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price};
+            var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price, ISBNFK = ISBN};
                 newbook.Location =  new Location() { Room = Room, Schaffold = Scaffhold, Shelf = Shelf, Position = Position };
 
+            string checkforisbn = newbook.ISBNFK;
+            bool check = CheckISBNExsist(checkforisbn, ctx);
+
+            if (check == false) 
+            {
+                InsertISBN(checkforisbn, ctx);
+                ctx.SaveChanges();
+            }
 
             ctx.Books.Add(newbook);
             ctx.Locations.Add(newbook.Location);
             ctx.SaveChanges();
+
         }
         public static void DeleteBook(Guid BookGuid, LibraryContext ctx)
         {
@@ -127,6 +138,56 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
 
+
+
+        }
+        public static bool CheckISBNExsist(string ISBN, LibraryContext ctx)
+        {
+            bool check=false;
+
+            ISBNList       a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+            if (a != null) { check = true; }
+
+            return check;
+        }
+        public static void InsertISBN(string ISBN, LibraryContext ctx)
+        {
+            var newisbn = new ISBNList() { ISBN = ISBN };
+            ctx.ISBNLists.Add(newisbn);
+
+        }
+        public static void UpdateBookAvailable(Guid BookGuid,bool Available, LibraryContext ctx)
+        {
+            Book a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
+            a.Available = Available;
+            ctx.SaveChanges();
+
+        }
+        public static bool IsBookAvaiable(string ISBN, LibraryContext ctx)
+        {
+            List<Book> c = ctx.Books.Where(u => u.ISBNFK == ISBN && u.Available == true).ToList();
+            bool check;
+
+            if (c != null)
+            {
+                check = true;
+            }
+            else
+            {
+                check = false;
+            }
+
+            return check;
+
+        }
+        public static int CountBookAvaiable(string ISBN, LibraryContext ctx)
+        {
+            List<Book> c = ctx.Books.Where(u => u.ISBNFK == ISBN && u.Available == true).ToList();
+            int available;
+
+            available = c.Count();
+
+            return available;
 
 
         }
@@ -172,9 +233,58 @@ namespace NationalLibrary.Metodi
         }
 
 
-        //////////////////   QUERY MANIPOLAZIONE ATTESA    \\\\\\\\\\\\\\\\\\\\\\
-        
+        //////////////////   QUERY MANIPOLAZIONE REQUEST    \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertRequest(string FiscalCode, string Title, string Author, string Comment, string ISBN, LibraryContext ctx)
+        {
+            var newrequest = new Request() { RequestGuid = Guid.NewGuid(),FiscalCodeFK = FiscalCode, Title = Title, Author= Author, Comment = Comment, State = "In Lavorazione", ISBN = ISBN, RequestDate = DateTime.Now };
+            ctx.Requests.Add(newrequest);
+            ctx.SaveChanges();
 
+        }
+        public static void UpdateRequestState(Guid RequestGuid ,string StateUpdate, LibraryContext ctx)
+        {
+            Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+            a.State = StateUpdate;
+
+            if(StateUpdate == "Accettata")
+            {
+
+                
+
+            }
+
+            ctx.SaveChanges();
+
+        }
+
+
+        //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
+        {
+            var newwaiting = new WaitingList() {WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN };
+            ctx.WaitingLists.Add(newwaiting);
+            ctx.SaveChanges();
+
+        }
+        public static void BookDelivered(Guid WaitingGuid, LibraryContext ctx)
+        {
+            WaitingList       a = ctx.WaitingLists.Where(u => u.WaitingGuid == WaitingGuid).ToList()[0];
+            ISBNList          b = ctx.ISBNLists.Where(u => u.ISBN == a.ISBNFK).ToList()[0];
+            List<Book>        c = ctx.Books.Where(u => u.ISBNFK == b.ISBN && u.Available == true).ToList();
+
+            a.ReceivedOn = DateTime.Now;
+
+            string ISBN = a.ISBNFK;
+            Guid BookGuid = c[0].BookGuid;
+            string FiscalCode = a.FiscalCodeFK;
+
+
+            InsertRent(BookGuid, FiscalCode, ctx);
+        }
+
+        //////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
+        
+        //public static List
 
 
 

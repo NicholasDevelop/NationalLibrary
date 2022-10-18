@@ -111,7 +111,7 @@ namespace NationalLibrary.Metodi
             return rentsview;
         }
 
-        public static List<RentRequestFinalView> RentFinalViewList(LibraryContext ctx)
+        public static List<RentRequestFinalView> RentRequestFinalViewList(LibraryContext ctx)
         {
             List<RentRequestFinalView> a = new List<RentRequestFinalView>();
             foreach (var item in ViewsLoaders.ViewsLoader_Rents(ctx))
