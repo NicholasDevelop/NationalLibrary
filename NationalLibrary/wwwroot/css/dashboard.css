@@ -292,12 +292,68 @@ td {
     align-items: center;
 }
 
-    #admin-line img {
+    #admin-line nav ul li img {
         cursor: pointer;
         margin-left: 5px;
         border-radius: 100rem;
         border: 1px solid black;
+        justify-self: center;
     }
+
+
+    #admin-line nav .drop-down {
+        border-radius: 5px;
+        border: 3px solid black;
+        list-style: none;
+        overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
+        height: 172px; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+        background-color: whitesmoke;
+        font-family: Arial;
+        width: 100px;
+        margin: 0 auto;
+        padding: 0;
+        text-align: center;
+        -webkit-transition: height 0.3s ease;
+        transition: height 0.3s ease;
+    }
+
+    #admin-line nav .drop-down.closed {
+        /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
+      with overflow: hidden set on the ul will hide all list items apart from the first */
+        /* current li height 38px + 5px border */
+        height: 43px;
+    }
+    #admin-line nav {
+        position: fixed;
+        justify-self: center;
+        align-self: center;
+        top: 10px;
+    }
+        #admin-line nav ul {
+            position: absolute;
+        }
+    #admin-line nav .drop-down li {
+        border-bottom: 5px solid;
+        border-color: rgb(164, 164, 164);
+    }
+
+        #admin-line nav .drop-down li a {
+            display: block;
+            color: black;
+            text-decoration: none;
+            padding: 10px; /* Larger touch target area */
+        }
+
+        #admin-line nav .drop-down li:first-child a:after {
+            content: "\25BC";
+            float: right;
+            margin-left: -30px; /* Excessive -margin to bring link text back to center */
+            margin-right: 5px;
+        }
+
+
+
+
 
 .transitions {
     margin-top: 20px;
@@ -310,7 +366,7 @@ td {
     padding: 20px;
     display: grid;
     grid-template-columns: 80% 20%;
-    border-radius: 100rem;
+    border-radius: 20px;
     background-color: whitesmoke;
 }
 

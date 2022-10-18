@@ -50,7 +50,11 @@ namespace NationalLibrary.Controllers
 		{
 			return View(user);
 		}
-
+		public IActionResult logout()
+		{
+			userFinal = new UserFinalView();
+			return RedirectToAction("Index");
+		}
 		public IActionResult loginPage()
 		{
 			return View();
@@ -94,6 +98,12 @@ namespace NationalLibrary.Controllers
 			{
 				case "Admin":
 					userFinal = type;
+					List<UserFinalView> result = new List<UserFinalView>();
+					foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
+						if (item.Type.ToLower() == "librarian")
+							result.Add(item);
+					ViewData["Employees"] = result;
+					ViewData["Today"] = DateTime.Now;
 					return View(type);
 				case "User":
 					return RedirectToAction("userDashboard", type);

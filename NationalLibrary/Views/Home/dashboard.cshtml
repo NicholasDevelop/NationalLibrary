@@ -1,4 +1,9 @@
-﻿<head>
+﻿@model NationalLibrary.FinalViews.UserFinalView
+@{
+    List<NationalLibrary.FinalViews.UserFinalView> userFinalViews = ViewData["Employees"] as List<NationalLibrary.FinalViews.UserFinalView>;
+    DateTime today = DateTime.Parse(ViewData["Today"].ToString());
+}
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +66,7 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" onclick="showData('books')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
+                        <div class="table-container" style="overflow-y: hidden; height: 100%;">
                             <h2 id="waiting-list">Libri Noleggiati</h2>
                             <table style="margin-top:0px; max-height: 570px;">
                                 <tr>
@@ -85,7 +90,7 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" onclick="showData('users')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
+                        <div class="table-container" style="overflow-y: hidden; height: 100%;">
                             <h2 id="waiting-list">Nuovi Utenti</h2>
                             <table style="margin-top:0px; max-height: 570px;">
                                 <tr>
@@ -106,7 +111,7 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" onclick="showData('buyedBooks')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
+                        <div class="table-container" style="overflow-y: hidden; height: 100%;">
                             <h2 id="waiting-list">Libri Noleggiati</h2>
                             <table style="margin-top:0px; max-height: 570px;">
                                 <tr>
@@ -126,8 +131,8 @@
                     <h1 style="margin-top: 2px;">Dashboard</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
-                                       alt="" srcset="">
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                                                alt="" srcset="">
                     </h2>
                     <div class="graph-container">
                         <div class="graph-data-container">
@@ -233,8 +238,8 @@
                     <h1 style="margin-top: 2px;">Magazzino</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
-                                       alt="" srcset="">
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                                                alt="" srcset="">
                     </h2>
                     <div class="table-container">
                         <h2 id="waiting-list">Lista D'Attesa</h2>
@@ -263,8 +268,8 @@
                     <h1 style="margin-top: 2px;">Dipendenti</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
-                                       alt="" srcset="">
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                                                alt="" srcset="">
                     </h2>
                     <div class="table-container">
                         <h2 id="waiting-list">Lista Dei Dipendenti</h2>
@@ -279,8 +284,20 @@
                                 <th>Provincia</th>
                                 <th>CAP</th>
                             </tr>
+                            @foreach (var item in userFinalViews)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Surname</td>
+                                    <td>@item.MobilePhone</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.City</td>
+                                    <td>@item.Street</td>
+                                    <td>@item.Province</td>
+                                    <td>@item.CAP</td>
+                                </tr>
+                            }
                         </table>
-
                     </div>
                     <a style="margin-top:20%" asp-action="addEmployee" asp-controller="Home">Aggiungi Dipendente</a>
                 </main>
@@ -290,7 +307,19 @@
         </div>
         <div class="transition-Container">
             <div id="admin-line">
-                <h4>Benvenuto @Model.Name</h4><img style="width: 32px" src="~/img/admin.svg" alt="">
+                <h4 style="position: relative;
+                            right: 170px;
+                            /* justify-self: center; */
+                            /* align-self: center; */
+                            bottom: 12px;">
+                    Benvenuto @Model.Name
+                </h4><nav>
+                    <ul id="slowdown-menu" class="drop-down closed">
+                        <li><img style="width: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
+                        <li><a>Dettagli</a></li>
+                        <li><a asp-controller="Home" asp-action="logout">Logout</a></li>
+                    </ul>
+                </nav>
             </div>
             <h3 style="justify-self: center; align-self: center;">Ecco le ultime transazioni</h3>
             <div class="transitions">
@@ -345,7 +374,7 @@
                 document.getElementById("Magazine").classList.remove("hidden");
                 document.getElementById("Employee").classList.add("hidden");
             }
-            else if(navItem == "dashboard"){
+            else if (navItem == "dashboard") {
                 magazineAnchor.classList.remove("active");
                 dashboardAnchor.classList.add("active");
                 employeeAnchor.classList.remove("active");
@@ -353,7 +382,7 @@
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
             }
-            else{
+            else {
                 employeeAnchor.classList.add("active");
                 dashboardAnchor.classList.remove("active");
                 magazineAnchor.classList.remove("active");
@@ -421,18 +450,22 @@
         var arrowbooks = document.getElementById("books");
         var arrowUsers = document.getElementById("users");
         var arrowbuyedBooks = document.getElementById("buyedBooks");
-                    // window.onclick = function (event) {
-                    //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
-                    //     console.log(arrowbooks)
-                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
-                    //         hideData("books")
-                    //     }
-                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
-                    //         hideData("users")
-                    //     }
-                    //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
-                    //         hideData("buyedBooks")
-                    //     }
-                    // }
+        function openMenu() {
+            console.log("Ma... Io ci sono, poi non so te");
+            document.getElementById("slowdown-menu").classList.toggle('closed');
+        }
+                         // window.onclick = function (event) {
+                                                                            //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
+                                                                            //     console.log(arrowbooks)
+                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
+                                                                            //         hideData("books")
+                                                                            //     }
+                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
+                                                                            //         hideData("users")
+                                                                            //     }
+                                                                            //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
+                                                                            //         hideData("buyedBooks")
+                                                                            //     }
+                                                                            // }
     </script>
 </body>
