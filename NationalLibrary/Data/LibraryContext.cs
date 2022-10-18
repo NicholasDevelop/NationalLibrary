@@ -55,7 +55,7 @@ public class LibraryContext : DbContext
         // Relation WaitingList N-N Book
         // (WaitingList 1-N WaitingList_Book N-1 Book)
 
-        modelBuilder.Entity<ISBNList>()
+        /*modelBuilder.Entity<ISBNList>()
             .HasKey(wb => new { wb.WaitingGuid, wb.BookGuid });
 
         modelBuilder.Entity<ISBNList>()
@@ -66,7 +66,7 @@ public class LibraryContext : DbContext
         modelBuilder.Entity<ISBNList>()
             .HasOne(wb => wb.Book)
             .WithMany(b => b.WaitingList_Books)
-            .HasForeignKey(wb => wb.BookGuid);
+            .HasForeignKey(wb => wb.BookGuid);*/
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NationalLibrary.Data
 {
@@ -35,9 +36,10 @@ namespace NationalLibrary.Data
         public Location Location { get; set; }
 
 
-        // Relation Book N-N WaitingList
-        //public ICollection<WaitingList> WaitingLists { get; set; }
-        public List<ISBNList> WaitingList_Books { get; set; }
+        // Relation ISBNList 1-N Book(FK)
+        public string ISBNFK { get; set; }
+        [ForeignKey("ISBNFK)")]
+        public ISBNList ISBNList { get; set; }
 
     }
 }

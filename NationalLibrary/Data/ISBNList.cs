@@ -4,13 +4,14 @@ namespace NationalLibrary.Data
 {
     public class ISBNList
     {
-        public Guid WaitingGuid { get; set; }
-        public WaitingList WaitingList { get; set; }
-        
-        public Guid BookGuid { get; set; }
-        public Book Book { get; set; }
 
-        [Required]
+        [Key]
         public string ISBN { get; set; }
+
+        // Relation ISBNList 1-N WaitingList(FK)
+        public List<WaitingList> WaitingLists { get; set; }
+
+        // Relation ISBNList 1-N Book(FK)
+        public List<Book> Books { get; set; }
     }
 }

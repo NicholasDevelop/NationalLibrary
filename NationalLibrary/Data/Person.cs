@@ -40,5 +40,8 @@ namespace NationalLibrary.Data
 
         // Relation Person 1-N Waiting List (FK)
         public List<WaitingList> WaitingLists { get; set; }
+
+        // Relation Person 1-N Request(FK)
+        public List<Request> Requests { get; set; }
     }
 }

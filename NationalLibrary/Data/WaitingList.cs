@@ -18,8 +18,9 @@ namespace NationalLibrary.Data
         public DateTime? ReceivedOn { get; set; }
 
 
-        // Relation Book N-N WaitiList
-        //public ICollection<Book> Books { get; set; }
-        public List<ISBNList> WaitingList_Books { get; set; }
+        // Relation WaitingList(FK) N-1 ISBNList
+        public string ISBNFK { get; set; }
+        [ForeignKey("ISBNFK)")]
+        public ISBNList ISBNList { get; set; }
     }
 }
