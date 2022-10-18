@@ -19,7 +19,7 @@ public class LibraryContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Rent> Rents { get; set; }
     public DbSet<WaitingList> WaitingLists { get; set; }
-    public DbSet<WaitingList_Book> WaitingList_Books { get; set; }
+    public DbSet<ISBNList> WaitingList_Books { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Location> Locations { get; set; }
 
@@ -55,15 +55,15 @@ public class LibraryContext : DbContext
         // Relation WaitingList N-N Book
         // (WaitingList 1-N WaitingList_Book N-1 Book)
 
-        modelBuilder.Entity<WaitingList_Book>()
+        modelBuilder.Entity<ISBNList>()
             .HasKey(wb => new { wb.WaitingGuid, wb.BookGuid });
 
-        modelBuilder.Entity<WaitingList_Book>()
+        modelBuilder.Entity<ISBNList>()
             .HasOne(wb => wb.WaitingList)
             .WithMany(wl => wl.WaitingList_Books)
             .HasForeignKey(wb => wb.WaitingGuid);
 
-        modelBuilder.Entity<WaitingList_Book>()
+        modelBuilder.Entity<ISBNList>()
             .HasOne(wb => wb.Book)
             .WithMany(b => b.WaitingList_Books)
             .HasForeignKey(wb => wb.BookGuid);

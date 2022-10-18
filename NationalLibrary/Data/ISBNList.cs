@@ -2,7 +2,7 @@
 
 namespace NationalLibrary.Data
 {
-    public class WaitingList_Book
+    public class ISBNList
     {
         public Guid WaitingGuid { get; set; }
         public WaitingList WaitingList { get; set; }
