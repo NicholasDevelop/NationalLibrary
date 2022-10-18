@@ -38,7 +38,7 @@ namespace NationalLibrary.Data
 
         // Relation ISBNList 1-N Book(FK)
         public string ISBNFK { get; set; }
-        [ForeignKey("ISBNFK)")]
+        [ForeignKey("ISBNFK")]
         public ISBNList ISBNList { get; set; }
 
     }

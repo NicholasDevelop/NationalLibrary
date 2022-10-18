@@ -14,7 +14,7 @@ namespace NationalLibrary.Data
         [ForeignKey("FiscalCodeFK")]
         public Person Person { get; set; }
 
-        public DateTime RequiredOn { get; set; }
+        public DateTime RequestedOn { get; set; }
         public DateTime? ReceivedOn { get; set; }
 
 

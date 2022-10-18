@@ -85,10 +85,10 @@ namespace NationalLibrary.Metodi
 
 
         //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, byte[] Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int Position, string Shelf, LibraryContext ctx)
+        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation,string Genre, byte[] Coverimg,DateTime BuyDate, string Price,string Room, string Scaffhold, int Position, string Shelf,string ISBN, LibraryContext ctx)
 
         {
-            var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price };
+            var newbook =           new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg,BuyDate = DateTime.Now, Price = Price};
                 newbook.Location =  new Location() { Room = Room, Schaffold = Scaffhold, Shelf = Shelf, Position = Position };
 
 
@@ -106,7 +106,7 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-        public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,byte[] Coverimg, string Room, string Scaffhold, string Shelf, int Position,LibraryContext ctx)
+        public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,byte[] Coverimg, string Room, string Scaffhold, string Shelf, int Position,string ISBN, LibraryContext ctx)
         {
 
             Book            a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
@@ -170,6 +170,10 @@ namespace NationalLibrary.Metodi
 
 
         }
+
+
+        //////////////////   QUERY MANIPOLAZIONE ATTESA    \\\\\\\\\\\\\\\\\\\\\\
+        
 
 
 

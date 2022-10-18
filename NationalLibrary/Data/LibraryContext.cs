@@ -19,9 +19,10 @@ public class LibraryContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Rent> Rents { get; set; }
     public DbSet<WaitingList> WaitingLists { get; set; }
-    public DbSet<ISBNList> WaitingList_Books { get; set; }
+    public DbSet<ISBNList> ISBNLists { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Location> Locations { get; set; }
+    public DbSet<Request> Requests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

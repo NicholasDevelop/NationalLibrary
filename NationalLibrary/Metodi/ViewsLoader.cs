@@ -74,35 +74,46 @@ namespace NationalLibrary.Metodi
             return booksview;
         }
 
-        public static IQueryable<RentFinalView> ViewsLoader_Rents(LibraryContext ctx)
+        public static IQueryable<RentRequestFinalView> ViewsLoader_Rents(LibraryContext ctx)
         {
             var rentsview = from x in ctx.Books
                             join a in ctx.Rents on x.BookGuid equals a.BookGuidFK
-                            join b in ctx.WaitingList_Books on x.BookGuid equals b.BookGuid
-                            join c in ctx.WaitingLists on b.WaitingGuid equals c.WaitingGuid
+                            join b in ctx.ISBNLists on x.ISBNFK equals b.ISBN
+                            join c in ctx.People on a.FiscalCodeFK equals c.FiscalCode
+                            join d in ctx.WaitingLists on c.FiscalCode equals d.FiscalCodeFK
+                            join e in ctx.Requests on c.FiscalCode equals e.FiscalCodeFK
 
 
                             // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
-                            select new RentFinalView
+                            select new RentRequestFinalView
                             {
                                 BookGuid = x.BookGuid,
-                                RentGuid = a.RentGuid,
-                                Title = x.Title,
-                                CoverImg = x.CoverImg,
-                                FiscalCode = a.FiscalCodeFK,
-                                RequiredOn = c.RequiredOn,
-                                WithdrawOn = a.WithdrawnOn,
-                                ReturnedOn = a.ReturnedOn,
-                                ISBN = b.ISBN
+                                Available = x.Available,
+                                ISBN = b.ISBN,
 
+                                WaitingGuid = d.WaitingGuid,
+                                RequestedOn = d.RequestedOn,
+                                ReceivedOn = d.ReceivedOn,
+
+                                RequestGuid = e.RequestGuid,
+                                Title = e.Title,
+                                Author = e.Author,
+                                Comment = e.Comment,
+                                State = e.State,
+                                ISBNRequest = e.ISBN,
+                                RequestDate = e.RequestDate,
+
+                                RentGuid = a.RentGuid,
+                                WithdrawnOn = a.WithdrawnOn,
+                                ReturnedOn = a.ReturnedOn,
                             };
 
             return rentsview;
         }
 
-        public static List<RentFinalView> RentFinalViewList(LibraryContext ctx)
+        public static List<RentRequestFinalView> RentFinalViewList(LibraryContext ctx)
         {
-            List<RentFinalView> a = new List<RentFinalView>();
+            List<RentRequestFinalView> a = new List<RentRequestFinalView>();
             foreach (var item in ViewsLoaders.ViewsLoader_Rents(ctx))
             {
                 a.Add(item);
