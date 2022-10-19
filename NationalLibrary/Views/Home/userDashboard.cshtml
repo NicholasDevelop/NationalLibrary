@@ -1,4 +1,8 @@
-﻿@model NationalLibrary.Data.User
+﻿@model NationalLibrary.FinalViews.UserFinalView
+
+@{
+    DateTime today = DateTime.Parse(ViewData["Today"].ToString());
+}
 
 <head>
     <meta charset="UTF-8">
@@ -41,14 +45,7 @@
                             <a class="nav-link" id="magazineAnchor" href="#Magazine" onclick="addClass('magazine')">
                                 <img src="~/fontawesome/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
                                      srcset="">
-                                Magazzino
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
-                                     src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
-                                Aggiungi dipendente
+                                Libreria
                             </a>
                         </li>
                     </ul>
@@ -57,168 +54,23 @@
         </div>
         <div id="pagesContainer" style="max-width: 100vw;">
             <div id="Dashboard">
-                <!-- Popup -->
-                <div id="popupBooks" class="modal hidden">
-
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <span class="close" onclick="showData('books')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
-                            <h2 id="waiting-list">Libri Noleggiati</h2>
-                            <table style="margin-top:0px; max-height: 570px;">
-                                <tr>
-                                    <th>Codice Fiscale</th>
-                                    <th>Nome Utente</th>
-                                    <th>Cognome Utente</th>
-                                    <th>Numero</th>
-                                    <th>Email Utente</th>
-                                    <th>ISBN</th>
-                                    <th>Titolo Libro</th>
-                                    <th>Richiesto Il</th>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div id="popupUsers" class="modal hidden">
-
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <span class="close" onclick="showData('users')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
-                            <h2 id="waiting-list">Nuovi Utenti</h2>
-                            <table style="margin-top:0px; max-height: 570px;">
-                                <tr>
-                                    <th>Codice Fiscale</th>
-                                    <th>Nome Utente</th>
-                                    <th>Cognome Utente</th>
-                                    <th>Numero</th>
-                                    <th>Email Utente</th>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div id="popupBuyedBooks" class="modal hidden">
-
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <span class="close" onclick="showData('buyedBooks')">&times;</span>
-                        <div class="table-container" style="overflow-y: scroll; height: 50%;">
-                            <h2 id="waiting-list">Libri Noleggiati</h2>
-                            <table style="margin-top:0px; max-height: 570px;">
-                                <tr>
-                                    <th>ISBN</th>
-                                    <th>Autore</th>
-                                    <th>Titolo Libro</th>
-                                    <th>Richiesto Il</th>
-                                    <th>Arrivato Il</th>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-                </div>
                 <!-- Inizio Main -->
-                <main>
+                <main style="grid-template-rows: 5% 5% 60% 5% auto;">
                     <h1 style="margin-top: 2px;">Dashboard</h1>
 
                     <h2 id="date">
-                        gg/mm/yyyy<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                        alt="" srcset="">
                     </h2>
-                    <div class="graph-container">
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart">
-                                    <img class="icons"
-                                         style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Libri Noleggiati</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('books')" id="books" src="~/fontawesome/svgs/solid/arrow-right-long.svg"
-                                         width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart" style="background-color: rgb(224, 115, 115);">
-                                    <img class="icons" style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Utenti Iscritti</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('users')" id="users" src="~/fontawesome/svgs/solid/arrow-right-long.svg"
-                                         width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph" style="background-color: rgb(224, 115, 115);">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="graph-data-container">
-                            <div class="graph-data">
-                                <div class="icons-chart" style="background-color: rgb(95, 201, 95);">
-                                    <img class="icons"
-                                         style="margin: 4px;  width: 24px; height: 24px;"
-                                         src="~/fontawesome/svgs/regular/chart-bar.svg" alt="" srcset="">
-                                </div>
-                                <div class="data-info">
-                                    <h4>Libri comprati</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
-                                </div>
-                                <h5 style="color: lightgray;">Ultimo mese</h5>
-                            </div>
-                            <div class="graph-data">
-                                <div class="arrow-right">
-                                    <img onclick="showData('buyedBooks')" id="buyedBooks"
-                                         src="~/fontawesome/svgs/solid/arrow-right-long.svg" width="16px" alt="" srcset="">
-                                </div>
-                                <div class="graph" style="background-color: rgb(95, 201, 95);">
-                                    <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="table-container">
                         <h2 id="waiting-list">Lista D'Attesa</h2>
                         <table>
                             <tr>
-                                <th>Codice Fiscale</th>
-                                <th>Nome Utente</th>
-                                <th>Cognome Utente</th>
-                                <th>Numero</th>
-                                <th>Email Utente</th>
                                 <th>ISBN</th>
                                 <th>Titolo Libro</th>
+                                <th>Autore Libro</th>
+                                <th>Genere Libro</th>
+                                <th>Casa Editrice</th>
                                 <th>Richiesto Il</th>
                             </tr>
                         </table>
@@ -260,8 +112,19 @@
             </div>
         </div>
         <div id="pippo">
-            <h1>Sei: @Model.Username</h1>
-            <h1>Yeeeee</h1>
+            <h4 style="position: relative;
+                            right: 170px;
+                            /* justify-self: center; */
+                            /* align-self: center; */
+                            bottom: 12px;">
+                Benvenuto @Model.Name
+            </h4><nav>
+                <ul id="slowdown-menu" class="drop-down closed">
+                    <li><img style="width: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
+                    <li><a>Dettagli</a></li>
+                    <li><a asp-controller="Home" asp-action="logout">Logout</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
     <script>

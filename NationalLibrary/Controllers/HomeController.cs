@@ -59,7 +59,7 @@ namespace NationalLibrary.Controllers
 		{
 			return View();
 		}
-		public IActionResult userDashboard(User user)
+		public IActionResult userDashboard(UserFinalView user)
 		{
 			return View(user);
 		}
@@ -111,6 +111,7 @@ namespace NationalLibrary.Controllers
 						ViewData["Today"] = DateTime.Now;
 						return View(type);
 					case "User":
+						ViewData["Today"] = DateTime.Now;
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
 						return View(type);
