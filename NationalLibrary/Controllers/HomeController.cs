@@ -150,6 +150,10 @@ namespace NationalLibrary.Controllers
 								result.Add(item);
 						ViewData["Employees"] = result;
 						ViewData["Today"] = DateTime.Now;
+						List<BookFinalView> result2 = new List<BookFinalView>();
+						foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
+							result2.Add(item);
+						ViewData["Books"] = result2;
 						return View(type);
 					case "User":
 						return RedirectToAction("userDashboard", type);
