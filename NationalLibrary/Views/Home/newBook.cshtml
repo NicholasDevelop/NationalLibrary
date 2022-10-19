@@ -35,7 +35,7 @@
                     <div class="label-container">
                         <!-- ISBN -->
                         <label class="custom-field">
-                            <input type="text" placeholder=" " />
+                            <input type="text" placeholder=" " asp-for="@Model.ISBN" />
                             <span class="placeholder">@Model.ISBN</span>
                             <span asp-validation-for="@Model.ISBN" class="text-red"></span>
                         </label>
@@ -109,8 +109,8 @@
                     </div>*@
 
                     <div class="button-container">
-                        <Button class="special-button red" type="submit" name="submitEmployee">Torna Indietro</Button>
-                        <Button class="special-button" type="submit" name="submitEmployee">Aggiungi</Button>
+                        <Button class="special-button red" type="submit" name="submitEmployee" asp-action="dashboard" asp-controller="Home">Torna Indietro</Button>
+                        <Button class="special-button" type="submit" name="submitEmployee" asp-action="dashboard" asp-controller="Home">Aggiungi</Button>
                     </div>
                 </form>
             </div>

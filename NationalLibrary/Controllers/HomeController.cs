@@ -91,9 +91,14 @@ namespace NationalLibrary.Controllers
 			Console.WriteLine(user.Username);
 			Console.WriteLine(user.MobilePhone);
 			DataQueries.InsertUser(user.FiscalCode, "Librarian", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
-	user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
-	user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
-			user = userFinal;
+			user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
+			user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
+
+		public IActionResult insertBook(BookFinalView book)
+		{
+
 			return RedirectToAction("dashboard", userFinal);
 		}
 
