@@ -1,4 +1,5 @@
-﻿
+﻿@model NationalLibrary.FinalViews.BookFinalView
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,6 @@
 
     <main>
         <div class="title-container">
-            <img src="/img/libri-antichi.jpg" alt="">
             <h1 class="newbook-title">Aggiungi un nuovo libro</h1>
         </div>
 
@@ -20,58 +20,83 @@
                     <div class="label-container">
                         <!-- Titolo -->
                         <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">@Model.Title</span>
+                            <input type="text" placeholder=" " asp-for="@Model.Title" />
+                            <span class="placeholder">Titolo</span>
                         </label>
-                        <!-- ISBN -->
+                        <!-- Autore -->
                         <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">ISBN</span>
-                        </label>
+                            <input type="text" placeholder=" " asp-for="@Model.Author" />
+                            <span class="placeholder">Autore</span>
+                        </label>                        
                     </div>
 
                     <div class="label-container">
-                        <!-- Autore -->
+                        <!-- ISBN -->
                         <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">@Model.Author</span>
+                            <input type="text" placeholder=" " />
+                            <span class="placeholder">ISBN</span>
                         </label>
                         <!-- Casa Editrice -->
                         <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">@Model.PublishingHouse</span>
+                            <input type="text" placeholder=" " asp-for="@Model.PublishingHouse" />
+                            <span class="placeholder">Casa Editrice</span>
+                        </label>
+                    </div>
+
+
+                    <div class="label-container">
+                        <!-- Reparto -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Room" />
+                            <span class="placeholder">Reparto</span>
+                        </label>
+                        <!-- Scaffale -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Scaffhold" />
+                            <span class="placeholder">Scaffale</span>
                         </label>
                     </div>
 
                     <div class="label-container">
+                        <!-- Ripiano -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Shelf" />
+                            <span class="placeholder">Ripiano N.</span>
+                        </label>
+                        <!-- Posizione -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Position" />
+                            <span class="placeholder">Posizione N.</span>
+                        </label>
+                    </div>
+
+                    <div class="label-container">
+                        <!-- Genere -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Genre" />
+                            <span class="placeholder">Genere</span>
+                        </label>
+                        <!-- Prezzo -->
+                        <label class="custom-field">
+                            <input type="text" placeholder=" " asp-for="@Model.Price" />
+                            <span class="placeholder">Genere</span>
+                        </label>
+                    </div>
+
+                    <!-- Trama -->
+                    <textarea style="width: 100%; margin-top: 10px; border-radius: 3px; padding: 10px; background-color: transparent; border: 2px solid #ddd;" rows="4" placeholder="Inserisci la trama del libro..." asp-for="@Model.Presentation"></textarea>
+
+                    <!-- Immagine di copertina -->
+                    <label for="" class="label-file">Scegli l'immagine di cover:</label>
+                    <input type="file" class="input-file" asp-for="@Model.CoverImg">
+
+                    @*<div class="label-container">
                         <!-- Copie in possesso -->
                         <label class="custom-field">
                             <input type="text" placeholder=" "/>
                             <span class="placeholder">Copie in possesso</span>
                         </label>
-                        <!-- Copie disponibili -->
-                        <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">Copie disponibili</span>
-                        </label>
-                    </div>
-
-                    <div class="label-container">
-                        <!-- Presentazione -->
-                        <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">@Model.Presentation</span>
-                        </label>
-                        <!-- Genere -->
-                        <label class="custom-field">
-                            <input type="text" placeholder=" "/>
-                            <span class="placeholder">@Model.Genre</span>
-                        </label>
-                    </div>
-
-                    <!-- Immagine di copertina -->
-                    <label for="" class="label-file">Scegli l'immagine di cover:</label>
-                    <input type="file" class="input-file">
+                    </div>*@
 
                     <div class="button-container">
                         <Button class="special-button red" type="submit" name="submitEmployee">Torna Indietro</Button>
