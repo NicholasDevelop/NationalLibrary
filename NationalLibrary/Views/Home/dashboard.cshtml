@@ -235,28 +235,29 @@
                 <!-- Popup -->
                 <!-- Inizio Main -->
                 <main>
-                    <h1 style="margin-top: 2px;">Magazzino</h1>
+                    <h1 style="margin-top: 2px;">Libreria</h1>
 
                     <h2 id="date">
                         @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                                                 alt="" srcset="">
                     </h2>
                     <div class="table-container">
-                        <h2 id="waiting-list">Lista D'Attesa</h2>
+                        <h2 id="waiting-list">Libri in libreria</h2>
                         <table>
                             <tr>
-                                <th>Codice Fiscale</th>
-                                <th>Nome Utente</th>
-                                <th>Cognome Utente</th>
-                                <th>Numero</th>
-                                <th>Email Utente</th>
                                 <th>ISBN</th>
-                                <th>Titolo Libro</th>
-                                <th>Richiesto Il</th>
+                                <th>Titolo</th>
+                                <th>Autore</th>
+                                <th>Casa Editrice</th>
+                                <th>Genere</th>
+                                <th>Data D'Acquisto</th>
+                                <th>Prezzo</th>
+                                <th>Disponibile</th>
                             </tr>
                         </table>
 
                     </div>
+                    <a style="margin-top:20%" asp-action="newBook" asp-controller="Home">Aggiungi Dipendente</a>
                 </main>
 
 
@@ -454,18 +455,18 @@
             console.log("Ma... Io ci sono, poi non so te");
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                         // window.onclick = function (event) {
-                                                                            //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
-                                                                            //     console.log(arrowbooks)
-                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
-                                                                            //         hideData("books")
-                                                                            //     }
-                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
-                                                                            //         hideData("users")
-                                                                            //     }
-                                                                            //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
-                                                                            //         hideData("buyedBooks")
-                                                                            //     }
-                                                                            // }
+                                 // window.onclick = function (event) {
+                                                                                    //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
+                                                                                    //     console.log(arrowbooks)
+                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
+                                                                                    //         hideData("books")
+                                                                                    //     }
+                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
+                                                                                    //         hideData("users")
+                                                                                    //     }
+                                                                                    //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
+                                                                                    //         hideData("buyedBooks")
+                                                                                    //     }
+                                                                                    // }
     </script>
 </body>

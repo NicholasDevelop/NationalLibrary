@@ -68,13 +68,16 @@ namespace NationalLibrary.Controllers
 		{
 			return View(book);
 		}
-
+		public IActionResult newBook(BookFinalView book)
+		{
+			return View(book);
+		}
 		public IActionResult bookList(Book book)
-        {
-            return View(book);
-        }
+		{
+			return View(book);
+		}
 
-        public IActionResult insertEmployee(UserFinalView user)
+		public IActionResult insertEmployee(UserFinalView user)
 		{
 			Console.WriteLine(user.Name);
 			Console.WriteLine(user.Username);
@@ -89,26 +92,33 @@ namespace NationalLibrary.Controllers
 		public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
-			if (string.IsNullOrEmpty(type.Type))
+			try
 			{
-				throw new Exception("Utente non esistente");
+				if (string.IsNullOrEmpty(type.Type))
+				{
+					throw new Exception("Utente non esistente");
+				}
+				Console.WriteLine(type.Email);
+				switch (type.Type)
+				{
+					case "Admin":
+						userFinal = type;
+						List<UserFinalView> result = new List<UserFinalView>();
+						foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
+							if (item.Type.ToLower() == "librarian")
+								result.Add(item);
+						ViewData["Employees"] = result;
+						ViewData["Today"] = DateTime.Now;
+						return View(type);
+					case "User":
+						return RedirectToAction("userDashboard", type);
+					case "Librarian":
+						return View(type);
+				}
 			}
-			Console.WriteLine(type.Email);
-			switch (type.Type)
+			catch (Exception ex)
 			{
-				case "Admin":
-					userFinal = type;
-					List<UserFinalView> result = new List<UserFinalView>();
-					foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
-						if (item.Type.ToLower() == "librarian")
-							result.Add(item);
-					ViewData["Employees"] = result;
-					ViewData["Today"] = DateTime.Now;
-					return View(type);
-				case "User":
-					return RedirectToAction("userDashboard", type);
-				case "Librarian":
-					return View(type);
+				return RedirectToAction("Error");
 			}
 			return View("Index");
 		}
