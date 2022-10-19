@@ -1,6 +1,9 @@
 ﻿@model NationalLibrary.FinalViews.BookFinalView
 @{
     NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
+    List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
+    int count = 0;
+    List<string> image = ViewData["Images"] as List<string>;
 }
 
 <head>
@@ -81,44 +84,17 @@
                     </button>
                 </div>
             </div>
-
             <div class="card-container">
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
-                <a class="card" href="#">
-                    <img class="card-img" src="~/img/img-carousel4.jpg" alt="">
-                    <div class="card-description">
-                        <p>Book Title</p>
-                    </div>
-                </a>
+                @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
+                {
+                    count++;
+                    <a class="card" href="#">
+                        <img src="@image[count - 1]" alt="">
+                        <div class="card-description">
+                            <p>@item.Title</p>
+                        </div>
+                    </a>
+                }
             </div>
         </div>
     </main>
@@ -151,7 +127,7 @@
     </footer>
 </body>
 <script>
-        function openMenu() {
-            document.getElementById("slowdown-menu").classList.toggle('closed');
-        }
+    function openMenu() {
+        document.getElementById("slowdown-menu").classList.toggle('closed');
+    }
 </script>

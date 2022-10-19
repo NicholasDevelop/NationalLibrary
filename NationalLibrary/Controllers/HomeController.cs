@@ -23,28 +23,25 @@ namespace NationalLibrary.Controllers
 			this.ctx = ctx;
 		}
 		private static UserFinalView userFinal;
+		private List<string> getImage()
+		{
+			List<BookFinalView> result2 = new List<BookFinalView>();
+			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
+				result2.Add(item);
+			ViewData["Books"] = result2;
+
+			List<string> bytes = new List<string>();
+
+			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
+			{
+				bytes.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.CoverImg)));
+			}
+			return bytes;
+		}
 		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
-			//DataQueries.InsertUser("ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1975, 10, 19),
-			//"Genova", "Via Dante Alighieri 8", 20040, "SI",
-			//"AA01890BB", "C.I.", "Siena", new DateTime(2030, 03, 25),
-			//"mattiaromagnoli1@gmail.com", "RomansLibrarian", "password", String.Empty, ctx);
-			//DataQueries.InsertUser
-			//(
-			//"ADMINR03A03M849U", "Admin", "Mattia", "Romagnoli", "3409998888", new DateTime(1996,12,05),
-			//"Siena", "Via Dante Alighieri 8", 69040, "SI",
-			//"AD01890MI", "C.I.", "Siena", new DateTime(2030,12,25),
-			//"mattiaromagnoli1@gmail.com", "Admin", "Admin", String.Empty, ctx
-			//);
-			//DataQueries.InsertUser
-			//(
-			//"USERMR03A03M849U", "User", "Brian", "Romagnoli", "3400768888", new DateTime(2003,01,02),
-			//"Siena", "Via Dante Alighieri 8", 69040, "SI",
-			//"AZ01890MI", "C.I.", "Siena", new DateTime(2030,12,25),
-			//"mattiaromagnoli1@gmail.com", "Brian", "password", String.Empty, ctx
-			//);
-			//ViewsLoaders.UserFinalViewList(ctx);
+			ViewData["Images"] = getImage();            
 			return View();
 		}
 		public IActionResult router()
@@ -86,6 +83,7 @@ namespace NationalLibrary.Controllers
 		public IActionResult bookList(BookFinalView book)
 		{
 			ViewData["UserLogged"] = userFinal;
+			ViewData["Images"] = getImage();
 			return View(book);
 		}
 
