@@ -1,8 +1,10 @@
 ﻿@model NationalLibrary.FinalViews.UserFinalView
 @{
     List<NationalLibrary.FinalViews.UserFinalView> userFinalViews = ViewData["Employees"] as List<NationalLibrary.FinalViews.UserFinalView>;
+    List<NationalLibrary.FinalViews.UserFinalView> lastSignedusers = ViewData["lastSignedUsers"] as List<NationalLibrary.FinalViews.UserFinalView>;
     DateTime today = DateTime.Parse(ViewData["Today"].ToString());
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
+    List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
 }
 <head>
     <meta charset="UTF-8">
@@ -101,6 +103,16 @@
                                     <th>Numero</th>
                                     <th>Email Utente</th>
                                 </tr>
+                                @foreach (NationalLibrary.FinalViews.UserFinalView item in lastSignedusers)
+                                {
+                                    <tr>
+                                        <td>@item.FiscalCode</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Surname</td>
+                                        <td>@item.MobilePhone</td>
+                                        <td>@item.Email</td>
+                                    </tr>
+                                }
                             </table>
 
                         </div>
@@ -113,15 +125,27 @@
                     <div class="modal-content">
                         <span class="close" onclick="showData('buyedBooks')">&times;</span>
                         <div class="table-container" style="overflow-y: hidden; height: 100%;">
-                            <h2 id="waiting-list">Libri Noleggiati</h2>
+                            <h2 id="waiting-list">Libri Comprati</h2>
                             <table style="margin-top:0px; max-height: 570px;">
                                 <tr>
                                     <th>ISBN</th>
                                     <th>Autore</th>
                                     <th>Titolo Libro</th>
+                                    <th>Casa Editrice</th>
+                                    <th>Genere</th>
                                     <th>Richiesto Il</th>
-                                    <th>Arrivato Il</th>
                                 </tr>
+                                @foreach (NationalLibrary.FinalViews.BookFinalView item in lastBuyedBooks)
+                                {
+                                    <tr>
+                                        <td>@item.ISBN</td>
+                                        <td>@item.Author</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.PublishingHouse</td>
+                                        <td>@item.Genre</td>
+                                        <td>@item.BuyDate</td>
+                                    </tr>
+                                }
                             </table>
 
                         </div>
@@ -255,26 +279,26 @@
                                 <th>Prezzo</th>
                                 <th>Disponibile</th>
                             </tr>
-                        @foreach (NationalLibrary.FinalViews.BookFinalView item in @bookFinalViews)
-                        {
-                            <tr>
-                                <td>@item.ISBN</td>
-                                <td style="max-width: 100px">@item.Title</td>
-                                <td>@item.Author</td>
-                                <td>@item.PublishingHouse</td>
-                                <td>@item.Genre</td>
-                                <td>@item.BuyDate.Day/@item.BuyDate.Month/@item.BuyDate.Year</td>
-                                <td>@item.Price €</td>
-                                @if (@item.Available)
-                                {
-                                    <td>Sì</td>
-                                }
-                                else
-                                {
-                                    <td>No</td>
-                                }
-                            </tr>
-                        }
+                            @foreach (NationalLibrary.FinalViews.BookFinalView item in @bookFinalViews)
+                            {
+                                <tr>
+                                    <td>@item.ISBN</td>
+                                    <td style="max-width: 100px">@item.Title</td>
+                                    <td>@item.Author</td>
+                                    <td>@item.PublishingHouse</td>
+                                    <td>@item.Genre</td>
+                                    <td>@item.BuyDate.Day/@item.BuyDate.Month/@item.BuyDate.Year</td>
+                                    <td>@item.Price €</td>
+                                    @if (@item.Available)
+                                    {
+                                        <td>Sì</td>
+                                    }
+                                    else
+                                    {
+                                        <td>No</td>
+                                    }
+                                </tr>
+                            }
                         </table>
                     </div>
                     <a style="margin-top:5%" asp-action="newBook" asp-controller="Home">Aggiungi Libro</a>
@@ -344,13 +368,17 @@
             </div>
             <h3 style="justify-self: center; align-self: center;">Ecco le ultime transazioni</h3>
             <div class="transitions">
-                <div class="transition">
-                    <div>
-                        <h5>Transazione: </h5>
-                        <h5>Totale speso: </h5>
+                @foreach (NationalLibrary.FinalViews.BookFinalView item in @lastBuyedBooks)
+                {
+                    <div class="transition">
+                        <div>
+                            <h5>Transazione: @item.Title</h5>
+                            <h5>Totale speso: @item.Price€</h5>
+                        </div>
+                        <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                     </div>
-                    <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
-                </div>
+
+                }
                 <div class="transition">
                     <div>
                         <h5>Transazione: </h5>
@@ -474,18 +502,18 @@
         function openMenu() {
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                                                         // window.onclick = function (event) {
-                                                                                                            //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
-                                                                                                            //     console.log(arrowbooks)
-                                                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
-                                                                                                            //         hideData("books")
-                                                                                                            //     }
-                                                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
-                                                                                                            //         hideData("users")
-                                                                                                            //     }
-                                                                                                            //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
-                                                                                                            //         hideData("buyedBooks")
-                                                                                                            //     }
-                                                                                                            // }
+                                                                                 // window.onclick = function (event) {
+                                                                                                                                    //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
+                                                                                                                                    //     console.log(arrowbooks)
+                                                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
+                                                                                                                                    //         hideData("books")
+                                                                                                                                    //     }
+                                                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
+                                                                                                                                    //         hideData("users")
+                                                                                                                                    //     }
+                                                                                                                                    //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
+                                                                                                                                    //         hideData("buyedBooks")
+                                                                                                                                    //     }
+                                                                                                                                    // }
     </script>
 </body>
