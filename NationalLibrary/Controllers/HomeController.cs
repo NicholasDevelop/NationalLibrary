@@ -153,6 +153,11 @@ namespace NationalLibrary.Controllers
 
 		public IActionResult employeeDashboard(UserFinalView user)
 		{
+			List<UserFinalView> users = new List<UserFinalView>();
+			foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
+				if (item.Type.ToLower() == "user")
+					users.Add(item);
+			ViewData["Users"] = users;
 			ViewData["Today"] = DateTime.Now;
 			return View(user);
 		}
@@ -184,12 +189,6 @@ namespace NationalLibrary.Controllers
 					case "User":
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
-						List<UserFinalView> users = new List<UserFinalView>();
-						foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
-							if (item.Type.ToLower() == "user")
-								users.Add(item);
-						ViewData["Users"] = users;
-						ViewData["Today"] = DateTime.Now;
 						return RedirectToAction("employeeDashboard", type);
 				}
 			}
