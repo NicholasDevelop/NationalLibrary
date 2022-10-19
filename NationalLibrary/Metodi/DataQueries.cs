@@ -290,6 +290,7 @@ namespace NationalLibrary.Metodi
 
         }
 
+        
         //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
         {
@@ -314,6 +315,7 @@ namespace NationalLibrary.Metodi
             InsertRent(BookGuid, FiscalCode, ctx);
         }
 
+       
         ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
         public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
         {
@@ -347,7 +349,26 @@ namespace NationalLibrary.Metodi
 
         }
 
+        // Ritorna la lista degli utenti registrati nell'ultimo mese
+        public static List<UserFinalView> getLastMonthRegisteredUsers(LibraryContext ctx)
+        {
+            var thismonth = DateTime.Now.ToString("MM yyyy");
+            var month = thismonth.Split(' ')[0];
+            var year = thismonth.Split(' ')[1];
 
+            List<UserFinalView> list = new List<UserFinalView>();
+
+            foreach(var item in ViewsLoaders.UserFinalViewList(ctx))
+            {
+                var registerDate = item.SignUpDate.ToString().Split(' ')[0];
+                if (registerDate.Split('/')[1] == month && registerDate.Split('/')[2] == year)
+                {
+                    list.Add(item);
+                }
+            }
+
+            return list;
+        }
     }
 
 }
