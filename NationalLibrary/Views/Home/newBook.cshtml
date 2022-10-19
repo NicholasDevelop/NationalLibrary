@@ -11,7 +11,7 @@
 
     <main>
         <div class="title-container">
-            <h1 class="newbook-title">Aggiungi un nuovo libro</h1>
+            <h1 class="newbook-title" style="margin=20px 0 0 0;">Aggiungi un nuovo libro</h1>
         </div>
 
         <div class="container">
@@ -22,11 +22,13 @@
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Title" />
                             <span class="placeholder">Titolo</span>
+                            <span asp-validation-for="@Model.Title" class="text-red"></span>
                         </label>
                         <!-- Autore -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Author" />
                             <span class="placeholder">Autore</span>
+                            <span asp-validation-for="@Model.Author" class="text-red"></span>
                         </label>                        
                     </div>
 
@@ -34,12 +36,14 @@
                         <!-- ISBN -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " />
-                            <span class="placeholder">ISBN</span>
+                            <span class="placeholder">@Model.ISBN</span>
+                            <span asp-validation-for="@Model.ISBN" class="text-red"></span>
                         </label>
                         <!-- Casa Editrice -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.PublishingHouse" />
                             <span class="placeholder">Casa Editrice</span>
+                            <span asp-validation-for="@Model.PublishingHouse" class="text-red"></span>
                         </label>
                     </div>
 
@@ -49,11 +53,13 @@
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Room" />
                             <span class="placeholder">Reparto</span>
+                            <span asp-validation-for="@Model.Room" class="text-red"></span>
                         </label>
                         <!-- Scaffale -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Scaffhold" />
                             <span class="placeholder">Scaffale</span>
+                            <span asp-validation-for="@Model.Scaffhold" class="text-red"></span>
                         </label>
                     </div>
 
@@ -62,11 +68,13 @@
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Shelf" />
                             <span class="placeholder">Ripiano N.</span>
+                            <span asp-validation-for="@Model.Shelf" class="text-red"></span>
                         </label>
                         <!-- Posizione -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Position" />
                             <span class="placeholder">Posizione N.</span>
+                            <span asp-validation-for="@Model.Position" class="text-red"></span>
                         </label>
                     </div>
 
@@ -75,11 +83,13 @@
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Genre" />
                             <span class="placeholder">Genere</span>
+                            <span asp-validation-for="@Model.Genre" class="text-red"></span>
                         </label>
                         <!-- Prezzo -->
                         <label class="custom-field">
                             <input type="text" placeholder=" " asp-for="@Model.Price" />
-                            <span class="placeholder">Genere</span>
+                            <span class="placeholder">Prezzo</span>
+                            <span asp-validation-for="@Model.Price" class="text-red"></span>
                         </label>
                     </div>
 
