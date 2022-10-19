@@ -94,12 +94,12 @@
                     </div>
 
                     <!-- Trama -->
-                    <textarea style="width: 100%; margin-top: 10px; border-radius: 3px; padding: 10px; background-color: transparent; border: 2px solid #ddd;" rows="4" placeholder="Inserisci la trama del libro..." asp-for="@Model.Presentation"></textarea>
+                    <textarea style="width: 100%; margin-top: 10px; border-radius: 3px; padding: 10px; background-color: transparent; border: 2px solid #ddd;" rows="4" placeholder="Inserisci la trama del libro..." asp-for="@Model.Presentation">@Model.Presentation</textarea>
                     <span asp-validation-for="@Model.Presentation" class="text-red"></span>
 
                     <!-- Immagine di copertina -->
                     <label for="" class="label-file">Scegli l'immagine di cover:</label>
-                    <input type="file" name="CoverImg" class="input-file" asp-for="@Model.CoverImg">
+                    <input type="file" name="CoverImg" class="input-file" asp-for="@Model.CoverImg" value="@Model.CoverImg">
 
                     @*<div class="label-container">
                         <!-- Copie in possesso -->
