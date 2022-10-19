@@ -100,7 +100,7 @@ namespace NationalLibrary.Metodi
             string checkforisbn = newbook.ISBNFK;
             bool check = CheckISBNExsist(checkforisbn, ctx);
 
-            if (check == false) 
+            if (check) 
             {
                 InsertISBN(checkforisbn, ctx);
                 ctx.SaveChanges();

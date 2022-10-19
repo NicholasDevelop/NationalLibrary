@@ -6,6 +6,10 @@ using NationalLibrary.Metodi;
 using NationalLibrary.FinalViews;
 using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System.Reflection.Metadata;
 
 namespace NationalLibrary.Controllers
 {
@@ -96,12 +100,36 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 
+		///pagina di controllo dei dati che provengono da newBook per la dashboard <summary>
+		/// pagina di controllo dei dati che provengono da newBook per la dashboard
+		/// </summary>
+		/// <param name="book"></param>
+		/// <returns></returns>
+
+		[HttpPost]
 		public IActionResult insertBook(BookFinalView book)
 		{
-
+			foreach (var file in Request.Form.Files)
+			{
+				IFormFile img = file;
+				byte[] p1 = null;
+				using (var ms1 = new MemoryStream())
+				{
+					img.CopyTo(ms1);
+					p1 = ms1.ToArray();
+				}
+				book.CoverImg = p1;
+			}
+			DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+				book.Genre, book.CoverImg, DateTime.Now,
+				book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
 			return RedirectToAction("dashboard", userFinal);
 		}
-
+		public IActionResult employeeDashboard(UserFinalView user)
+		{
+			ViewData["Today"] = DateTime.Now;
+			return View(user);
+		}
 		public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
@@ -126,7 +154,13 @@ namespace NationalLibrary.Controllers
 					case "User":
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
-						return View(type);
+						List<UserFinalView> users = new List<UserFinalView>();
+						foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
+							if (item.Type.ToLower() == "user")
+								users.Add(item);
+						ViewData["Users"] = users;
+						ViewData["Today"] = DateTime.Now;
+						return RedirectToAction("employeeDashboard", type);
 				}
 			}
 			catch (Exception ex)
