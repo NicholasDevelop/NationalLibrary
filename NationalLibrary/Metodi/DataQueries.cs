@@ -149,7 +149,7 @@ namespace NationalLibrary.Metodi
         {
             bool check=false;
 
-            ISBNList       a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+            List<ISBNList>       a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList();
             if (a != null) { check = true; }
 
             return check;
@@ -303,7 +303,6 @@ namespace NationalLibrary.Metodi
         }
 
         ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
-
         public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
         {
             List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
