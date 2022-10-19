@@ -21,7 +21,7 @@
 
     <div id="container">
         <div id="navbar">
-            <img id="logo" src="~/img/LogoFinale.svg" alt="" srcset="">
+            <a asp-action="Index" asp-controller="Home"><img id="logo" src="~/img/LogoFinale.svg" alt="" srcset=""></a>
             <nav class="navbar navbar-light bg-light justify-content-between">
                 <div class="row">
                     <a class="navbar-brand"> </a>
@@ -452,7 +452,6 @@
         var arrowUsers = document.getElementById("users");
         var arrowbuyedBooks = document.getElementById("buyedBooks");
         function openMenu() {
-            console.log("Ma... Io ci sono, poi non so te");
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
                                                  // window.onclick = function (event) {

@@ -21,6 +21,7 @@ namespace NationalLibrary.Controllers
 		private static UserFinalView userFinal;
 		public IActionResult Index()
 		{
+			ViewData["UserLogged"] = userFinal;
 			//DataQueries.InsertUser("ABSDEL03A03M849U", "Librarian", "Mattia", "Romagnoli", "3339998888", new DateTime(1975, 10, 19),
 			//"Genova", "Via Dante Alighieri 8", 20040, "SI",
 			//"AA01890BB", "C.I.", "Siena", new DateTime(2030, 03, 25),
@@ -48,11 +49,13 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult addEmployee(UserFinalView user)
 		{
+			if (userFinal == null || userFinal.Type.ToLower() == "user" || userFinal.Type.ToLower() == "librarian")
+				return RedirectToAction("Error");
 			return View(user);
 		}
 		public IActionResult logout()
 		{
-			userFinal = new UserFinalView();
+			userFinal = null;
 			return RedirectToAction("Index");
 		}
 		public IActionResult loginPage()
@@ -61,19 +64,24 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult userDashboard(UserFinalView user)
 		{
+			ViewData["Today"] = DateTime.Now;
 			return View(user);
 		}
 
-		public IActionResult viewBook(Book book)
+		public IActionResult viewBook(BookFinalView book)
 		{
+			ViewData["UserLogged"] = userFinal;
 			return View(book);
 		}
 		public IActionResult newBook(BookFinalView book)
 		{
+			if (userFinal == null || userFinal.Type.ToLower() == "user")
+				return RedirectToAction("Error");
 			return View(book);
 		}
-		public IActionResult bookList(Book book)
+		public IActionResult bookList(BookFinalView book)
 		{
+			ViewData["UserLogged"] = userFinal;
 			return View(book);
 		}
 
@@ -111,7 +119,6 @@ namespace NationalLibrary.Controllers
 						ViewData["Today"] = DateTime.Now;
 						return View(type);
 					case "User":
-						ViewData["Today"] = DateTime.Now;
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
 						return View(type);
