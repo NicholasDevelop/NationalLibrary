@@ -17,7 +17,7 @@
         public string Scaffhold { get; set; }
         public string Shelf { get; set; }
         public int? Position { get; set; }
-        public string ISB { get; set; }
+        public string ISBN { get; set; }
 
     }
 }
