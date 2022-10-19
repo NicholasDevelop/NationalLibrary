@@ -196,6 +196,18 @@ namespace NationalLibrary.Metodi
 
         }
 
+        public static BookFinalView getBookByGuid(Guid BookGuid, LibraryContext ctx)
+        {
+            BookFinalView book = new BookFinalView();
+            foreach (var item in ViewsLoaders.BookFinalViewList(ctx))
+            {
+                if (item.BookGuid == BookGuid)
+                {
+                    book = item;
+                }
+            }
+            return book;
+        }
 
         //////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)

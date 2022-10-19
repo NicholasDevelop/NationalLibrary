@@ -133,7 +133,7 @@
                     @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
                     {
                         count++;
-                        <a href="#" class="card">
+                        <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
                             <p>@count</p>
                             <img src="@image[count - 1]" alt="">
                             <div class="card-description">
@@ -150,9 +150,10 @@
             <div class="book-news-container">
                 <h1>LE NOVITA'</h1>
                 <div class="card-container">
-                    @for (int i = 1; i <= 5; i++)
+                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
                     {
-                        <a href="#" class="card">
+                        count++;
+                        <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
                             @*<img src="@Model.CoverImg[i]" alt="">*@
                             <div class="card-description">
                                 @*<h3>@Model.Title[i]</h3>*@

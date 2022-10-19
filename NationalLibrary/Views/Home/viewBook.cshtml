@@ -2,6 +2,7 @@
 
 @{
     NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
+    string image = ViewData["Image"] as string;
 }
 <head>
     <meta charset="UTF-8">
@@ -45,11 +46,11 @@
 
             <div class="second-header-container">
                 <nav>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Home" asp-action="index" class="nav-item">
                         <img src="~/fontawesome/svgs/regular/house.svg" alt="">
                         <h4>HOME</h4>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Home" asp-action="bookList" class="nav-item">
                         <i class="fa-regular fa-magnifying-glass"></i>
                         <h4>I NOSTRI LIBRI</h4>
                     </a>
@@ -74,15 +75,15 @@
     <main>
         <div class="container">
             <div class="sub-container">
-                <img src="/img/libri-antichi.jpg" alt="">
+                <img src="@image" alt="">
                 <div class="book-info">
-                    <h1 class="title">Titolo</h1>
-                    <p class="author">Autore: <span></span></p>
-                    <p class="genre">Genere: <span></span></p>
-                    <p class="publishing-house">Casa editrice: <span></span></p>
+                    <h1 class="title">@Model.Title</h1>
+                    <p class="author">Autore: <span>@Model.Author</span></p>
+                    <p class="genre">Genere: <span>@Model.Genre</span></p>
+                    <p class="publishing-house">Casa editrice: <span>@Model.PublishingHouse</span></p>
                     <p class="n-copies">Copie disponibili: <span></span></p>
-                    <p class="story">Trama: <span></span></p>
-                    <button>Prenota ora*</button>
+                    <p class="story">Trama: <span>@Model.Presentation</span></p>
+                    <a href="#">Prenota ora*</a>
                 </div>
             </div>
 
@@ -96,13 +97,14 @@
             <h2>NationlLibrary</h2>
 
             <div class="social-link">
-                <a asp-controller="Home" asp-action="index" class="nav-item">
-                    <img src="~/fontawesome/svgs/regular/house.svg" alt="">
-                    <h4>HOME</h4>
+                <a href="#" class="social-container facebook">
+                    <img src="~/fontawesome/svgs/brands/facebook-f.svg" alt="">
                 </a>
-                <a asp-controller="Home" asp-action="bookList" class="nav-item">
-                    <i class="fa-regular fa-magnifying-glass"></i>
-                    <h4>I NOSTRI LIBRI</h4>
+                <a href="#" class="social-container instagram">
+                    <img src="~/fontawesome/svgs/brands/instagram.svg" alt="">
+                </a>
+                <a href="#" class="social-container twitter">
+                    <img src="~/fontawesome/svgs/brands/twitter.svg" alt="">
                 </a>
             </div>
         </div>

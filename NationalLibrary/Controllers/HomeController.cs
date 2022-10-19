@@ -23,7 +23,7 @@ namespace NationalLibrary.Controllers
 			this.ctx = ctx;
 		}
 		private static UserFinalView userFinal;
-		private List<string> getImage()
+		private List<string> getImages()
 		{
 			List<BookFinalView> result2 = new List<BookFinalView>();
 			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
@@ -38,10 +38,20 @@ namespace NationalLibrary.Controllers
 			}
 			return bytes;
 		}
-		public IActionResult Index()
+
+        private string getImage(BookFinalView book)
+        {
+            string bytes;
+
+			bytes = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.CoverImg));
+            
+            return bytes;
+        }
+
+        public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
-			ViewData["Images"] = getImage();            
+			ViewData["Images"] = getImages();            
 			return View();
 		}
 		public IActionResult router()
@@ -69,25 +79,68 @@ namespace NationalLibrary.Controllers
 			return View(user);
 		}
 
-		public IActionResult viewBook(BookFinalView book)
+		//Controller per la gestione dei Libri
+		public IActionResult viewBook(BookFinalView book, Guid id)
+		{
+			ViewData["UserLogged"] = userFinal;			
+			book = DataQueries.getBookByGuid(id, ctx);
+            ViewData["Image"] = getImage(book);
+            return View(book);
+		}
+
+		[HttpGet]
+		public IActionResult modifyBook(Guid id)
+		{
+            return View(DataQueries.getBookByGuid(id, ctx));
+		}
+
+		[HttpPost]
+		public IActionResult modifyBook(BookFinalView book)
+		{
+
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+		public IActionResult bookList(BookFinalView book)
 		{
 			ViewData["UserLogged"] = userFinal;
+			ViewData["Images"] = getImages();
 			return View(book);
 		}
+
 		public IActionResult newBook(BookFinalView book)
 		{
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
 				return RedirectToAction("Error");
 			return View(book);
 		}
-		public IActionResult bookList(BookFinalView book)
-		{
-			ViewData["UserLogged"] = userFinal;
-			ViewData["Images"] = getImage();
-			return View(book);
-		}
 
-		public IActionResult insertEmployee(UserFinalView user)
+        ///pagina di controllo dei dati che provengono da newBook per la dashboard <summary>
+        /// pagina di controllo dei dati che provengono da newBook per la dashboard
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult insertBook(BookFinalView book)
+        {
+            foreach (var file in Request.Form.Files)
+            {
+                IFormFile img = file;
+                byte[] p1 = null;
+                using (var ms1 = new MemoryStream())
+                {
+                    img.CopyTo(ms1);
+                    p1 = ms1.ToArray();
+                }
+                book.CoverImg = p1;
+            }
+            DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+                book.Genre, book.CoverImg, DateTime.Now,
+                book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+        public IActionResult insertEmployee(UserFinalView user)
 		{
 			Console.WriteLine(user.Name);
 			Console.WriteLine(user.Username);
@@ -98,31 +151,6 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 
-		///pagina di controllo dei dati che provengono da newBook per la dashboard <summary>
-		/// pagina di controllo dei dati che provengono da newBook per la dashboard
-		/// </summary>
-		/// <param name="book"></param>
-		/// <returns></returns>
-
-		[HttpPost]
-		public IActionResult insertBook(BookFinalView book)
-		{
-			foreach (var file in Request.Form.Files)
-			{
-				IFormFile img = file;
-				byte[] p1 = null;
-				using (var ms1 = new MemoryStream())
-				{
-					img.CopyTo(ms1);
-					p1 = ms1.ToArray();
-				}
-				book.CoverImg = p1;
-			}
-			DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
-				book.Genre, book.CoverImg, DateTime.Now,
-				book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
-			return RedirectToAction("dashboard", userFinal);
-		}
 		public IActionResult employeeDashboard(UserFinalView user)
 		{
 			ViewData["Today"] = DateTime.Now;
