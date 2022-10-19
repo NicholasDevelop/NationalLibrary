@@ -206,6 +206,11 @@ namespace NationalLibrary.Controllers
 						foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
 							result2.Add(item);
 						ViewData["Books"] = result2;
+						List<BookFinalView> lastBuyedBooks = ViewsLoaders.MonthBookBought(ctx);
+						ViewData["LastBuyedBooks"] = lastBuyedBooks;
+						List<UserFinalView> lastSignedUsers = new List<UserFinalView>();
+						lastSignedUsers = DataQueries.getLastMonthRegisteredUsers(ctx);
+						ViewData["LastSignedUsers"] = lastSignedUsers;
 						return View(type);
 					case "User":
 						return RedirectToAction("userDashboard", type);
