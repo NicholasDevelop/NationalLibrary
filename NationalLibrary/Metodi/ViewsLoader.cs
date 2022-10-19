@@ -52,7 +52,7 @@ namespace NationalLibrary.Metodi
         {
             var booksview = from x in ctx.Books  // seleziona tutto nella lista CONTACTS presente in CONTEXT
                             join a in ctx.Locations on x.LocationGuidFK equals a.LocationGuid
-                            // In pratica joino solo i dati dove x.qualcosa (la select iniziale) è uguale alla FK del dato stesso
+                            join i in ctx.ISBNLists on x.ISBNFK equals i.ISBN
 
 
                             // Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
@@ -65,10 +65,11 @@ namespace NationalLibrary.Metodi
                                 Available = x.Available,
                                 Presentation = x.Presentation,
                                 Genre = x.Genre,
-                                CoverImg= x.CoverImg,
+                                CoverImg = x.CoverImg,
                                 Room = a.Room,
                                 Scaffhold = a.Schaffold,
-                                Position = a.Position
+                                Position = a.Position,
+                                ISBN = i.ISBN
 
                             };
 
