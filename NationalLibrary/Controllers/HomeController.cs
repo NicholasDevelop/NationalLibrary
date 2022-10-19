@@ -10,6 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Reflection.Metadata;
+using System.Linq.Expressions;
 
 namespace NationalLibrary.Controllers
 {
@@ -17,6 +18,8 @@ namespace NationalLibrary.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly LibraryContext ctx;
+		private static BookFinalView tmp;
+
 		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
@@ -42,7 +45,6 @@ namespace NationalLibrary.Controllers
         private string getImage(BookFinalView book)
         {
             string bytes;
-
 			bytes = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.CoverImg));
             
             return bytes;
@@ -79,6 +81,7 @@ namespace NationalLibrary.Controllers
 			return View(user);
 		}
 
+
 		//Controller per la gestione dei Libri
 		public IActionResult viewBook(BookFinalView book, Guid id)
 		{
@@ -88,20 +91,36 @@ namespace NationalLibrary.Controllers
             return View(book);
 		}
 
-		[HttpGet]
-		public IActionResult modifyBook(Guid id)
-		{
-            return View(DataQueries.getBookByGuid(id, ctx));
-		}
+		public IActionResult modifyBook(BookFinalView book,Guid id)
+		{		
+            book = DataQueries.getBookByGuid(id, ctx);
+			tmp = book;
+			ViewData["Image"] = getImage(book);
+            return View(book);
+        }
 
-		[HttpPost]
-		public IActionResult modifyBook(BookFinalView book)
+        [HttpPost]
+        public IActionResult postModifyBook(BookFinalView book)
 		{
-
+            foreach (var file in Request.Form.Files)
+            {
+                IFormFile img = file;
+                byte[] p1 = null;
+                using (var ms1 = new MemoryStream())
+                {
+                    img.CopyTo(ms1);
+                    p1 = ms1.ToArray();
+                }
+                tmp.CoverImg = p1;
+            }
+			book.BookGuid = tmp.BookGuid;
+			book.CoverImg = tmp.CoverImg;
+            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, ctx);
             return RedirectToAction("dashboard", userFinal);
         }
 
-		public IActionResult bookList(BookFinalView book)
+
+        public IActionResult bookList(BookFinalView book)
 		{
 			ViewData["UserLogged"] = userFinal;
 			ViewData["Images"] = getImages();
@@ -115,7 +134,6 @@ namespace NationalLibrary.Controllers
 			return View(book);
 		}
 
-        ///pagina di controllo dei dati che provengono da newBook per la dashboard <summary>
         /// pagina di controllo dei dati che provengono da newBook per la dashboard
         /// </summary>
         /// <param name="book"></param>
@@ -140,6 +158,9 @@ namespace NationalLibrary.Controllers
             return RedirectToAction("dashboard", userFinal);
         }
 
+
+
+		//Controller per la gestione degli impiegati
         public IActionResult insertEmployee(UserFinalView user)
 		{
 			Console.WriteLine(user.Name);

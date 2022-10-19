@@ -121,7 +121,7 @@ namespace NationalLibrary.Metodi
             ctx.SaveChanges();
 
         }
-        public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,byte[] Coverimg, string Room, string Scaffhold, string Shelf, int Position,string ISBN, LibraryContext ctx)
+        public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre,byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position,string ISBN, LibraryContext ctx)
         {
 
             Book            a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];

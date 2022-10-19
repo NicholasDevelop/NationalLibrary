@@ -1,4 +1,7 @@
 ﻿@model NationalLibrary.FinalViews.BookFinalView
+@{
+    string image = ViewData["Image"] as string;
+}
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +14,7 @@
 
     <main>
         <div class="title-container">
-            <h1 class="newbook-title" style="margin=20px 0 0 0;">Aggiungi un nuovo libro</h1>
+            <h1 class="newbook-title" style="margin=20px 0 0 0;">Modifica libro</h1>
         </div>
 
         <div class="container">
@@ -99,7 +102,8 @@
 
                     <!-- Immagine di copertina -->
                     <label for="" class="label-file">Scegli l'immagine di cover:</label>
-                    <input type="file" name="CoverImg" class="input-file" asp-for="@Model.CoverImg" value="@Model.CoverImg">
+                    <img src="@image" />
+                    <input type="file" name="CoverImg" class="input-file" asp-for="@Model.CoverImg">
 
                     @*<div class="label-container">
                         <!-- Copie in possesso -->
@@ -110,8 +114,8 @@
                     </div>*@
 
                     <div class="button-container">
-                        <Button class="special-button red" type="submit" name="submitEmployee" asp-action="dashboard" asp-controller="Home">Annulla Modifica</Button>
-                        <Button class="special-button" type="submit" name="submitEmployee" asp-action="editBook" asp-controller="Home" asp-route-id="@Model.BookGuid" >Conferma Modifica</Button>
+                        <Button class="special-button red" type="submit" asp-action="dashboard" asp-controller="Home">Annulla Modifica</Button>
+                        <Button class="special-button" type="submit" asp-action="postModifyBook" asp-controller="Home">Conferma Modifica</Button>
                     </div>
                 </form>
             </div>
