@@ -10,18 +10,20 @@
 <body>
     <div class="container">
         <img src="~/img/BackgroundUserLogin.svg" alt="">
-        <form asp-action="dashboard" asp-controller="Home" method="post">
-            <img src="~/img/loginIcon.png" alt="">
-            <label class="custom-field">
-                <input asp-for="@Model.Username" type="text" placeholder=" " />
-                <span class="placeholder">Inserisci Username</span>
-            </label>
+        <div class="formContainer">
+            <form asp-action="dashboard" asp-controller="Home" method="post">
+                <img src="~/img/loginIcon.png" alt="">
+                <label class="custom-field">
+                    <input asp-for="@Model.Username" type="text" placeholder=" " />
+                    <span class="placeholder">Inserisci Username</span>
+                </label>
 
-            <label class="custom-field">
-                <input asp-for="@Model.Password" type="password" placeholder=" " />
-                <span class="placeholder">Inserisci Password</span>
-            </label>
-            <Button class="special-button" type="submit" name="submitEmployee">Accedi</Button>
-        </form>
+                <label class="custom-field">
+                    <input asp-for="@Model.Password" type="password" placeholder=" " />
+                    <span class="placeholder">Inserisci Password</span>
+                </label>
+                <Button class="special-button" type="submit" name="submitEmployee">Accedi</Button>
+            </form>
+        </div>
     </div>
 </body>
