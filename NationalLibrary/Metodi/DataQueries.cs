@@ -218,7 +218,7 @@ namespace NationalLibrary.Metodi
 			List<Book> c = ctx.Books.Where(u => u.ISBNFK == ISBN && u.Available == true).ToList();
 			bool check;
 
-			if (c != null)
+			if (c.Count > 0)
 			{
 				check = true;
 			}
