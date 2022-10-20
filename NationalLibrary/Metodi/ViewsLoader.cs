@@ -32,6 +32,7 @@ namespace NationalLibrary.Metodi
 								BirthDate = x.BirthDate,
 								SignUpDate = x.SignUpDate,
 								MobilePhone = x.MobilePhone,
+								FCRelatedTO = x.FCRelatedTO,
 								Email = a.Email,
 								City = b.City,
 								Street = b.Street,
@@ -86,13 +87,14 @@ namespace NationalLibrary.Metodi
 							join c in ctx.People on a.FiscalCodeFK equals c.FiscalCode
 							join d in ctx.WaitingLists on c.FiscalCode equals d.FiscalCodeFK
 							join e in ctx.Requests on c.FiscalCode equals e.FiscalCodeFK
-
+							join f in ctx.Users on c.FiscalCode equals f.FiscalCode
 
 							// Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
 							select new RentRequestFinalView
 							{
 								BookGuid = x.BookGuid,
 								Available = x.Available,
+
 								ISBN = b.ISBN,
 
 								WaitingGuid = d.WaitingGuid,
@@ -110,6 +112,13 @@ namespace NationalLibrary.Metodi
 								RentGuid = a.RentGuid,
 								WithdrawnOn = a.WithdrawnOn,
 								ReturnedOn = a.ReturnedOn,
+
+								FiscalCode = c.FiscalCode,
+								Name = c.Name,
+								Surname = c.Surname,
+								MobilePhone = c.MobilePhone,
+
+								Email = f.Email
 							};
 
 			return rentsview;

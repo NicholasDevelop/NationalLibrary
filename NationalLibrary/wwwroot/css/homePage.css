@@ -22,6 +22,7 @@ a {
 
 body {
     background-color: #CCCCCC !important;
+    min-height: 100vh !important;
 }
 
 /* Header rules */
@@ -203,6 +204,7 @@ main {
     display: flex !important;
     flex-direction: column;
     align-items: center;
+    flex-grow: 1;
 }
 
 #our-info {
@@ -286,8 +288,9 @@ main {
 }
 
 .card {
+    height: 100%;
     width: 17%;
-    height: 220px;
+    aspect-ratio: 3/5;
     position: relative;
     border-radius: 3px;
     border: 1px solid #961224;
@@ -300,7 +303,7 @@ main {
 }
 
 .card img {
-    height: 70%;
+    height: 80%;
 }
 
 .card-description {
