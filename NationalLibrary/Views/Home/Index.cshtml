@@ -4,6 +4,7 @@
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
+    Console.WriteLine(image.Count);
 }
 <head>
     <meta charset="UTF-8">
@@ -130,7 +131,7 @@
         <!-- More-Rented Section -->
         <section id="more-rented">
             <div class="more-rented-container">
-                <h1>I LIBRI PIU' NOLEGGIATI DELLA SETTIMANA</h1>
+                <h1>I LIBRI PIU' NOLEGGIATI DELLA SETTIMANA (TOP 10)</h1>
                 <div class="card-container">
                     @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
                     {
@@ -141,6 +142,10 @@
                             <div class="card-description">
                                 <h3>@book.Title</h3>
                             </div>
+                            @if (count == 10)
+                            {
+                                break;
+                            }
                         </a>
                     }
                 </div>
@@ -152,15 +157,20 @@
             <div class="book-news-container">
                 <h1>LE NOVITA'</h1>
                 <div class="card-container">
+                    @count = 0;
                     @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
                     {
-                        count++;
                         <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
-                            @*<img src="@Model.CoverImg[i]" alt="">*@
+                            <img src="@image[count]" alt="">
                             <div class="card-description">
-                                @*<h3>@Model.Title[i]</h3>*@
+                                <h3>@book.Title</h3>
                             </div>
+                        count++;
                         </a>
+                        if (count == 5)
+                        {
+                            break;
+                        }
                     }
                 </div>
             </div>
