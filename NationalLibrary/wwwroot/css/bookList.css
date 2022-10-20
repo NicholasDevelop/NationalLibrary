@@ -45,6 +45,7 @@ header{
     justify-content: space-between;
     padding: 5px 10px;
     background-color: #961224;
+    position: relative;
 }
 
 .first-header-container img{
@@ -56,6 +57,83 @@ header{
     border: transparent;
     background-color: #7B0F1D;
     color: white !important;
+}
+
+.login-container {
+    position: relative;
+}
+
+.login-container h4 {
+    color: white !important;
+    font-size: 1.1rem !important;
+    position: absolute;
+    right: 102px;
+    top: -7px;
+    width: 185px;
+    margin: 0px !important;
+}
+
+#admin-line {
+    background-color: #961224;
+    color: white !important;
+    position: absolute;
+    right: 0px;
+    top: -20px;
+}
+
+#admin-line nav ul li img {
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 100rem;
+    border: 1px solid black;
+    justify-self: center;
+}
+
+
+#admin-line nav .drop-down {
+    border-radius: 5px;
+    list-style: none;
+    overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
+    height: 90px; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+    background-color: #961224;
+    color: white !important;
+    font-family: Arial;
+    width: 100px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    -webkit-transition: height 0.3s ease;
+    transition: height 0.3s ease;
+    border: 1px solid black;
+}
+
+#admin-line nav .drop-down.closed {
+    height: 43px;
+}
+
+#admin-line nav {
+    justify-self: center;
+    align-self: center;
+    top: 10px;
+}
+
+#admin-line nav .drop-down li {
+    border-bottom: 1px solid;
+    border-color: black;
+}
+
+#admin-line nav .drop-down li a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 10px; /* Larger touch target area */
+}
+
+#admin-line nav .drop-down li:first-child a:after {
+    content: "\25BC";
+    float: right;
+    margin-left: -30px; /* Excessive -margin to bring link text back to center */
+    margin-right: 5px;
 }
 
 .second-header-container{
@@ -125,8 +203,9 @@ nav .nav-item h4{
 
 /* Main */
 main{
-    /* min-height: 80vh; */
+     min-height: 80vh !important; 
     position: relative;
+    z-index: -1;
 }
 
 .container{
@@ -234,66 +313,7 @@ main{
     color: white;
 }
 
-#admin-line {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
 
-#admin-line nav ul li img {
-    cursor: pointer;
-    margin-left: 5px;
-    border-radius: 100rem;
-    border: 1px solid black;
-    justify-self: center;
-}
-
-
-#admin-line nav .drop-down {
-    border-radius: 5px;
-    border: 3px solid black;
-    list-style: none;
-    overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
-    height: 172px; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
-    background-color: whitesmoke;
-    font-family: Arial;
-    width: 100px;
-    margin: 0 auto;
-    padding: 0;
-    text-align: center;
-    -webkit-transition: height 0.3s ease;
-    transition: height 0.3s ease;
-}
-
-#admin-line nav .drop-down.closed {
-    height: 43px;
-}
-
-#admin-line nav {
-    justify-self: center;
-    align-self: center;
-    top: 10px;
-}
-
-#admin-line nav .drop-down li {
-    border-bottom: 5px solid;
-    border-color: rgb(164, 164, 164);
-}
-
-#admin-line nav .drop-down li a {
-    display: block;
-    color: black;
-    text-decoration: none;
-    padding: 10px; /* Larger touch target area */
-}
-
-#admin-line nav .drop-down li:first-child a:after {
-    content: "\25BC";
-    float: right;
-    margin-left: -30px; /* Excessive -margin to bring link text back to center */
-    margin-right: 5px;
-}
 /* Footer */
 footer{
     background-color: #333333;
