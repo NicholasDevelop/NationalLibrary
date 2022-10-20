@@ -79,10 +79,10 @@ header{
     position: absolute;
     right: 0px;
     top: -20px;
+    cursor: pointer;
 }
 
 #admin-line nav ul li img {
-    cursor: pointer;
     margin: 5px;
     border-radius: 100rem;
     border: 1px solid black;

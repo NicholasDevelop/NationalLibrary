@@ -36,10 +36,10 @@
                             @user.Name 
                             @user.Surname
                         </h4>
-                        <div id="admin-line">
+                        <div id="admin-line" onclick="openMenu()">
                             <nav>
                                 <ul id="slowdown-menu" class="drop-down closed">
-                                    <li><img style="width: 32px; height: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
+                                    <li><img style="width: 32px; height: 32px" class="nav-button" src="~/img/admin.svg" alt=""></li>
                                     <li><a asp-controller="Home" asp-action="logout">Logout</a></li>
                                 </ul>
                             </nav>
@@ -128,6 +128,7 @@
         </div>
     </footer>
 </body>
+
 <script>
     function openMenu() {
         document.getElementById("slowdown-menu").classList.toggle('closed');
