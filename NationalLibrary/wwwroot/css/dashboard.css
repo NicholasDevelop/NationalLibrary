@@ -110,11 +110,11 @@ li {
     border-left: 5px solid transparent;
 }
 
-.nav-link.active {
-    border-left: 5px solid rgb(115, 64, 255);
-    padding-left: 5px;
-    background: linear-gradient(to right, rgb(194, 172, 255), rgb(230, 220, 255));
-}
+    .nav-link.active {
+        border-left: 5px solid rgb(115, 64, 255);
+        padding-left: 5px;
+        background: linear-gradient(to right, rgb(194, 172, 255), rgb(230, 220, 255));
+    }
 
 #Dashboard {
     height: 100vh;
@@ -125,7 +125,7 @@ li {
     position: relative;
 }
 
-#Dashboard.hidden {
+    #Dashboard.hidden {
         position: relative;
         transform: translateX(-1300px);
         z-index: -100;
@@ -148,6 +148,7 @@ li {
     transform: translateX(0px);
     transition: 1.8s all
 }
+
 #Employee.hidden {
     /* z-index: -1; */
     position: absolute;
@@ -156,18 +157,20 @@ li {
     float: left;
     transform: translateX(1470px);
 }
+
 #Employee {
-    width:63%;
+    width: 63%;
     height: 100vh;
     top: 0px;
     position: absolute;
     transform: translateX(0px);
     transition: 1.8s all
 }
-#Employee:not(.hidden) ~ #Magazine.hidden {
-    position: absolute;
-    transform: translateX(-1470px);
-}
+
+    #Employee:not(.hidden) ~ #Magazine.hidden {
+        position: absolute;
+        transform: translateX(-1470px);
+    }
 
 main {
     display: grid;
@@ -275,11 +278,12 @@ td {
     font-size: 14px;
 }
 
-.edit-book{
-    width:24px;
+.edit-book {
+    width: 24px;
 }
-.delete-book{
-    width:24px;
+
+.delete-book {
+    width: 24px;
 }
 
 .transition-Container {
@@ -324,70 +328,96 @@ td {
         transition: height 0.3s ease;
     }
 
-    #admin-line nav .drop-down.closed {
-        /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
+        #admin-line nav .drop-down.closed {
+            /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
       with overflow: hidden set on the ul will hide all list items apart from the first */
-        /* current li height 38px + 5px border */
-        height: 43px;
-    }
+            /* current li height 38px + 5px border */
+            height: 43px;
+        }
+
     #admin-line nav {
         position: fixed;
         justify-self: center;
         align-self: center;
         top: 10px;
     }
+
         #admin-line nav ul {
             position: absolute;
         }
-    #admin-line nav .drop-down li {
-        border-bottom: 5px solid;
-        border-color: rgb(164, 164, 164);
-    }
 
-#admin-line nav .drop-down li a {
-    display: block;
-    color: black;
-    text-decoration: none;
-    padding: 10px; /* Larger touch target area */
-}
+        #admin-line nav .drop-down li {
+            border-bottom: 5px solid;
+            border-color: rgb(164, 164, 164);
+        }
 
-#admin-line nav .drop-down li:first-child a:after {
-    content: "\25BC";
-    float: right;
-    margin-left: -30px; /* Excessive -margin to bring link text back to center */
-    margin-right: 5px;
-}
+            #admin-line nav .drop-down li a {
+                display: block;
+                color: black;
+                text-decoration: none;
+                padding: 10px; /* Larger touch target area */
+            }
 
-.card-container{
-    height: 64%;
+            #admin-line nav .drop-down li:first-child a:after {
+                content: "\25BC";
+                float: right;
+                margin-left: -30px; /* Excessive -margin to bring link text back to center */
+                margin-right: 5px;
+            }
+
+.card-container {
+    overflow-y:scroll;
+    height: 100%;
     width: 100%;
     background: whitesmoke;
     border-radius: 15px;
-    box-shadow: 20px 20px 20px whitesmoke;
+    box-shadow: 5px 15px 20px lightgrey;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 22.75% 22.75% 22.75% 22.75%;
     column-gap: 3%;
+    row-gap: 10%;
     justify-items: center;
+    padding: 20px;
 }
-.card{
+
+.card {
+    margin-bottom: 50px;
     display: grid;
     grid-template-rows: 80% 20%;
-    height: 200px;
-    align-self:center;
+    height: 400px;
+    align-self: center;
     background-color: lightgray;
-    transition: 0.3s all ease;
+    transition: 0.3s all;
+    border-radius: 20px;
 }
-.card:hover {
-    zoom: 1.1;
-    box-shadow: 1px 1px 1px #BFBFBF;
+
+    .card:hover {
+        scale: 1.1;
+        box-shadow: 5px 5px 5px #BFBFBF;
+    }
+
+.card-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #b02c3d;
+    width: 100%;
 }
+
+    .card-description p {
+        text-align: center;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 10px;
+        color: white;
+    }
 
 .transitions {
     margin-top: 20px;
     display: grid;
     grid-template-rows: 15% 15% 15% 15% 15%;
     row-gap: 5%;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 .transition {
@@ -398,10 +428,10 @@ td {
     background-color: whitesmoke;
 }
 
-.transition div {
-    display: grid;
-    grid-template-rows: 80% 20%;
-}
+    .transition div {
+        display: grid;
+        grid-template-rows: 80% 20%;
+    }
 
 ::-webkit-scrollbar {
     width: 5px;

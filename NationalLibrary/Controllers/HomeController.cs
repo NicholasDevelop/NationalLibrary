@@ -197,7 +197,7 @@ namespace NationalLibrary.Controllers
 					DataQueries.InsertUser(user.FiscalCode, "User", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
 					user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
 					user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
-					return RedirectToAction("router");
+					return RedirectToAction("dashboard", userFinal);
 				}
 				else
 				{
@@ -207,7 +207,7 @@ namespace NationalLibrary.Controllers
 						user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
 						user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, user.FCRelatedTO, ctx);
 					}
-					return RedirectToAction("router");
+					return RedirectToAction("dashboard", userFinal);
 				}
 			}
 			catch (Exception ex)
