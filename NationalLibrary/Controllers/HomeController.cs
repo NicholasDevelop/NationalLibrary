@@ -228,6 +228,10 @@ namespace NationalLibrary.Controllers
 						user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
 						user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, user.FCRelatedTO, ctx);
 					}
+					else
+					{
+						return RedirectToAction("addUser");
+					}
 					return RedirectToAction("dashboard", userFinal);
 				}
 			}
@@ -249,6 +253,7 @@ namespace NationalLibrary.Controllers
 			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
 				result2.Add(item);
 			ViewData["Books"] = result2;
+			ViewData["Images"] = getImages();
 			List<RentRequestFinalView> rentedBooks = new List<RentRequestFinalView>();
 			foreach (RentRequestFinalView item in ViewsLoaders.RentRequestFinalViewList(ctx))
 				rentedBooks.Add(item);

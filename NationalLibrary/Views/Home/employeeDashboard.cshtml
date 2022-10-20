@@ -3,6 +3,8 @@
     List<NationalLibrary.FinalViews.UserFinalView> userFinalViews = ViewData["Users"] as List<NationalLibrary.FinalViews.UserFinalView>;
     DateTime today = DateTime.Parse(ViewData["Today"].ToString());
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
+    int count = 0;
+    List<string> image = ViewData["Images"] as List<string>;
 }
 <head>
     <meta charset="UTF-8">
@@ -157,25 +159,21 @@
                 <main style="grid-template-rows: 5% 5% 60% 5% auto;">
                     <h1 style="margin-top: 2px;">Libreria</h1>
 
-                    <h2 id="date" style="width:30%">
+                    <h2 id="date" style="width:20%">
                         @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                                                 alt="" srcset="">
                     </h2>
-                    <div class="table-container">
-                        <h2 id="waiting-list">Libri in libreria</h2>
-                        <table>
-                            <tr>
-                                <th>ISBN</th>
-                                <th>Titolo</th>
-                                <th>Autore</th>
-                                <th>Casa Editrice</th>
-                                <th>Genere</th>
-                                <th>Data D'Acquisto</th>
-                                <th>Prezzo</th>
-                                <th>Disponibile</th>
-                            </tr>
-                        </table>
-
+                    <div class="card-container">
+                        @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
+                        {
+                            count++;
+                            <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
+                                <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
+                                <div class="card-description">
+                                    <p>@item.Title</p>
+                                </div>
+                            </a>
+                        }
                     </div>
                     <a style="margin-top:5%" asp-action="newBook" asp-controller="Home">Aggiungi Libro</a>
                 </main>
