@@ -11,6 +11,7 @@ namespace NationalLibrary.FinalViews
         public string Surname { get; set; }
         public string MobilePhone { get; set; }
         public DateTime BirthDate { get; set; }
+        public string FCRelatedTO { get; set; }
         public DateTime? SignUpDate { get; set; }
 
         // Residence
