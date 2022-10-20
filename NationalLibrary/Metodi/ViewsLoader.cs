@@ -32,6 +32,7 @@ namespace NationalLibrary.Metodi
 								BirthDate = x.BirthDate,
 								SignUpDate = x.SignUpDate,
 								MobilePhone = x.MobilePhone,
+								FCRelatedTO = x.FCRelatedTO,
 								Email = a.Email,
 								City = b.City,
 								Street = b.Street,
