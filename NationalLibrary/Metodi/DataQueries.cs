@@ -64,6 +64,7 @@ namespace NationalLibrary.Metodi
 
 			a.FiscalCode = FiscalCode;
 			a.Type = Type;
+			
 			a.Name = Name;
 			a.Surname = Surname;
 			a.MobilePhone = MobilePhone;
@@ -124,7 +125,7 @@ namespace NationalLibrary.Metodi
 			ctx.SaveChanges();
 
 		}
-		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position, string ISBN, LibraryContext ctx)
+		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position, string ISBN,string Price, LibraryContext ctx)
 		{
 
 			Book a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
@@ -142,6 +143,7 @@ namespace NationalLibrary.Metodi
 			a.Presentation = Presentation;
 			a.Genre = Genre;
 			a.CoverImg = Coverimg;
+			a.Price = Price;
 			b.Room = Room;
 			b.Schaffold = Scaffhold;
 			b.Shelf = Shelf;
