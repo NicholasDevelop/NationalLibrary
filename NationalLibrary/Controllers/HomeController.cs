@@ -41,7 +41,12 @@ namespace NationalLibrary.Controllers
 			}
 			return bytes;
 		}
-
+		public IActionResult addUser()
+		{
+			if (userFinal == null || userFinal.Type.ToLower() == "user")
+				return RedirectToAction("Error");
+			return View();
+		}
         private string getImage(BookFinalView book)
         {
             string bytes;
@@ -115,7 +120,7 @@ namespace NationalLibrary.Controllers
             }
 			book.BookGuid = tmp.BookGuid;
 			book.CoverImg = tmp.CoverImg;
-            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, ctx);
+            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
             return RedirectToAction("dashboard", userFinal);
         }
 
@@ -213,8 +218,10 @@ namespace NationalLibrary.Controllers
 						ViewData["LastSignedUsers"] = lastSignedUsers;
 						return View(type);
 					case "User":
+						userFinal = type;
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
+						userFinal = type;
 						return RedirectToAction("employeeDashboard", type);
 				}
 			}

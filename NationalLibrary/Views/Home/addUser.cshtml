@@ -28,7 +28,16 @@
             <div class="container-left">
                 <img class="mainBackground" src="~/img/librarianBackground.svg" alt="">
             </div>
+            @if (Model != null)
+            {
+                @if ((DateTime.Now - Model.BirthDate).TotalDays < 6570)
+                {
+                    <section>
+                        <h1>Ciaoooooooooooooooooooo</h1>
+                    </section>
+                }
 
+            }
             <div class="container-right">
                 <form asp-action="insertEmployee" asp-controller="Home" method="post">
                     <div class="form-data">

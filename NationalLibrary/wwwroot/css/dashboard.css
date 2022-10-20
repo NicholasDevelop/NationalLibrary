@@ -232,7 +232,6 @@ main {
 .graph {
     width: 80px;
     height: 80px;
-    background-color: rgb(105, 105, 224);
     border-radius: 100rem;
     display: flex;
     justify-content: center;

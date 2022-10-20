@@ -71,8 +71,8 @@ namespace NationalLibrary.Metodi
 								Room = a.Room,
 								Scaffhold = a.Schaffold,
 								Position = a.Position,
-								ISBN = i.ISBN
-
+								ISBN = i.ISBN,
+								Shelf = a.Shelf
 							};
 
 			return booksview;
