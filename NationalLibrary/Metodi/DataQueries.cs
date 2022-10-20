@@ -88,11 +88,20 @@ namespace NationalLibrary.Metodi
 
 
 		}
+        public static bool CheckFCExsist(string FiscalCode, LibraryContext ctx)
+        {
+            bool check = false;
+
+            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            if (a != null) { check = true; }
+
+            return check;
+        }
 
 
 
-		//////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
-		public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
+        //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
 
 		{
 			var newbook = new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg, BuyDate = DateTime.Now, Price = Price, ISBNFK = ISBN };
@@ -425,6 +434,7 @@ namespace NationalLibrary.Metodi
 
 			return list;
 		}
+
 	}
 
 }
