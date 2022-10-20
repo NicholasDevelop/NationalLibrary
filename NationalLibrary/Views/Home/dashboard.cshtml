@@ -6,6 +6,7 @@
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
     List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int percentaceLastBuyedBooks = lastBuyedBooks.Count * 100 / 50;
+    List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
 }
 <head>
     <meta charset="UTF-8">
@@ -82,7 +83,22 @@
                                     <th>ISBN</th>
                                     <th>Titolo Libro</th>
                                     <th>Richiesto Il</th>
+                                    <th>Restituito Il</th>
                                 </tr>
+                                @foreach (NationalLibrary.FinalViews.RentRequestFinalView item in @rentedBooks)
+                                {
+                                    <tr>
+                                        <td>@item.FiscalCode</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Surname</td>
+                                        <td>@item.MobilePhone</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.ISBN</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.RequestedOn</td>
+                                        <td>@item.ReturnedOn</td>
+                                    </tr>
+                                }
                             </table>
 
                         </div>
@@ -170,7 +186,7 @@
                                 </div>
                                 <div class="data-info">
                                     <h4>Libri Noleggiati</h4>
-                                    <h2 style="margin-top: 20px;">70</h2>
+                                    <h2 style="margin-top: 20px;">@rentedBooks.Count</h2>
                                 </div>
                                 <h5 style="color: lightgray;">Ultimo mese</h5>
                             </div>
@@ -181,9 +197,10 @@
                                 </div>
                                 <div class="graph" style="background: rgb(105, 105, 224);">
                                     <div class="graph" style="background-color: white; width: 60px; height: 60px;">
-                                        <h3>4%</h3>
+                                        <h3>@rentedBooks.Count%</h3>
                                     </div>
                                 </div>
+                                <h5 style="color: lightgray;">Obiettivo: 100</h5>
                             </div>
                         </div>
                         <div class="graph-data-container">
@@ -296,7 +313,7 @@
                                         <td>No</td>
                                     }
                                     <td><a asp-controller="Home" asp-action="modifyBook" asp-route-id="@item.BookGuid"><img class="edit-book" src="~/img/edit.svg" /></a></td>
-                                    <td><a asp-controller="Home" asp-action="deleteBook" asp-route-id="@item.BookGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg"/></a></td>
+                                    <td><a asp-controller="Home" asp-action="deleteBook" asp-route-id="@item.BookGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                                 </tr>
                             }
                         </table>
@@ -472,18 +489,18 @@
         function openMenu() {
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                                                                                                         // window.onclick = function (event) {
-                                                                                                                                                            //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
-                                                                                                                                                            //     console.log(arrowbooks)
-                                                                                                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
-                                                                                                                                                            //         hideData("books")
-                                                                                                                                                            //     }
-                                                                                                                                                            //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
-                                                                                                                                                            //         hideData("users")
-                                                                                                                                                            //     }
-                                                                                                                                                            //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
-                                                                                                                                                            //         hideData("buyedBooks")
-                                                                                                                                                            //     }
-                                                                                                                                                            // }
+                                                                                                                 // window.onclick = function (event) {
+                                                                                                                                                                    //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
+                                                                                                                                                                    //     console.log(arrowbooks)
+                                                                                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
+                                                                                                                                                                    //         hideData("books")
+                                                                                                                                                                    //     }
+                                                                                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
+                                                                                                                                                                    //         hideData("users")
+                                                                                                                                                                    //     }
+                                                                                                                                                                    //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
+                                                                                                                                                                    //         hideData("buyedBooks")
+                                                                                                                                                                    //     }
+                                                                                                                                                                    // }
     </script>
 </body>

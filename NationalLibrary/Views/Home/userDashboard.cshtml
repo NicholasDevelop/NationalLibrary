@@ -97,8 +97,8 @@
                         @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
                         {
                             count++;
-                            <a class="card" href="#">
-                                <img src="@image[count - 1]" alt="">
+                            <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
+                                <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
                                 <div class="card-description">
                                     <p>@item.Title</p>
                                 </div>

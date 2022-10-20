@@ -1,0 +1,90 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+    background-image: url('~/img/Sfondo-Generale.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100vh;
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 70% 25%;
+    padding-left: 5%;
+    width: 100vw;
+    height: 100%;
+}
+
+.container-left {
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-column-gap: 2%;
+}
+
+.book-cover {
+    height: 70%;
+}
+
+.book-details {
+    display: flex;
+    row-gap: 7%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+.img-nav {
+    width: 120px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10%;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(25, 177, 227);
+    border-radius: 100rem;
+    transition: 0.5s;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: blue;
+    }

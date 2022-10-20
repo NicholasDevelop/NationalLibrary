@@ -93,12 +93,33 @@ namespace NationalLibrary.Controllers
 
 
 		//Controller per la gestione dei Libri
+		public IActionResult viewBookFromUser(BookFinalView book, Guid id)
+		{
+			book = DataQueries.getBookByGuid(id, ctx);
+			if (DataQueries.IsBookAvaiable(book.ISBN, ctx))
+			{
+				ViewData["UserLogged"] = userFinal;
+				ViewData["Image"] = getImage(book);
+				return View(book);
+			}
+			else
+			{
+				return RedirectToAction("userDashboard", userFinal);
+			}
+		}
 		public IActionResult viewBook(BookFinalView book, Guid id)
 		{
 			ViewData["UserLogged"] = userFinal;
 			book = DataQueries.getBookByGuid(id, ctx);
 			ViewData["Image"] = getImage(book);
 			return View(book);
+		}
+		public IActionResult rentBook(BookFinalView book, Guid id)
+		{
+			BookFinalView bookToRent = DataQueries.getBookByGuid(id, ctx);
+			DataQueries.InsertRent(bookToRent.BookGuid, userFinal.FiscalCode, ctx);
+
+			return RedirectToAction("dashboard", userFinal);
 		}
 
 		public IActionResult modifyBook(BookFinalView book, Guid id)
@@ -261,6 +282,7 @@ namespace NationalLibrary.Controllers
 						ViewData["Books"] = result2;
 						List<BookFinalView> lastBuyedBooks = ViewsLoaders.MonthBookBought(ctx);
 						ViewData["LastBuyedBooks"] = lastBuyedBooks;
+						ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 						List<UserFinalView> lastSignedUsers = new List<UserFinalView>();
 						lastSignedUsers = DataQueries.getLastMonthRegisteredUsers(ctx);
 						ViewData["LastSignedUsers"] = lastSignedUsers;

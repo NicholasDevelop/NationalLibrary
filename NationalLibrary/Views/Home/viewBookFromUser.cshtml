@@ -1,0 +1,50 @@
+﻿@model NationalLibrary.FinalViews.BookFinalView
+
+@{
+    int count = 0;
+    string image = ViewData["Image"] as string;
+}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/css/viewBookFromDashboard.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <a asp-action="Index" asp-controller="Home">
+                <img class="img-nav" src="~/img/LogoFinale.svg" alt="">
+            </a>
+
+            <div>
+                <h2>Prenota Un Libro</h2>
+            </div>
+            <a class="dashboard" asp-action="router" asp-controller="Home">Dashboard</a>
+        </div>
+    </header>
+
+    <!-- Inizio Main -->
+    <main>
+        <div class="form-container">
+            <div class="container-left">
+                <img class="book-cover" src="@image" alt="" srcset="">
+                <div class="book-details">
+                    <h1 class="title">@Model.Title</h1>
+                    <p class="author">Autore: <span>@Model.Author</span></p>
+                    <p class="genre">Genere: <span>@Model.Genre</span></p>
+                    <p class="publishing-house">Casa editrice: <span>@Model.PublishingHouse</span></p>
+                    <p class="n-copies">Copie disponibili: <span></span></p>
+                    <p class="story">Trama: <span>@Model.Presentation</span></p>
+                    <a asp-action="rentBook" asp-route-id="@Model.BookGuid" asp-controller="Home">Prenota ora</a>
+                </div>
+            </div>
+            <div class="container-right">
+            </div>
+        </div>
+    </main>
+</body>

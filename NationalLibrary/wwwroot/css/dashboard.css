@@ -388,13 +388,12 @@ td {
     align-self: center;
     background-color: lightgray;
     transition: 0.3s all;
-    border-radius: 20px;
 }
 
-    .card:hover {
-        scale: 1.1;
-        box-shadow: 5px 5px 5px #BFBFBF;
-    }
+.card:hover {
+    scale: 1.1;
+    box-shadow: 5px 5px 5px #BFBFBF;
+}
 
 .card-description {
     display: flex;
@@ -404,13 +403,13 @@ td {
     width: 100%;
 }
 
-    .card-description p {
-        text-align: center;
-        font-weight: 700;
-        font-size: 16px;
-        padding: 10px;
-        color: white;
-    }
+.card-description p {
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 10px;
+    color: white;
+}
 
 .transitions {
     margin-top: 20px;
