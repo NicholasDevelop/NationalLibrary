@@ -116,17 +116,25 @@ namespace NationalLibrary.Metodi
 			//Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
 
 			Book view = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
+			ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == view.ISBNFK).ToList()[0];
 			ctx.Books.Remove(view);
+
+			TryISBNDelete(a.ISBN, ctx);
 
 			ctx.SaveChanges();
 
 		}
-		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int Position, string ISBN, LibraryContext ctx)
+		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position, string ISBN, LibraryContext ctx)
 		{
 
 			Book a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
-			List<Location> b = ctx.Locations.Where(u => u.LocationGuid == a.LocationGuidFK).ToList();
+			Location b = ctx.Locations.Where(u => u.LocationGuid == a.LocationGuidFK).ToList()[0];
+			ISBNList i = ctx.ISBNLists.Where(u => u.ISBN == a.ISBNFK).ToList()[0];
+			List<WaitingList> w = ctx.WaitingLists.Where(u => u.ISBNFK == i.ISBN).ToList();
 
+			string oldisbn = i.ISBN;
+
+			// Modifiche al libro
 			a.Title = Title;
 			a.Author = Author;
 			a.PublishingHouse = PublishingHouse;
@@ -134,16 +142,42 @@ namespace NationalLibrary.Metodi
 			a.Presentation = Presentation;
 			a.Genre = Genre;
 			a.CoverImg = Coverimg;
-			b[0].Room = Room;
-			b[0].Schaffold = Scaffhold;
-			b[0].Shelf = Shelf;
-			b[0].Position = Position;
+			b.Room = Room;
+			b.Schaffold = Scaffhold;
+			b.Shelf = Shelf;
+			b.Position = Position;
 
+
+			//Controllo se ISBN vecchio != ISBN nuovo. Se sono diversi controllo se il nuovo gia esiste nella lista. Se non c'è lo creo
+			//Successivamente controllo se ci sono altri libri presenti sotto il vecchio ISBN. Se ce ne sono allora non è necessario cambiare
+			//gli ISBN presenti in waiting list in quanto  sono in attesa dell'isbn giusto. Se non ci sono altri libri sotto il vecchio isbn
+			//allora tutti quelli che erano in attesa stavano aspettando per l'ISBN sbagliato. In questo caso faccio un Count di waiting list e
+			//se ci sono attese inserite per il vecchio ISBN lo aggiorno con quello nuovo. Finito il ciclo elimino il vecchio ISBN
+
+			if (i.ISBN != ISBN)
+			{
+				if (!CheckISBNExsist(ISBN, ctx))
+				{
+					InsertISBN(ISBN, ctx);
+				}
+
+
+				i.ISBN = ISBN;
+
+
+				if (!ISBNLeft(oldisbn, ctx))
+				{
+					if (w.Count > 0)
+					{
+						for (int c = 0; c < w.Count; c++)
+						{
+							w[c].ISBNFK = ISBN;
+						}
+					}
+					TryISBNDelete(oldisbn, ctx);
+				}
+			}
 			ctx.SaveChanges();
-
-
-
-
 		}
 		public static bool CheckISBNExsist(string ISBN, LibraryContext ctx)
 		{
@@ -195,7 +229,39 @@ namespace NationalLibrary.Metodi
 
 
 		}
+		public static bool ISBNLeft(string ISBN, LibraryContext ctx)
+		{
+			bool check = false;
 
+			if (!CheckISBNExsist(ISBN, ctx)) { check = false; }
+			if (CheckISBNExsist(ISBN, ctx)) { check = true; }
+
+			// false = L'ISBN è presente in lista ma non ci sono libri associati
+			// true = L'ISBN è presente in lista ma ci sono ancora libri associati
+
+
+			return check;
+
+		}
+		public static void TryISBNDelete(string ISBN, LibraryContext ctx)
+		{
+			if (CheckISBNExsist(ISBN, ctx))
+			{
+				if (ISBNLeft(ISBN, ctx))
+				{
+					ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+					ctx.ISBNLists.Remove(a);
+					ctx.SaveChanges();
+				}
+			}
+
+		}
+		public static void EditISBNFromISBNList(string ISBN, LibraryContext ctx)
+		{
+            ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+			a.ISBN = ISBN;
+			ctx.SaveChanges();
+        }
 		public static BookFinalView getBookByGuid(Guid BookGuid, LibraryContext ctx)
 		{
 			BookFinalView book = new BookFinalView();
@@ -211,7 +277,6 @@ namespace NationalLibrary.Metodi
 
 		//////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
 		public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
-
 		{
 			// Inserisco nuovo affitto
 			var newrent = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode, WithdrawnOn = DateTime.Now };
@@ -222,16 +287,6 @@ namespace NationalLibrary.Metodi
 			a.Available = false;
 			ctx.SaveChanges();
 		}
-		//public static void DeleteRent(Guid RentGuid, LibraryContext ctx)
-		//{
-		//    //Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
-
-		//    Rent rent = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
-		//    ctx.Rents.Remove(rent);
-
-		//    ctx.SaveChanges();
-
-		//}
 		public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
 		{
 
@@ -242,9 +297,6 @@ namespace NationalLibrary.Metodi
 			b[0].Available = true;
 
 			ctx.SaveChanges();
-
-
-
 
 		}
 
@@ -373,3 +425,5 @@ namespace NationalLibrary.Metodi
 	}
 
 }
+
+
