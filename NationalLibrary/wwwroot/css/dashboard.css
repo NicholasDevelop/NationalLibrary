@@ -358,9 +358,29 @@ td {
     margin-right: 5px;
 }
 
-
-
-
+.card-container{
+    height: 64%;
+    width: 100%;
+    background: whitesmoke;
+    border-radius: 15px;
+    box-shadow: 20px 20px 20px whitesmoke;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    column-gap: 3%;
+    justify-items: center;
+}
+.card{
+    display: grid;
+    grid-template-rows: 80% 20%;
+    height: 200px;
+    align-self:center;
+    background-color: lightgray;
+    transition: 0.3s all ease;
+}
+.card:hover {
+    zoom: 1.1;
+    box-shadow: 1px 1px 1px #BFBFBF;
+}
 
 .transitions {
     margin-top: 20px;

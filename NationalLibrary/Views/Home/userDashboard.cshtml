@@ -2,6 +2,9 @@
 
 @{
     DateTime today = DateTime.Parse(ViewData["Today"].ToString());
+    List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
+    int count = 0;
+    List<string> image = ViewData["Images"] as List<string>;
 }
 
 <head>
@@ -60,7 +63,7 @@
 
                     <h2 id="date">
                         @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
-                                       alt="" srcset="">
+                                                                alt="" srcset="">
                     </h2>
                     <div class="table-container">
                         <h2 id="waiting-list">Lista D'Attesa</h2>
@@ -83,28 +86,24 @@
             <div id="Magazine" class="hidden">
                 <!-- Popup -->
                 <!-- Inizio Main -->
-                <main>
+                <main style="grid-template-rows: 5% 5% 80% 5%">
                     <h1 style="margin-top: 2px;">Libreria</h1>
 
                     <h2 id="date">
                         @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
-                                       alt="" srcset="">
-                                             </h2>
-                    <div class="table-container">
-                        <h2 id="waiting-list">Lista D'Attesa</h2>
-                        <table>
-                            <tr>
-                                <th>Codice Fiscale</th>
-                                <th>Nome Utente</th>
-                                <th>Cognome Utente</th>
-                                <th>Numero</th>
-                                <th>Email Utente</th>
-                                <th>ISBN</th>
-                                <th>Titolo Libro</th>
-                                <th>Richiesto Il</th>
-                            </tr>
-                        </table>
-
+                                                                alt="" srcset="">
+                    </h2>
+                    <div class="card-container">
+                        @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
+                        {
+                            count++;
+                            <a class="card" href="#">
+                                <img src="@image[count - 1]" alt="">
+                                <div class="card-description">
+                                    <p>@item.Title</p>
+                                </div>
+                            </a>
+                        }
                     </div>
                 </main>
 

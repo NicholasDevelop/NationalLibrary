@@ -11,6 +11,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Reflection.Metadata;
 using System.Linq.Expressions;
+using System.Data;
 
 namespace NationalLibrary.Controllers
 {
@@ -83,6 +84,10 @@ namespace NationalLibrary.Controllers
 		public IActionResult userDashboard(UserFinalView user)
 		{
 			ViewData["Today"] = DateTime.Now;
+			ViewData["UserLogged"] = userFinal;
+			ViewData["Images"] = getImages();
+			List<BookFinalView> l = ViewsLoaders.BookFinalViewList(ctx);
+			ViewData["Books"] = l;
 			return View(user);
 		}
 
@@ -219,6 +224,15 @@ namespace NationalLibrary.Controllers
 					users.Add(item);
 			ViewData["Users"] = users;
 			ViewData["Today"] = DateTime.Now;
+			List<BookFinalView> result2 = new List<BookFinalView>();
+			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
+				result2.Add(item);
+			ViewData["Books"] = result2;
+			List<RentRequestFinalView> rentedBooks = new List<RentRequestFinalView>();
+			foreach (RentRequestFinalView item in ViewsLoaders.RentRequestFinalViewList(ctx))
+				rentedBooks.Add(item);
+			ViewData["RentedBook"] = rentedBooks;
+
 			return View(user);
 		}
 		public IActionResult dashboard(UserFinalView user)

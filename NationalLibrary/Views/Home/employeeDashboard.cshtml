@@ -2,6 +2,7 @@
 @{
     List<NationalLibrary.FinalViews.UserFinalView> userFinalViews = ViewData["Users"] as List<NationalLibrary.FinalViews.UserFinalView>;
     DateTime today = DateTime.Parse(ViewData["Today"].ToString());
+    List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
 }
 <head>
     <meta charset="UTF-8">
@@ -336,18 +337,5 @@
         function openMenu() {
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                                                 // window.onclick = function (event) {
-                                                                                                    //     console.log(document.getElementById("popupBooks").classList.contains("hidden"))
-                                                                                                    //     console.log(arrowbooks)
-                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupBooks") && document.getElementById("popupBooks").classList.contains("hidden") == false) {
-                                                                                                    //         hideData("books")
-                                                                                                    //     }
-                                                                                                    //     if (event.target != arrowbooks && event.target != document.getElementById("popupUsers") && document.getElementById("popupUsers").classList.contains("hidden") == false) {
-                                                                                                    //         hideData("users")
-                                                                                                    //     }
-                                                                                                    //     if (event.target != arrowbuyedbooks && event.target != document.getElementById("popupBuyedBooks") && document.getElementById("popupBuyedBooks").classList.contains("hidden") == false) {
-                                                                                                    //         hideData("buyedBooks")
-                                                                                                    //     }
-                                                                                                    // }
     </script>
 </body>
