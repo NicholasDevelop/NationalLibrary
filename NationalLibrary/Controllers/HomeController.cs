@@ -187,12 +187,12 @@ namespace NationalLibrary.Controllers
 			user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
 			return RedirectToAction("dashboard", userFinal);
 		}
-		public void insertUser(UserFinalView user)
+		public IActionResult insertUser(UserFinalView user)
 		{
 			try
 			{
 
-				if (string.IsNullOrEmpty(user.FCRelatedTO) && (DateTime.Now - user.BirthDate).TotalDays > 65070)
+				if (string.IsNullOrEmpty(user.FCRelatedTO) && (DateTime.Now - user.BirthDate).TotalDays > 6570)
 				{
 					DataQueries.InsertUser(user.FiscalCode, "User", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
 					user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
@@ -209,6 +209,7 @@ namespace NationalLibrary.Controllers
 					}
 					router();
 				}
+				return Error();
 			}
 			catch (Exception ex)
 			{
