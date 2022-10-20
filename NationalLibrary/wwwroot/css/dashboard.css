@@ -141,6 +141,7 @@ li {
 }
 
 #Magazine {
+    width: 64%;
     height: 100vh;
     top: 0px;
     position: absolute;
@@ -272,6 +273,13 @@ tr {
 td {
     color: lightgray;
     font-size: 14px;
+}
+
+.edit-book{
+    width:24px;
+}
+.delete-book{
+    width:24px;
 }
 
 .transition-Container {

@@ -47,18 +47,18 @@ namespace NationalLibrary.Controllers
 				return RedirectToAction("Error");
 			return View();
 		}
-        private string getImage(BookFinalView book)
-        {
-            string bytes;
+		private string getImage(BookFinalView book)
+		{
+			string bytes;
 			bytes = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.CoverImg));
-            
-            return bytes;
-        }
 
-        public IActionResult Index()
+			return bytes;
+		}
+
+		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
-			ViewData["Images"] = getImages();            
+			ViewData["Images"] = getImages();
 			return View();
 		}
 		public IActionResult router()
@@ -90,42 +90,48 @@ namespace NationalLibrary.Controllers
 		//Controller per la gestione dei Libri
 		public IActionResult viewBook(BookFinalView book, Guid id)
 		{
-			ViewData["UserLogged"] = userFinal;			
+			ViewData["UserLogged"] = userFinal;
 			book = DataQueries.getBookByGuid(id, ctx);
-            ViewData["Image"] = getImage(book);
-            return View(book);
+			ViewData["Image"] = getImage(book);
+			return View(book);
 		}
 
-		public IActionResult modifyBook(BookFinalView book,Guid id)
-		{		
-            book = DataQueries.getBookByGuid(id, ctx);
+		public IActionResult modifyBook(BookFinalView book, Guid id)
+		{
+			book = DataQueries.getBookByGuid(id, ctx);
 			tmp = book;
 			ViewData["Image"] = getImage(book);
-            return View(book);
-        }
-
-        [HttpPost]
-        public IActionResult postModifyBook(BookFinalView book)
+			return View(book);
+		}
+		public IActionResult deleteBook(BookFinalView book, Guid id)
 		{
-            foreach (var file in Request.Form.Files)
-            {
-                IFormFile img = file;
-                byte[] p1 = null;
-                using (var ms1 = new MemoryStream())
-                {
-                    img.CopyTo(ms1);
-                    p1 = ms1.ToArray();
-                }
-                tmp.CoverImg = p1;
-            }
+			book = DataQueries.getBookByGuid(id, ctx);
+			DataQueries.DeleteBook(book.BookGuid, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
+
+		[HttpPost]
+		public IActionResult postModifyBook(BookFinalView book)
+		{
+			foreach (var file in Request.Form.Files)
+			{
+				IFormFile img = file;
+				byte[] p1 = null;
+				using (var ms1 = new MemoryStream())
+				{
+					img.CopyTo(ms1);
+					p1 = ms1.ToArray();
+				}
+				tmp.CoverImg = p1;
+			}
 			book.BookGuid = tmp.BookGuid;
 			book.CoverImg = tmp.CoverImg;
-            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+			DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 
 
-        public IActionResult bookList(BookFinalView book)
+		public IActionResult bookList(BookFinalView book)
 		{
 			ViewData["UserLogged"] = userFinal;
 			ViewData["Images"] = getImages();
@@ -139,34 +145,34 @@ namespace NationalLibrary.Controllers
 			return View(book);
 		}
 
-        /// pagina di controllo dei dati che provengono da newBook per la dashboard
-        /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult insertBook(BookFinalView book)
-        {
-            foreach (var file in Request.Form.Files)
-            {
-                IFormFile img = file;
-                byte[] p1 = null;
-                using (var ms1 = new MemoryStream())
-                {
-                    img.CopyTo(ms1);
-                    p1 = ms1.ToArray();
-                }
-                book.CoverImg = p1;
-            }
-            DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
-                book.Genre, book.CoverImg, DateTime.Now,
-                book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+		/// pagina di controllo dei dati che provengono da newBook per la dashboard
+		/// </summary>
+		/// <param name="book"></param>
+		/// <returns></returns>
+		[HttpPost]
+		public IActionResult insertBook(BookFinalView book)
+		{
+			foreach (var file in Request.Form.Files)
+			{
+				IFormFile img = file;
+				byte[] p1 = null;
+				using (var ms1 = new MemoryStream())
+				{
+					img.CopyTo(ms1);
+					p1 = ms1.ToArray();
+				}
+				book.CoverImg = p1;
+			}
+			DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+				book.Genre, book.CoverImg, DateTime.Now,
+				book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 
 
 
 		//Controller per la gestione degli impiegati
-        public IActionResult insertEmployee(UserFinalView user)
+		public IActionResult insertEmployee(UserFinalView user)
 		{
 			Console.WriteLine(user.Name);
 			Console.WriteLine(user.Username);
@@ -175,6 +181,34 @@ namespace NationalLibrary.Controllers
 			user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
 			user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
 			return RedirectToAction("dashboard", userFinal);
+		}
+		public void insertUser(UserFinalView user)
+		{
+			try
+			{
+
+				if (string.IsNullOrEmpty(user.FCRelatedTO) && (DateTime.Now - user.BirthDate).TotalDays > 65070)
+				{
+					DataQueries.InsertUser(user.FiscalCode, "User", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
+					user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
+					user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
+					router();
+				}
+				else
+				{
+					if (DataQueries.CheckFCExsist(user.FCRelatedTO, ctx))
+					{
+						DataQueries.InsertUser(user.FiscalCode, "User", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
+						user.CAP, user.Province, user.DocumentNumber, user.DocumentType,
+						user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, user.FCRelatedTO, ctx);
+					}
+					router();
+				}
+			}
+			catch (Exception ex)
+			{
+				Error();
+			}
 		}
 
 		public IActionResult employeeDashboard(UserFinalView user)

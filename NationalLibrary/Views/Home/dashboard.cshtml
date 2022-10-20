@@ -5,7 +5,7 @@
     DateTime today = DateTime.Parse(ViewData["Today"].ToString());
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
     List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
-    int percentaceLastBuyedBooks = lastBuyedBooks.Count * 10;
+    int percentaceLastBuyedBooks = lastBuyedBooks.Count * 100 / 50;
 }
 <head>
     <meta charset="UTF-8">
@@ -236,7 +236,7 @@
                                         </h3>
                                     </div>
                                 </div>
-                                <h5 style="color: lightgray;">Obiettivo Max: 10</h5>
+                                <h5 style="color: lightgray;">Obiettivo Max: 50</h5>
                             </div>
                         </div>
                     </div>
@@ -264,7 +264,7 @@
                 <main style="grid-template-rows: 5% 5% 60% 5% auto;">
                     <h1 style="margin-top: 2px;">Libreria</h1>
 
-                    <h2 id="date" style="width:30%">
+                    <h2 id="date" style="width:20%">
                         @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
                                                                 alt="" srcset="">
                     </h2>
@@ -295,8 +295,8 @@
                                     {
                                         <td>No</td>
                                     }
-                                    <td><a asp-controller="Home" asp-action="modifyBook" asp-route-id="@item.BookGuid"><img width="32px" src="~/img/edit.svg"/></a></td>
-                                    <td><a><img width="32px" src="~/fontawesome/svgs/solid/delete-left.svg"/></a></td>
+                                    <td><a asp-controller="Home" asp-action="modifyBook" asp-route-id="@item.BookGuid"><img class="edit-book" src="~/img/edit.svg" /></a></td>
+                                    <td><a asp-controller="Home" asp-action="deleteBook" asp-route-id="@item.BookGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg"/></a></td>
                                 </tr>
                             }
                         </table>
