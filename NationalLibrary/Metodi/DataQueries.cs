@@ -101,7 +101,7 @@ namespace NationalLibrary.Metodi
 			string checkforisbn = newbook.ISBNFK;
 			bool check = CheckISBNExsist(checkforisbn, ctx);
 
-			if (check)
+			if (!check)
 			{
 				InsertISBN(checkforisbn, ctx);
 				ctx.SaveChanges();
@@ -186,7 +186,7 @@ namespace NationalLibrary.Metodi
 			bool check = false;
 
 			List<ISBNList> a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList();
-			if (a != null) { check = true; }
+			if (a.Count > 0) { check = true; }
 
 			return check;
 		}
