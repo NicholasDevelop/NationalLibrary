@@ -133,7 +133,7 @@
             <div class="more-rented-container">
                 <h1>I LIBRI PIU' NOLEGGIATI DELLA SETTIMANA (TOP 10)</h1>
                 <div class="card-container">
-                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
+                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews.Take(10))
                     {
                         count++;
                         <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
@@ -142,10 +142,6 @@
                             <div class="card-description">
                                 <h3>@book.Title</h3>
                             </div>
-                            @if (count == 10)
-                            {
-                                break;
-                            }
                         </a>
                     }
                 </div>
@@ -157,20 +153,16 @@
             <div class="book-news-container">
                 <h1>LE NOVITA'</h1>
                 <div class="card-container">
-                    @count = 0;
-                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews)
+                    @{count = 0;}
+                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews.Take(5) )
                     {
+                        count++;
                         <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
-                            <img src="@image[count]" alt="">
+                            <img src="@image[count-1]" alt="">
                             <div class="card-description">
                                 <h3>@book.Title</h3>
                             </div>
-                        count++;
                         </a>
-                        if (count == 5)
-                        {
-                            break;
-                        }
                     }
                 </div>
             </div>
