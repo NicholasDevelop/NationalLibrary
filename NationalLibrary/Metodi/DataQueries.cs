@@ -173,10 +173,10 @@ namespace NationalLibrary.Metodi
 				}
 
 
-				i.ISBN = ISBN;
+				a.ISBNFK = ISBN;
+                ctx.SaveChanges();
 
-
-				if (!ISBNLeft(oldisbn, ctx))
+                if (!ISBNLeft(oldisbn, ctx))
 				{
 					if (w.Count > 0)
 					{
@@ -185,6 +185,7 @@ namespace NationalLibrary.Metodi
 							w[c].ISBNFK = ISBN;
 						}
 					}
+
 					TryISBNDelete(oldisbn, ctx);
 				}
 			}
@@ -243,22 +244,27 @@ namespace NationalLibrary.Metodi
 		public static bool ISBNLeft(string ISBN, LibraryContext ctx)
 		{
 			bool check = false;
+			if (CheckISBNExsist(ISBN, ctx)) 
+			{ 
 
-			if (!CheckISBNExsist(ISBN, ctx)) { check = false; }
-			if (CheckISBNExsist(ISBN, ctx)) { check = true; }
+					ISBNList i = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+					List<Book> b = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList();
+					
+					if (b.Count > 0) { check = true; }
+            }
 
-			// false = L'ISBN è presente in lista ma non ci sono libri associati
-			// true = L'ISBN è presente in lista ma ci sono ancora libri associati
+            // false = L'ISBN è presente in lista ma non ci sono libri associati
+            // true = L'ISBN è presente in lista ma ci sono ancora libri associati
 
 
-			return check;
+            return check;
 
 		}
 		public static void TryISBNDelete(string ISBN, LibraryContext ctx)
 		{
 			if (CheckISBNExsist(ISBN, ctx))
 			{
-				if (ISBNLeft(ISBN, ctx))
+				if (!ISBNLeft(ISBN, ctx))
 				{
 					ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
 					ctx.ISBNLists.Remove(a);
