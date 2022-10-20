@@ -60,6 +60,8 @@ namespace NationalLibrary.Controllers
 		{
 			ViewData["UserLogged"] = userFinal;
 			ViewData["Images"] = getImages();
+			ViewData["Last5Books"] = Metodi.ViewsLoaders.getLastFiveInsertedBooks(ctx);
+			//Console.WriteLine(ViewData["Last5Books"]);
 			return View();
 		}
 		public IActionResult router()

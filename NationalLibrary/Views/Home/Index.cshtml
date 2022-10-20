@@ -2,6 +2,9 @@
 @{
     NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
+    
+    IEnumerable<NationalLibrary.FinalViews.BookFinalView> last5InsertedBooks = ViewData["Last5Books"] as IEnumerable<NationalLibrary.FinalViews.BookFinalView>;
+    
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
     Console.WriteLine(image.Count);
@@ -154,7 +157,7 @@
                 <h1>LE NOVITA'</h1>
                 <div class="card-container">
                     @{count = 0;}
-                    @foreach (NationalLibrary.FinalViews.BookFinalView book in @bookFinalViews.Take(5) )
+                    @foreach (NationalLibrary.FinalViews.BookFinalView book in last5InsertedBooks)
                     {
                         count++;
                         <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
