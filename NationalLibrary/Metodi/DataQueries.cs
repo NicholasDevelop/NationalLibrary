@@ -272,6 +272,7 @@ namespace NationalLibrary.Metodi
 				if (item.BookGuid == BookGuid)
 				{
 					book = item;
+					break;
 				}
 			}
 			return book;
