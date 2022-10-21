@@ -125,6 +125,11 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 
+		public IActionResult bookWithdrawned(Guid id)
+		{
+			DataQueries.BookDeliveredFromRent(id, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 		public IActionResult modifyBook(BookFinalView book, Guid id)
 		{
 			book = DataQueries.getBookByGuid(id, ctx);
