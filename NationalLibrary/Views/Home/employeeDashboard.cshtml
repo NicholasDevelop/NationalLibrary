@@ -321,7 +321,7 @@
                                     <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
                                 }
                                 <td>@item.ReceivedOn</td>
-                                <td><a asp-controller="Home" asp-action="buyBook" asp-route-id="@item.FiscalCode"><img class="edit-book" src="~/img/edit.svg" /></a></td>
+                                <td><a asp-controller="Home" asp-action="approvedBook" asp-route-id="@item.FiscalCode"><img class="edit-book" src="~/img/edit.svg" /></a></td>
                                 <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.FiscalCode"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                             </tr>
                         }
