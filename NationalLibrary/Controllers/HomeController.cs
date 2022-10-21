@@ -63,7 +63,12 @@ namespace NationalLibrary.Controllers
 		{
 			return RedirectToAction("dashboard", userFinal);
 		}
-
+		[HttpPost]
+		public IActionResult askForBook(IFormCollection form)
+		{
+			DataQueries.InsertRequest(userFinal.FiscalCode, form["title"], form["author"], form["comment"], null, ctx);
+			return RedirectToAction("router", userFinal);
+		}
 		public IActionResult addUser()
 		{
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
