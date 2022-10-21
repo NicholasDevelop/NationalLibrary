@@ -5,6 +5,7 @@
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
+    List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
 }
 <head>
     <meta charset="UTF-8">
@@ -44,6 +45,13 @@
                                 <img src="~/fontawesome/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
                                      srcset="">
                                 Libreria
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="rentAnchor" href="#RentList" onclick="addClass('RentList')">
+                                <img src="~/fontawesome/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
+                                     srcset="">
+                                Libri Noleggiati
                             </a>
                         </li>
                         <li class="nav-item">
@@ -178,6 +186,51 @@
                     <a style="margin-top:5%" asp-action="newBook" asp-controller="Home">Aggiungi Libro</a>
                 </main>
             </div>
+            <!-- RentList -->
+            <div id="RentList" class="hidden">
+                <!-- Popup -->
+                <!-- Inizio Main -->
+                <main style="grid-template-rows: 5% 5% 60% 5% auto;">
+                    <h1 style="margin-top: 2px;">Libreria</h1>
+
+                    <h2 id="date" style="width:20%">
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                                                alt="" srcset="">
+                    </h2>
+                    <table style="margin-top:0px; max-height: 570px;">
+                        <tr>
+                            <th>Nome Utente</th>
+                            <th>Cognome Utente</th>
+                            <th>Numero</th>
+                            <th>Email Utente</th>
+                            <th>ISBN</th>
+                            <th>Titolo Libro</th>
+                            <th>Ritirato Il</th>
+                            <th>Restituito Il</th>
+                        </tr>
+                        @foreach (NationalLibrary.FinalViews.RentRequestFinalView item in @rentedBooks)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Surname</td>
+                                <td>@item.MobilePhone</td>
+                                <td>@item.Email</td>
+                                <td>@item.ISBN</td>
+                                <td>@item.Title</td>
+                                @if (item.WithdrawnOn == null)
+                                {
+                                    <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                }
+                                else
+                                {
+                                    <td>@item.WithdrawnOn.Day/@item.WithdrawnOn.Month/@item.WithdrawnOn.Year</td>
+                                }
+                                <td>@item.ReturnedOn</td>
+                            </tr>
+                        }
+                    </table>
+                </main>
+            </div>
             <!-- Users -->
             <div id="Employee" class="hidden">
                 <!-- Popup -->
@@ -253,26 +306,42 @@
             if (navItem == "magazine") {
                 dashboardAnchor.classList.remove("active");
                 employeeAnchor.classList.remove("active");
+                rentAnchor.classList.remove("active");
                 magazineAnchor.classList.add("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.remove("hidden");
+                document.getElementById("RentList").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
             }
             else if (navItem == "dashboard") {
                 magazineAnchor.classList.remove("active");
                 dashboardAnchor.classList.add("active");
                 employeeAnchor.classList.remove("active");
+                rentAnchor.classList.remove("active");
                 document.getElementById("Dashboard").classList.remove("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
+                document.getElementById("RentList").classList.add("hidden");
             }
-            else {
+            else if (navItem == "employee") {
                 employeeAnchor.classList.add("active");
                 dashboardAnchor.classList.remove("active");
                 magazineAnchor.classList.remove("active");
+                rentAnchor.classList.remove("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.remove("hidden");
+                document.getElementById("RentList").classList.add("hidden");
+            }
+            else {
+                employeeAnchor.classList.remove("active");
+                dashboardAnchor.classList.remove("active");
+                magazineAnchor.classList.remove("active");
+                rentAnchor.classList.add("active");
+                document.getElementById("Dashboard").classList.add("hidden");
+                document.getElementById("Magazine").classList.add("hidden");
+                document.getElementById("Employee").classList.add("hidden");
+                document.getElementById("RentList").classList.remove("hidden");
             }
         }
         function hideData(dataToHide) {

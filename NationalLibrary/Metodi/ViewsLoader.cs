@@ -139,7 +139,7 @@ namespace NationalLibrary.Metodi
                                 //ReceivedOn = d.ReceivedOn,
 
                                 //RequestGuid = e.RequestGuid,
-                                //Title = e.Title,
+                                Title = x.Title,
                                 //Author = e.Author,
                                 //Comment = e.Comment,
                                 //State = e.State,
@@ -264,5 +264,18 @@ namespace NationalLibrary.Metodi
 			}
 			return check;
 		}
-	}
+        public static UserFinalView getUserByFiscalCode(string FiscalCode, LibraryContext ctx)
+        {
+            UserFinalView user = new UserFinalView();
+            foreach (var item in ViewsLoaders.UserFinalViewList(ctx))
+            {
+                if (item.FiscalCode == FiscalCode)
+                {
+                    user = item;
+                    break;
+                }
+            }
+            return user;
+        }
+    }
 }
