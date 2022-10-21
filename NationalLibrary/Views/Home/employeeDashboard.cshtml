@@ -254,6 +254,8 @@
                                 <th>Via</th>
                                 <th>Provincia</th>
                                 <th>CAP</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             @foreach (var item in userFinalViews)
                             {
@@ -266,6 +268,8 @@
                                     <td>@item.Street</td>
                                     <td>@item.Province</td>
                                     <td>@item.CAP</td>
+                                    <td><a asp-controller="Home" asp-action="modifyBook" asp-route-id="@item.FiscalCode" ><img class="edit-book" src="~/img/edit.svg" /></a></td>
+                                    <td><a><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                                 </tr>
                             }
                         </table>

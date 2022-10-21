@@ -20,8 +20,10 @@ namespace NationalLibrary.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly LibraryContext ctx;
 		private static BookFinalView tmp;
+        private static UserFinalView temp;
 
-		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
+
+        public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
 			this.ctx = ctx;
@@ -42,12 +44,6 @@ namespace NationalLibrary.Controllers
 			}
 			return bytes;
 		}
-		public IActionResult addUser()
-		{
-			if (userFinal == null || userFinal.Type.ToLower() == "user")
-				return RedirectToAction("Error");
-			return View();
-		}
 		private string getImage(BookFinalView book)
 		{
 			string bytes;
@@ -55,7 +51,6 @@ namespace NationalLibrary.Controllers
 
 			return bytes;
 		}
-
 		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
@@ -68,6 +63,14 @@ namespace NationalLibrary.Controllers
 		{
 			return RedirectToAction("dashboard", userFinal);
 		}
+
+		public IActionResult addUser()
+		{
+			if (userFinal == null || userFinal.Type.ToLower() == "user")
+				return RedirectToAction("Error");
+			return View();
+		}
+
 		public IActionResult addEmployee(UserFinalView user)
 		{
 			if (userFinal == null || userFinal.Type.ToLower() == "user" || userFinal.Type.ToLower() == "librarian")
@@ -137,12 +140,6 @@ namespace NationalLibrary.Controllers
 			ViewData["Image"] = getImage(book);
 			return View(book);
 		}
-		public IActionResult deleteBook(BookFinalView book, Guid id)
-		{
-			book = DataQueries.getBookByGuid(id, ctx);
-			DataQueries.DeleteBook(book.BookGuid, ctx);
-			return RedirectToAction("dashboard", userFinal);
-		}
 
 		[HttpPost]
 		public IActionResult postModifyBook(BookFinalView book)
@@ -164,6 +161,12 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 
+		public IActionResult deleteBook(BookFinalView book, Guid id)
+		{
+			book = DataQueries.getBookByGuid(id, ctx);
+			DataQueries.DeleteBook(book.BookGuid, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 
 		public IActionResult bookList(BookFinalView book)
 		{
@@ -248,8 +251,54 @@ namespace NationalLibrary.Controllers
 				return Error();
 			}
 		}
+        //public static UserFinalView getUserByFiscalCode(string FiscalCode, LibraryContext ctx)
+        //{
+        //    UserFinalView user = new UserFinalView();
+        //    foreach (var item in ViewsLoaders.UserFinalViewList(ctx))
+        //    {
+        //        if (item.FiscalCode == FiscalCode)
+        //        {
+        //            user = item;
+        //            break;
+        //        }
+        //    }
+        //    return user;
+        //}
+        public IActionResult modifyUser(UserFinalView user, string id)
+        {
+            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+            temp = user;
+            return View(user);
+        }
 
-		public IActionResult employeeDashboard(UserFinalView user)
+        [HttpPost]
+        public IActionResult postModifyUser(BookFinalView book)
+        {
+            foreach (var file in Request.Form.Files)
+            {
+                IFormFile img = file;
+                byte[] p1 = null;
+                using (var ms1 = new MemoryStream())
+                {
+                    img.CopyTo(ms1);
+                    p1 = ms1.ToArray();
+                }
+                tmp.CoverImg = p1;
+            }
+            book.BookGuid = tmp.BookGuid;
+            book.CoverImg = tmp.CoverImg;
+            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+        public IActionResult deleteBook(BookFinalView book, Guid id)
+        {
+            book = DataQueries.getBookByGuid(id, ctx);
+            DataQueries.DeleteBook(book.BookGuid, ctx);
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+        public IActionResult employeeDashboard(UserFinalView user)
 		{
 			List<UserFinalView> users = new List<UserFinalView>();
 			foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
