@@ -401,20 +401,24 @@ td {
 }
 
     #admin-line nav ul li img {
-        cursor: pointer;
+        margin-top: 4px;
         margin-left: 5px;
         border-radius: 100rem;
         border: 1px solid black;
         justify-self: center;
     }
 
+    #admin-line nav ul:first-child {
+        cursor: pointer;
+    }
 
     #admin-line nav .drop-down {
         border-radius: 5px;
         border: 3px solid black;
         list-style: none;
         overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
-        height: 172px; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+        height: 128px; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+        /*124px = (38 (li) +5 (li border)) * 3 (number of li) -5 (last li border) */
         background-color: whitesmoke;
         font-family: Arial;
         width: 100px;

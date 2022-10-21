@@ -375,9 +375,10 @@
                             /* align-self: center; */
                             bottom: 12px;">
                     Benvenuto @Model.Name
-                </h4><nav>
-                    <ul id="slowdown-menu" class="drop-down closed">
-                        <li><img style="width: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
+                </h4>
+                <nav>
+                    <ul id="slowdown-menu" class="drop-down closed" onclick="openMenu()">
+                        <li><img style="width: 32px" class="nav-button" src="~/img/admin.svg" alt=""></li>
                         <li>
                             <a href="#" id="detailsLink">Details</a>
                         </li>
