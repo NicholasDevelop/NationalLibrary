@@ -7,6 +7,8 @@
     List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int percentaceLastBuyedBooks = lastBuyedBooks.Count * 100 / 50;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
+    List<NationalLibrary.FinalViews.WaitingBookStatusFinalView> wlist = ViewData["wlist"] as List<NationalLibrary.FinalViews.WaitingBookStatusFinalView>;
+
 }
 <head>
     <meta charset="UTF-8">
@@ -407,6 +409,7 @@
             </div>
         </div>
     </div>
+
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
@@ -502,4 +505,16 @@
         }
                                                                                                                                                                        // }
     </script>
+    @if(@wlist.Count() > 0){
+        <script>
+            let books = [];
+            @foreach (var item in wlist)
+            {
+                @:books.push(@item.Title);
+            }
+            swal("Ciao" + @Model.Name + "I seguenti libri sono ora disponibili" + books.join(", "));
+        </script>
+    }
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"</script>
 </body>
