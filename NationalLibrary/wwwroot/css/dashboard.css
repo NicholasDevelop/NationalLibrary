@@ -354,6 +354,7 @@ tr {
 td {
     color: gray;
     font-size: 14px;
+    min-width: 24px;
 }
 
 .edit-book {
