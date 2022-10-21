@@ -41,33 +41,10 @@ public class LibraryContext : DbContext
                     .IsRequired()
                     .OnDelete(DeleteBehavior.ClientCascade);
 
-        // Relation Book 1-1 Rent(FK)
-        //modelBuilder.Entity<Book>()
-        //            .HasOne(b => b.Rent)
-        //            .WithOne(r => r.Book)
-        //            .HasForeignKey<Book>(r => r.BookGuid);
-
         // Relation Location 1-1 Book(FK)
         modelBuilder.Entity<Location>()
                     .HasOne(l => l.Book)
                     .WithOne(b => b.Location)
                     .HasForeignKey<Book>(b => b.LocationGuidFK);
-
-        // Relation WaitingList N-N Book
-        // (WaitingList 1-N WaitingList_Book N-1 Book)
-
-        /*modelBuilder.Entity<ISBNList>()
-            .HasKey(wb => new { wb.WaitingGuid, wb.BookGuid });
-
-        modelBuilder.Entity<ISBNList>()
-            .HasOne(wb => wb.WaitingList)
-            .WithMany(wl => wl.WaitingList_Books)
-            .HasForeignKey(wb => wb.WaitingGuid);
-
-        modelBuilder.Entity<ISBNList>()
-            .HasOne(wb => wb.Book)
-            .WithMany(b => b.WaitingList_Books)
-            .HasForeignKey(wb => wb.BookGuid);*/
-
     }
 }
