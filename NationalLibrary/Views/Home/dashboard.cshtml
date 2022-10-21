@@ -7,6 +7,7 @@
     List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int percentaceLastBuyedBooks = lastBuyedBooks.Count * 100 / 50;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
+
 }
 <head>
     <meta charset="UTF-8">
@@ -407,6 +408,7 @@
             </div>
         </div>
     </div>
+
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
@@ -502,4 +504,5 @@
         }
                                                                                                                                                                        // }
     </script>
+    
 </body>

@@ -5,6 +5,8 @@
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
+    List<NationalLibrary.FinalViews.WaitingBookStatusFinalView> wlist = ViewData["wlist"] as List<NationalLibrary.FinalViews.WaitingBookStatusFinalView>;
+
 }
 
 <head>
@@ -216,5 +218,17 @@
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @if (@wlist.Count() > 0)
+    {
+        <script>
+            let _books = [];
+            @foreach (var item in wlist)
+            {
+                @:_books.push("@item.Title");
+            }
+            swal("Ciao @Model.Name i seguenti libri sono ora disponibili " + _books.join(", "));
+        </script>
+    }
 
 </body>

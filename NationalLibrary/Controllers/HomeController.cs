@@ -98,6 +98,9 @@ namespace NationalLibrary.Controllers
 			ViewData["Images"] = getImages();
 			List<BookFinalView> l = ViewsLoaders.BookFinalViewList(ctx);
 			ViewData["Books"] = l;
+			
+			List<WaitingBookStatusFinalView> wlist =  DataQueries.CheckIfBookArrived(user.FiscalCode, ctx);
+			ViewData["wlist"] = wlist;
 			return View(user);
 		}
 

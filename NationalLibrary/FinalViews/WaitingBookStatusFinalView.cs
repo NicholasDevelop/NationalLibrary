@@ -8,7 +8,7 @@
             Title = title;
         }
 
-        string Name { get; set; }
-        string Title { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
     }
 }
