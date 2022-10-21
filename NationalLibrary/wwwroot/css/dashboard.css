@@ -131,6 +131,24 @@ li {
         z-index: -100;
     }
 /*~*/
+#RentList.hidden {
+    /* z-index: -1; */
+    position: absolute;
+    /* top: unset; */
+    /* left: 88px; */
+    float: left;
+    transform: translateX(150%);
+}
+
+#RentList {
+    width: 64%;
+    height: 100vh;
+    top: 0px;
+    position: absolute;
+    transform: translateX(0px);
+    transition: 1.8s all
+}
+
 #Magazine.hidden {
     /* z-index: -1; */
     position: absolute;
@@ -167,7 +185,7 @@ li {
     transition: 1.8s all
 }
 
-    #Employee:not(.hidden) ~ #Magazine.hidden {
+    #Employee:not(.hidden) ~ #Magazine.hidden ~ #RentList.hidden {
         position: absolute;
         transform: translateX(-150%);
     }
