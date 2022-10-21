@@ -56,7 +56,7 @@ namespace NationalLibrary.Metodi
 			ctx.SaveChanges();
 
 		}
-		public static void EditUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo, string City, string Street, int CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, LibraryContext ctx)
+		public static void EditUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string FCRelatedTo, string City, string Street, int? CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, LibraryContext ctx)
 		{
 
 			Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
