@@ -85,7 +85,10 @@
                     <p class="publishing-house">Casa editrice: <span>@Model.PublishingHouse</span></p>
                     <p class="n-copies">Copie disponibili: <span></span></p>
                     <p class="story">Trama: <span>@Model.Presentation</span></p>
-                    <a href="#">Prenota ora*</a>
+                    @if (user != null)
+                    {
+                        <a href="#">Prenota ora*</a>
+                    }
                 </div>
             </div>
 
