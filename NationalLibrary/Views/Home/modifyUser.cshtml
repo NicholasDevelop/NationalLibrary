@@ -1,0 +1,164 @@
+﻿@model NationalLibrary.FinalViews.UserFinalView
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#">
+                <img class="img-nav" src="~/img/LogoFinale.svg" alt="">
+            </a>
+
+            <div>
+                <h2>Inserimento utenti</h2>
+            </div>
+            <a class="dashboard" asp-action="router" asp-controller="Home">Dashboard</a>
+        </div>
+    </header>
+
+    <!-- Inizio Main -->
+    <main>
+        <div class="form-container">
+            <div class="container-left">
+                <img class="mainBackground" src="~/img/librarianBackground.svg" alt="">
+            </div>
+            <div class="container-right">
+                <form asp-action="insertUser" asp-controller="Home" method="post">
+                    <div class="form-data">
+                        <!-- Nome -->
+                        <div class="inputContainer">
+                            <label for="name">Codice Fiscale</label>
+                            <div>
+                                <input required minlength="16" maxlength="16" placeholder="Codice Fiscale" asp-for="@Model.FiscalCode" type="text" name="fiscalCode">
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <label for="name">Codice Fiscale Tutore</label>
+                            <div>
+                                <input minlength="16" maxlength="16" placeholder="Codice Fiscale" asp-for="@Model.FCRelatedTO" type="text" name="FCRelatedTO">
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <label for="name">Nome</label>
+                            <div>
+                                <input required minlength="2" maxlength="20" placeholder="Nome" asp-for="@Model.Name" type="text" name="name">
+                            </div>
+                        </div>
+                        <!-- Cognome -->
+                        <div class="inputContainer">
+                            <label for="surname">Cognome </label>
+                            <div>
+                                <input required minlength="2" maxlength="25" asp-for="@Model.Surname" placeholder="Cognome" type="text" name="surname">
+                            </div>
+                        </div>
+                        <!-- Data Nascita -->
+                        <div class="inputContainer">
+                            <label for="name">Data Nascita</label>
+                            <div>
+                                <input type="date" asp-for="@Model.BirthDate" onchange="checkBirthDate(this.value)" name="birthdate">
+                            </div>
+                        </div>
+                        <!-- Città Di Residenza -->
+                        <div class="inputContainer">
+                            <label for="surname">Città Di Residenza</label>
+                            <div>
+                                <input required minlength="2" maxlength="25" asp-for="@Model.City" placeholder="Ciità Di Residenza" type="text" name="city">
+                            </div>
+                        </div>
+                        <!-- Indirizzo Di Residenza -->
+                        <div class="inputContainer">
+                            <label for="surname">Indirizzo Di Residenza</label>
+                            <div>
+                                <input required minlength="2" maxlength="25" asp-for="@Model.Street" placeholder="Indrizzo Di Residenza" type="text" name="street">
+                            </div>
+                        </div>
+                        <!-- CAP Di Residenza -->
+                        <div class="inputContainer">
+                            <label for="surname">CAP</label>
+                            <div>
+                                <input required maxlength="5" minlength="5" asp-for="@Model.CAP" placeholder="CAP" type="text" name="cap">
+                            </div>
+                        </div>
+                        <!-- Provincia Di Residenza -->
+                        <div class="inputContainer">
+                            <label for="surname">Provincia</label>
+                            <div>
+                                <input required minlength="2" maxlength="2" placeholder="Provincia" asp-for="@Model.Province" type="text" name="province">
+                            </div>
+                        </div>
+                        <!-- Numero Documento -->
+                        <div class="inputContainer">
+                            <label for="surname">Numero Documento</label>
+                            <div>
+                                <input required maxlength="9" minlength="9" placeholder="Numero Documento" asp-for="@Model.DocumentNumber" type="text" name="documentNumber">
+                            </div>
+                        </div>
+                        <!-- Tipo Di Documento -->
+                        <div class="inputContainer">
+                            <label for="surname">Tipo Di Documento</label>
+                            <div>
+                                <input required minlength="5" maxlength="40" placeholder="Tipo Di Documento" asp-for="@Model.DocumentType" type="text" name="documentType">
+                            </div>
+                        </div>
+                        <!-- Rilasciato Da -->
+                        <div class="inputContainer">
+                            <label for="surname">Rilasciato Da</label>
+                            <div>
+                                <input required minlength="4" maxlength="25" placeholder="Rilasciato Da" asp-for="@Model.ReleasedBy" type="text" name="releasedBy">
+                            </div>
+                        </div>
+                        <!-- Scadenza -->
+                        <div class="inputContainer">
+                            <label for="surname">Scadenza</label>
+                            <div>
+                                <input required type="date" asp-for="@Model.ExpiredOn" name="expireOn">
+                            </div>
+                        </div>
+                        <!-- Numero Di Telefono -->
+                        <div class="inputContainer">
+                            <label for="surname">Numero Di Telefono</label>
+                            <div>
+                                <input required maxlength="15" minlength="11" asp-for="@Model.MobilePhone" placeholder="Numero Di Telefono" type="text" name="mobilePhone">
+                            </div>
+                        </div>
+                        <!-- Email -->
+                        <div class="inputContainer">
+                            <label for="surname">Email</label>
+                            <div>
+                                <input required placeholder="Email" type="email" asp-for="@Model.Email" name="email">
+                            </div>
+                        </div>
+                        <!-- Default Username -->
+                        <div class="inputContainer">
+                            <label for="surname">Default Username</label>
+                            <div>
+                                <input required placeholder="Username" type="text" asp-for="@Model.Username" name="Username">
+                            </div>
+                        </div>
+                        <!-- Default Password -->
+                        <div class="inputContainer">
+                            <label for="surname">Default Password</label>
+                            <div>
+                                <input required minlength="8" placeholder="Password" type="password" asp-for="@Model.Password" name="Password">
+                            </div>
+                        </div>
+                        <!-- Submit -->
+                        <div class="inputContainer item-center" style="margin-bottom: 10px;">
+                            <Button class="special-button" asp-action="router" asp-controller="Home">Annulla Modifica</Button>
+                        </div>
+                        <div class="inputContainer item-center">
+                            <a class="special-button" type="submit" asp-action="postModifyUser" asp-controller="Home">Conferma Modifica</a>
+                        </div>
+                    </div>
+                    <img src="~/img/Librarian.svg" />
+                </form>
+            </div>
+        </div>
+    </main>
+</body>

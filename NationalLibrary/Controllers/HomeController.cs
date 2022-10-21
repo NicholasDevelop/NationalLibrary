@@ -282,14 +282,14 @@ namespace NationalLibrary.Controllers
             user.FiscalCode = temp.FiscalCode;
             DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
 				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
-            return RedirectToAction("dashboard", userFinal);
+            return RedirectToAction("employeeDashboard", userFinal);
         }
 
         public IActionResult deleteUser(UserFinalView user, string id)
         {
             user = ViewsLoaders.getUserByFiscalCode(id, ctx);
             DataQueries.DeleteUser(user.FiscalCode, ctx);
-            return RedirectToAction("dashboard", userFinal);
+            return RedirectToAction("employeeDashboard", userFinal);
         }
 
         public IActionResult employeeDashboard(UserFinalView user)
