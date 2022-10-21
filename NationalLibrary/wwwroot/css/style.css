@@ -161,6 +161,7 @@ input {
     z-index: 1;
 }
 
+
 .special-button::after {
     content: '';
     position: absolute;
@@ -185,9 +186,14 @@ input {
     border-radius: 8px;
     z-index: -1;
 }
+
 .special-button:hover {
     color: black;
 }
+
+/*.special-button.special-button-red::before{
+    background-color: orangered;
+}*/
 
 .special-button:hover::before {
     width: 100%;
