@@ -95,13 +95,26 @@
                     <div class="card-container">
                         @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
                         {
-                            count++;
-                            <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
-                                <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
-                                <div class="card-description">
-                                    <p>@item.Title</p>
-                                </div>
-                            </a>
+                            @if (item.Available)
+                            {
+                                count++;
+                                <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
+                                    <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
+                                    <div class="card-description">
+                                        <p>@item.Title</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            {
+                                count++;
+                                <a style="opacity: 35%" class="card">
+                                    <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
+                                    <div class="card-description">
+                                        <p>@item.Title</p>
+                                    </div>
+                                </a>
+                            }
                         }
                     </div>
                 </main>
