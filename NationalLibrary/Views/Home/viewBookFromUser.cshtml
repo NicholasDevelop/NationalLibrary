@@ -1,8 +1,10 @@
-﻿@model NationalLibrary.FinalViews.BookFinalView
+﻿@model NationalLibrary.FinalViews.UserFinalView
 
 @{
     int count = 0;
     string image = ViewData["Image"] as string;
+    NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
+    NationalLibrary.FinalViews.BookFinalView book = ViewData["BookToRent"] as NationalLibrary.FinalViews.BookFinalView;
 }
 
 
@@ -34,13 +36,19 @@
             <div class="container-left">
                 <img class="book-cover" src="@image" alt="" srcset="">
                 <div class="book-details">
-                    <h1 class="title">@Model.Title</h1>
-                    <p class="author">Autore: <span>@Model.Author</span></p>
-                    <p class="genre">Genere: <span>@Model.Genre</span></p>
-                    <p class="publishing-house">Casa editrice: <span>@Model.PublishingHouse</span></p>
+                    <h1 class="title">@book.Title</h1>
+                    <p class="author">Autore: <span>@book.Author</span></p>
+                    <p class="genre">Genere: <span>@book.Genre</span></p>
+                    <p class="publishing-house">Casa editrice: <span>@book.PublishingHouse</span></p>
                     <p class="n-copies">Copie disponibili: <span></span></p>
-                    <p class="story">Trama: <span>@Model.Presentation</span></p>
-                    <a asp-action="rentBook" asp-route-id="@Model.BookGuid" asp-controller="Home">Prenota ora</a>
+                    <p class="story">Trama: <span>@book.Presentation</span></p>
+                    <form class="book-details" method="post">
+                        @if (@user.Type == "Librarian")
+                        {
+                            <input type="text" asp-for="@Model.FiscalCode" />
+                        }
+                        <button asp-action="rentBook" asp-route-id="@book.BookGuid" asp-controller="Home">Prenota ora</button>
+                    </form>
                 </div>
             </div>
             <div class="container-right">

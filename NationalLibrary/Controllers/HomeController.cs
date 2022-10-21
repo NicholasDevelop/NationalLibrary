@@ -95,14 +95,15 @@ namespace NationalLibrary.Controllers
 
 
 		//Controller per la gestione dei Libri
-		public IActionResult viewBookFromUser(BookFinalView book, Guid id)
+		public IActionResult viewBookFromUser(UserFinalView user, Guid id)
 		{
-			book = DataQueries.getBookByGuid(id, ctx);
+			BookFinalView book = DataQueries.getBookByGuid(id, ctx);
 			if (DataQueries.IsBookAvaiable(book.ISBN, ctx))
 			{
 				ViewData["UserLogged"] = userFinal;
 				ViewData["Image"] = getImage(book);
-				return View(book);
+				ViewData["BookToRent"] = book;
+				return View(user);
 			}
 			else
 			{
@@ -116,10 +117,10 @@ namespace NationalLibrary.Controllers
 			ViewData["Image"] = getImage(book);
 			return View(book);
 		}
-		public IActionResult rentBook(BookFinalView book, Guid id)
+		public IActionResult rentBook(UserFinalView rent, Guid id)
 		{
 			BookFinalView bookToRent = DataQueries.getBookByGuid(id, ctx);
-			DataQueries.InsertRent(bookToRent.BookGuid, userFinal.FiscalCode, ctx);
+			DataQueries.InsertRent(bookToRent.BookGuid, rent.FiscalCode, ctx);
 
 			return RedirectToAction("dashboard", userFinal);
 		}
