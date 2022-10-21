@@ -160,6 +160,27 @@ namespace NationalLibrary.Metodi
             return rentsview;
 		}
 
+		public static IQueryable<UserRequestFinalView> ViewsLoader_UserRequest(LibraryContext ctx)
+		{
+			var view = from x in ctx.People
+					   join a in ctx.Users on x.FiscalCode equals a.FiscalCode
+					   join b in ctx.Requests on x.FiscalCode equals b.FiscalCodeFK
+					   select new UserRequestFinalView
+					   {
+						   Email = a.Email,
+
+						   FiscalCode = x.FiscalCode,
+						   Name = x.Name,
+						   Surname = x.Surname,
+						   MobilePhone = x.MobilePhone,
+
+						   Title = b.Title,
+						   Author = b.Author,
+						   RequestDate = b.RequestDate
+					   };
+
+			return view;
+		}
 		public static List<RentRequestFinalView> RentRequestFinalViewList(LibraryContext ctx)
 		{
 			List<RentRequestFinalView> a = new List<RentRequestFinalView>();
@@ -189,6 +210,15 @@ namespace NationalLibrary.Metodi
 			}
 			return a;
 		}
+
+		public static List<UserRequestFinalView> UserRequestFinalViewList(LibraryContext ctx) {
+            List<UserRequestFinalView> a = new List<UserRequestFinalView>();
+            foreach (var item in ViewsLoaders.ViewsLoader_UserRequest(ctx))
+            {
+                a.Add(item);
+            }
+            return a;
+        }
 
 		// Numero di libri comprati dalla biblioteca questo mese
 		public static List<BookFinalView> MonthBookBought(LibraryContext ctx)
