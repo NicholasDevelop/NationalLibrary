@@ -217,15 +217,22 @@
                                 <td>@item.Email</td>
                                 <td>@item.ISBN</td>
                                 <td>@item.Title</td>
-                                @if (item.WithdrawnOn == null)
+                                @if (item.WithdrawnOn.Value.Year == 1)
                                 {
-                                    <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                    <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
                                 }
                                 else
                                 {
-                                    <td>@item.WithdrawnOn.Day/@item.WithdrawnOn.Month/@item.WithdrawnOn.Year</td>
+                                    <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
                                 }
-                                <td>@item.ReturnedOn</td>
+                                @if (item.ReturnedOn == null)
+                                {
+                                    <td><a asp-action="bookReturned" asp-controller="Home" asp-route-id="@item.RentGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                }
+                                else
+                                {
+                                    <td>@item.ReturnedOn.Value.Day/@item.ReturnedOn.Value.Month/@item.ReturnedOn.Value.Year</td>
+                                }
                             </tr>
                         }
                     </table>

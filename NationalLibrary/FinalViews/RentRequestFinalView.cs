@@ -25,7 +25,7 @@
 
         // Rent
         public Guid RentGuid { get; set; }
-        public DateTime WithdrawnOn { get; set; }
+        public DateTime? WithdrawnOn { get; set; }
         public DateTime? ReturnedOn { get; set; }
 
         // Person
