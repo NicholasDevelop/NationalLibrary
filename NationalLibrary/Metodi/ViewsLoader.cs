@@ -3,8 +3,7 @@ using Microsoft.Extensions.WebEncoders.Testing;
 using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System.Globalization;
-
-
+using System.Runtime.Serialization.Formatters;
 
 namespace NationalLibrary.Metodi
 {
@@ -277,5 +276,38 @@ namespace NationalLibrary.Metodi
             }
             return user;
         }
+
+		// Restituisce lista libri con un group for ISBN
+		public static List<BookFinalView> BookGroupISBN(LibraryContext ctx)
+		{
+
+			List<BookFinalView> lista = BookFinalViewList(ctx);
+            
+				for (int a = 0; a < lista.Count; a++)
+				{
+                    if (CheckISBNList(lista[a].ISBN, lista, ctx) == true)
+					{
+					lista.Remove(lista[a]);
+					}
+
+                }
+			return lista;
+				
+        }
+
+		public static bool CheckISBNList(string ISBN, List<BookFinalView> pippo, LibraryContext ctx)
+		{
+			bool check = false;
+
+			for (int i = 0; i < pippo.Count; i++)
+			{
+				if (pippo[i].ISBN == ISBN)
+				{
+					check = true;
+				}
+			}
+			return check;
+
+		}
     }
 }
