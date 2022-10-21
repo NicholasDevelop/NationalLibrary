@@ -100,8 +100,8 @@ namespace NationalLibrary.Metodi
             return check;
         }
 
-        //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
+		//////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
+		public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
 
 		{
 			var newbook = new Book() { BookGuid = Guid.NewGuid(), Title = Title, Author = Author, PublishingHouse = PublishingHouse, Available = Available, Presentation = Presentation, Genre = Genre, CoverImg = Coverimg, BuyDate = DateTime.Now, Price = Price, ISBNFK = ISBN };
@@ -113,12 +113,16 @@ namespace NationalLibrary.Metodi
 			if (!check)
 			{
 				InsertISBN(checkforisbn, ctx);
+				ctx.Books.Add(newbook);
+				ctx.Locations.Add(newbook.Location);
 				ctx.SaveChanges();
 			}
-
-			ctx.Books.Add(newbook);
-			ctx.Locations.Add(newbook.Location);
-			ctx.SaveChanges();
+			else 
+			{ 
+				ctx.Books.Add(newbook);
+				ctx.Locations.Add(newbook.Location);
+				ctx.SaveChanges();
+			}
 
 		}
 		public static void DeleteBook(Guid BookGuid, LibraryContext ctx)
@@ -335,18 +339,12 @@ namespace NationalLibrary.Metodi
 			ctx.SaveChanges();
 
 		}
-		public static void UpdateRequestState(Guid RequestGuid, string StateUpdate, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
+		public static void UpdateRequestState(Guid RequestGuid, string StateUpdate, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[]? Coverimg, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
 		{
 			if (StateUpdate == "Accettata")
 			{
-				bool check = CheckISBNExsist(ISBN, ctx);
 
-				if (!check)
-				{
-					InsertISBN(ISBN, ctx);
-				}
-
-				InsertBook(Title, Author, PublishingHouse, Available, Presentation, Genre, Coverimg, BuyDate, Price, Room, Scaffhold, Position, Shelf, ISBN, ctx);
+				InsertBook(Title, Author, PublishingHouse, Available, Presentation, Genre, Coverimg, Price, Room, Scaffhold, Position, Shelf, ISBN, ctx);
 
 				Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
 				string FC = a.FiscalCodeFK;
@@ -363,9 +361,6 @@ namespace NationalLibrary.Metodi
 				ctx.SaveChanges();
 
 			}
-
-
-
 		}
 
 

@@ -14,6 +14,7 @@ namespace NationalLibrary.FinalViews
         public string MobilePhone { get; set; }
 
         // Request
+        public Guid RequestGuid { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public DateTime RequestDate { get; set; }

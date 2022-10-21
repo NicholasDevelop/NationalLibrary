@@ -203,10 +203,20 @@
                     <div class="card-container">
                         @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
                         {
-                            @if (item.Available)
+                            @if (item.Available && item.Room != null)
                             {
                                 count++;
                                 <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
+                                    <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
+                                    <div class="card-description">
+                                        <p>@item.Title</p>
+                                    </div>
+                                </a>
+                            }
+                            else if(item.Room != null)
+                            {
+                                count++;
+                                <a style="opacity: 35%" class="card">
                                     <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
                                     <div class="card-description">
                                         <p>@item.Title</p>
@@ -311,8 +321,8 @@
                                 <td>@item.Title</td>
                                 <td>@item.Author</td>
                                 <td>@item.RequestDate.Day/@item.RequestDate.Month/@item.RequestDate.Year</td>
-                                <td><a asp-controller="Home" asp-action="buyBook" asp-route-id="@item.FiscalCode"><img class="edit-book" src="~/img/edit.svg" /></a></td>
-                                <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.FiscalCode"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
+                                <td><a asp-controller="Home" asp-action="acceptBook" asp-route-id="@item.RequestGuid"><img class="edit-book" src="~/fontawesome/svgs/solid/check.svg"></a></td>
+                                <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.RequestGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                             </tr>
                         }
                     </table>

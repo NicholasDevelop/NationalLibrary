@@ -21,7 +21,7 @@ namespace NationalLibrary.Controllers
 		private readonly LibraryContext ctx;
 		private static BookFinalView tmp;
 		private static UserFinalView temp;
-
+		private static UserRequestFinalView requestTmp;
 
 		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
@@ -29,6 +29,7 @@ namespace NationalLibrary.Controllers
 			this.ctx = ctx;
 		}
 		private static UserFinalView userFinal;
+		#region Image
 		private List<string> getImages()
 		{
 			List<BookFinalView> result2 = new List<BookFinalView>();
@@ -51,6 +52,7 @@ namespace NationalLibrary.Controllers
 
 			return bytes;
 		}
+		#endregion
 		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
@@ -63,12 +65,8 @@ namespace NationalLibrary.Controllers
 		{
 			return RedirectToAction("dashboard", userFinal);
 		}
+		#region AddSomePerson
 		[HttpPost]
-		public IActionResult askForBook(IFormCollection form)
-		{
-			DataQueries.InsertRequest(userFinal.FiscalCode, form["title"], form["author"], form["comment"], null, ctx);
-			return RedirectToAction("router", userFinal);
-		}
 		public IActionResult addUser()
 		{
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
@@ -82,6 +80,8 @@ namespace NationalLibrary.Controllers
 				return RedirectToAction("Error");
 			return View(user);
 		}
+		#endregion
+		#region Log
 		public IActionResult logout()
 		{
 			userFinal = null;
@@ -91,21 +91,22 @@ namespace NationalLibrary.Controllers
 		{
 			return View();
 		}
-		public IActionResult userDashboard(UserFinalView user)
+		#endregion
+
+		#region BookRequests
+		public IActionResult askForBook(IFormCollection form)
 		{
-			ViewData["Today"] = DateTime.Now;
-			ViewData["UserLogged"] = userFinal;
-			ViewData["Images"] = getImages();
-			List<BookFinalView> l = ViewsLoaders.BookFinalViewList(ctx);
-			ViewData["Books"] = l;
-			
-			List<WaitingBookStatusFinalView> wlist =  DataQueries.CheckIfBookArrived(user.FiscalCode, ctx);
-			ViewData["wlist"] = wlist;
-			return View(user);
+			DataQueries.InsertRequest(userFinal.FiscalCode, form["title"], form["author"], form["comment"], null, ctx);
+			return RedirectToAction("router", userFinal);
 		}
-
-
+		public IActionResult acceptBook(Guid id)
+		{
+			requestTmp = ViewsLoaders.getRequestById(id, ctx);
+			return RedirectToAction("newBook");
+		}
+		#endregion
 		//Controller per la gestione dei Libri
+		#region BookRent
 		public IActionResult viewBookFromUser(UserFinalView user, Guid id)
 		{
 			BookFinalView book = DataQueries.getBookByGuid(id, ctx);
@@ -149,6 +150,9 @@ namespace NationalLibrary.Controllers
 			DataQueries.ReturnRent(id, ctx);
 			return RedirectToAction("dashboard", userFinal);
 		}
+		#endregion
+
+		#region Book
 		public IActionResult modifyBook(BookFinalView book, Guid id)
 		{
 			book = DataQueries.getBookByGuid(id, ctx);
@@ -216,14 +220,25 @@ namespace NationalLibrary.Controllers
 				}
 				book.CoverImg = p1;
 			}
-			DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
-				book.Genre, book.CoverImg, DateTime.Now,
-				book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
+			if (requestTmp != null)
+			{
+				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Accettata", book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+				book.Genre, book.CoverImg,
+				book.Price, null, null, null, null, book.ISBN, ctx);
+				requestTmp = null;
+			}
+			else
+			{
+				DataQueries.InsertBook(book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+					book.Genre, book.CoverImg,
+					book.Price, book.Room, book.Scaffhold, book.Position, book.Shelf, book.ISBN, ctx);
+			}
 			return RedirectToAction("dashboard", userFinal);
 		}
 
+		#endregion
 
-
+		#region Employee
 		//Controller per la gestione degli impiegati
 		public IActionResult insertEmployee(UserFinalView user)
 		{
@@ -236,32 +251,63 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 
-        public IActionResult modifyEmployee(UserFinalView user, string id)
-        {
-            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
-            temp = user;
-            return View(user);
-        }
+		public IActionResult modifyEmployee(UserFinalView user, string id)
+		{
+			user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+			temp = user;
+			return View(user);
+		}
 
-        [HttpPost]
-        public IActionResult postModifyEmployee(UserFinalView user)
-        {
-            user.Password = temp.Password;
-            user.FiscalCode = temp.FiscalCode;
-            user.Type = temp.Type;
-            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
-                user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+		[HttpPost]
+		public IActionResult postModifyEmployee(UserFinalView user)
+		{
+			user.Password = temp.Password;
+			user.FiscalCode = temp.FiscalCode;
+			user.Type = temp.Type;
+			DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
+		public IActionResult employeeDashboard(UserFinalView user)
+		{
+			List<UserFinalView> users = new List<UserFinalView>();
+			foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
+				if (item.Type.ToLower() == "user")
+					users.Add(item);
+			ViewData["Users"] = users;
+			ViewData["Today"] = DateTime.Now;
+			List<BookFinalView> result2 = new List<BookFinalView>();
+			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
+				result2.Add(item);
+			ViewData["Books"] = result2;
+			ViewData["Images"] = getImages();
+			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
+			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
+			return View(user);
+		}
 
-        public IActionResult deleteEmployee(UserFinalView user, string id)
-        {
-            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
-            DataQueries.DeleteUser(user.FiscalCode, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+		public IActionResult deleteEmployee(UserFinalView user, string id)
+		{
+			user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+			DataQueries.DeleteUser(user.FiscalCode, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
+		#endregion
 
-        public IActionResult insertUser(UserFinalView user)
+		#region User
+		public IActionResult userDashboard(UserFinalView user)
+		{
+			ViewData["Today"] = DateTime.Now;
+			ViewData["UserLogged"] = userFinal;
+			ViewData["Images"] = getImages();
+			List<BookFinalView> l = ViewsLoaders.BookFinalViewList(ctx);
+			ViewData["Books"] = l;
+
+			List<WaitingBookStatusFinalView> wlist = DataQueries.CheckIfBookArrived(user.FiscalCode, ctx);
+			ViewData["wlist"] = wlist;
+			return View(user);
+		}
+		public IActionResult insertUser(UserFinalView user)
 		{
 			try
 			{
@@ -319,35 +365,19 @@ namespace NationalLibrary.Controllers
 			user.Password = temp.Password;
 			user.FiscalCode = temp.FiscalCode;
 			user.Type = temp.Type;
-            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+			DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
 				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
-            return RedirectToAction("employeeDashboard", userFinal);
-        }
-
-        public IActionResult deleteUser(UserFinalView user, string id)
-        {
-            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
-            DataQueries.DeleteUser(user.FiscalCode, ctx);
-            return RedirectToAction("employeeDashboard", userFinal);
-        }
-
-		public IActionResult employeeDashboard(UserFinalView user)
-		{
-			List<UserFinalView> users = new List<UserFinalView>();
-			foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
-				if (item.Type.ToLower() == "user")
-					users.Add(item);
-			ViewData["Users"] = users;
-			ViewData["Today"] = DateTime.Now;
-			List<BookFinalView> result2 = new List<BookFinalView>();
-			foreach (BookFinalView item in ViewsLoaders.BookFinalViewList(ctx))
-				result2.Add(item);
-			ViewData["Books"] = result2;
-			ViewData["Images"] = getImages();
-			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
-			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
-			return View(user);
+			return RedirectToAction("employeeDashboard", userFinal);
 		}
+
+		public IActionResult deleteUser(UserFinalView user, string id)
+		{
+			user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+			DataQueries.DeleteUser(user.FiscalCode, ctx);
+			return RedirectToAction("employeeDashboard", userFinal);
+		}
+		#endregion
+
 		public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);

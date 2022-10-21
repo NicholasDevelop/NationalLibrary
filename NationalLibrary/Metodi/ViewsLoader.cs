@@ -174,6 +174,7 @@ namespace NationalLibrary.Metodi
 						   Surname = x.Surname,
 						   MobilePhone = x.MobilePhone,
 
+						   RequestGuid = b.RequestGuid,
 						   Title = b.Title,
 						   Author = b.Author,
 						   RequestDate = b.RequestDate
@@ -219,6 +220,14 @@ namespace NationalLibrary.Metodi
             }
             return a;
         }
+
+		public static UserRequestFinalView getRequestById(Guid id, LibraryContext ctx)
+		{
+			foreach (var item in UserRequestFinalViewList(ctx))
+				if (item.RequestGuid == id)
+					return item;
+			return null;
+		}
 
 		// Numero di libri comprati dalla biblioteca questo mese
 		public static List<BookFinalView> MonthBookBought(LibraryContext ctx)
