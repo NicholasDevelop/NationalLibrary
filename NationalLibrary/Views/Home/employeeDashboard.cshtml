@@ -298,13 +298,16 @@
                 </h4><nav>
                     <ul id="slowdown-menu" class="drop-down closed">
                         <li><img style="width: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
-                        <li><a>Dettagli</a></li>
+                        <li>
+                            <a href="#" id="detailsLink">Details</a>
+                        </li>
                         <li><a asp-controller="Home" asp-action="logout">Logout</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model);
     <script>
         var books = document.getElementById("popupBooks");
         var users = document.getElementById("popupUsers");
