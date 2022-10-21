@@ -127,6 +127,30 @@
                     </ul>
                 </nav>
             </div>
+            <div>
+                <div class="bookToAdd">
+                    <h3>Non hai trovato ciò che cercavi?</h3>
+                    <p>
+                        Puoi richiedere un libro <br />
+                        in qualsiasi momento. Valuteremo <br />
+                        la tua richiesta e cercheremo di accontentarla!
+                    </p>
+                    <div>
+                        <form asp-action="dashboard" asp-controller="Home" method="post">
+                            <div style="display: grid;
+                            grid-template-columns: 50% 80% !important;
+                            width: 20%;
+                            column-gap: 50%;">
+                                <img src="~/fontawesome/svgs/solid/book.svg" style="border-top: 29px solid transparent;" width="24px" alt="">
+                                <label style="width: 200px;" class="custom-field">
+                                    <input asp-for="@Model.Name" style="width: 100%;" type="text" placeholder=" " />
+                                    <span class="placeholder">Inserisci Username</span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>

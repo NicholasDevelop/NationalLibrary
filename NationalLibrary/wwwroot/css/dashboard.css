@@ -185,10 +185,70 @@ li {
     transition: 1.8s all
 }
 
-    #Employee:not(.hidden) ~ #Magazine.hidden ~ #RentList.hidden {
-        position: absolute;
-        transform: translateX(-150%);
+.custom-field {
+    position: relative;
+    font-size: 14px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: inline-block;
+    --field-padding: 12px;
+}
+
+    .custom-field input {
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: none;
+        padding: var(--field-padding);
+        border-radius: 3px;
+        width: 250px;
+        outline: none;
+        font-size: 14px;
+        border: 2px solid #ddd;
+        transition: border-color 0.3s ease;
     }
+
+    .custom-field .placeholder {
+        position: absolute;
+        left: var(--field-padding);
+        width: calc(100% - (var(--field-padding) * 2));
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        top: 22px;
+        line-height: 100%;
+        transform: translateY(-50%);
+        color: #aaa;
+        transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+    }
+
+    .custom-field input + .placeholder {
+        left: 8px;
+        padding: 0 5px;
+    }
+
+    .custom-field input.dirty,
+    .custom-field input:not(:placeholder-shown),
+    .custom-field input:focus {
+        border-color: #222;
+        transition-delay: 0.1s
+    }
+
+        .custom-field input.dirty + .placeholder,
+        .custom-field input:not(:placeholder-shown) + .placeholder,
+        .custom-field input:focus + .placeholder {
+            top: 0;
+            font-size: 12px;
+            color: #222;
+            background: #fff;
+            width: auto
+        }
+
+#Employee:not(.hidden) ~ #Magazine.hidden ~ #RentList.hidden {
+    position: absolute;
+    transform: translateX(-150%);
+}
 
 main {
     display: grid;
@@ -347,44 +407,41 @@ td {
     }
 
         #admin-line nav .drop-down.closed {
-            /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
-      with overflow: hidden set on the ul will hide all list items apart from the first */
-            /* current li height 38px + 5px border */
             height: 43px;
         }
 
-    #admin-line nav {
-        position: fixed;
-        justify-self: center;
-        align-self: center;
-        top: 10px;
+in-line nav {
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    top: 10px;
+    #admin-line nav ul
+
+{
+    position: absolute;
+}
+
+#admin-line nav .drop-down li {
+    border-bottom: 5px solid;
+    border-color: rgb(164, 164, 164);
+}
+
+    #admin-line nav .drop-down li a {
+        display: block;
+        color: black;
+        text-decoration: none;
+        padding: 10px; /* Larger touch target area */
     }
 
-        #admin-line nav ul {
-            position: absolute;
-        }
-
-        #admin-line nav .drop-down li {
-            border-bottom: 5px solid;
-            border-color: rgb(164, 164, 164);
-        }
-
-            #admin-line nav .drop-down li a {
-                display: block;
-                color: black;
-                text-decoration: none;
-                padding: 10px; /* Larger touch target area */
-            }
-
-            #admin-line nav .drop-down li:first-child a:after {
-                content: "\25BC";
-                float: right;
-                margin-left: -30px; /* Excessive -margin to bring link text back to center */
-                margin-right: 5px;
-            }
+    #admin-line nav .drop-down li:first-child a:after {
+        content: "\25BC";
+        float: right;
+        margin-left: -30px; /* Excessive -margin to bring link text back to center */
+        margin-right: 5px;
+    }
 
 .card-container {
-    overflow-y:scroll;
+    overflow-y: scroll;
     height: 100%;
     width: 100%;
     background: whitesmoke;
@@ -408,10 +465,10 @@ td {
     transition: 0.3s all;
 }
 
-.card:hover {
-    scale: 1.1;
-    box-shadow: 5px 5px 5px #BFBFBF;
-}
+    .card:hover {
+        scale: 1.1;
+        box-shadow: 5px 5px 5px #BFBFBF;
+    }
 
 .card-description {
     display: flex;
@@ -421,13 +478,13 @@ td {
     width: 100%;
 }
 
-.card-description p {
-    text-align: center;
-    font-weight: 700;
-    font-size: 16px;
-    padding: 10px;
-    color: white;
-}
+    .card-description p {
+        text-align: center;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 10px;
+        color: white;
+    }
 
 .transitions {
     margin-top: 20px;
@@ -436,7 +493,12 @@ td {
     row-gap: 5%;
     overflow-y: scroll;
 }
-
+.bookToAdd{
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 10% 40% 20%;
+    grid-row-gap: 5%;
+}
 .transition {
     padding: 20px;
     display: grid;

@@ -123,7 +123,7 @@ namespace NationalLibrary.Controllers
 		public IActionResult rentBook(UserFinalView rent, Guid id)
 		{
 			BookFinalView bookToRent = DataQueries.getBookByGuid(id, ctx);
-			DataQueries.InsertRent(bookToRent.BookGuid, rent.FiscalCode, ctx);
+			DataQueries.InsertRent(bookToRent.BookGuid, userFinal.FiscalCode, ctx);
 
 			return RedirectToAction("dashboard", userFinal);
 		}
