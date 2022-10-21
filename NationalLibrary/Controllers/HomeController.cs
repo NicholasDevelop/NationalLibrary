@@ -20,10 +20,10 @@ namespace NationalLibrary.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly LibraryContext ctx;
 		private static BookFinalView tmp;
-        private static UserFinalView temp;
+		private static UserFinalView temp;
 
 
-        public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
+		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
 			this.ctx = ctx;
@@ -123,7 +123,10 @@ namespace NationalLibrary.Controllers
 		public IActionResult rentBook(UserFinalView rent, Guid id)
 		{
 			BookFinalView bookToRent = DataQueries.getBookByGuid(id, ctx);
-			DataQueries.InsertRent(bookToRent.BookGuid, userFinal.FiscalCode, ctx);
+			if (userFinal.Type == "Librarian")
+				DataQueries.InsertRent(bookToRent.BookGuid, rent.FiscalCode, ctx);
+			else
+				DataQueries.InsertRent(bookToRent.BookGuid, userFinal.FiscalCode, ctx);
 
 			return RedirectToAction("dashboard", userFinal);
 		}
@@ -256,43 +259,43 @@ namespace NationalLibrary.Controllers
 				return Error();
 			}
 		}
-        //public static UserFinalView getUserByFiscalCode(string FiscalCode, LibraryContext ctx)
-        //{
-        //    UserFinalView user = new UserFinalView();
-        //    foreach (var item in ViewsLoaders.UserFinalViewList(ctx))
-        //    {
-        //        if (item.FiscalCode == FiscalCode)
-        //        {
-        //            user = item;
-        //            break;
-        //        }
-        //    }
-        //    return user;
-        //}
-        public IActionResult modifyUser(UserFinalView user, string id)
-        {
-            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
-            temp = user;
-            return View(user);
-        }
+		//public static UserFinalView getUserByFiscalCode(string FiscalCode, LibraryContext ctx)
+		//{
+		//    UserFinalView user = new UserFinalView();
+		//    foreach (var item in ViewsLoaders.UserFinalViewList(ctx))
+		//    {
+		//        if (item.FiscalCode == FiscalCode)
+		//        {
+		//            user = item;
+		//            break;
+		//        }
+		//    }
+		//    return user;
+		//}
+		public IActionResult modifyUser(UserFinalView user, string id)
+		{
+			user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+			temp = user;
+			return View(user);
+		}
 
-        [HttpPost]
-        public IActionResult postModifyUser(UserFinalView user)
-        {
-            user.FiscalCode = temp.FiscalCode;
-            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+		[HttpPost]
+		public IActionResult postModifyUser(UserFinalView user)
+		{
+			user.FiscalCode = temp.FiscalCode;
+			DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
 				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+			return RedirectToAction("dashboard", userFinal);
+		}
 
-        public IActionResult deleteUser(UserFinalView user, string id)
-        {
-            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
-            DataQueries.DeleteUser(user.FiscalCode, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
+		public IActionResult deleteUser(UserFinalView user, string id)
+		{
+			user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+			DataQueries.DeleteUser(user.FiscalCode, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 
-        public IActionResult employeeDashboard(UserFinalView user)
+		public IActionResult employeeDashboard(UserFinalView user)
 		{
 			List<UserFinalView> users = new List<UserFinalView>();
 			foreach (UserFinalView item in ViewsLoaders.UserFinalViewList(ctx))
