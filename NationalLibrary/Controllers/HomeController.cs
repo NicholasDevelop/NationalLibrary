@@ -227,7 +227,33 @@ namespace NationalLibrary.Controllers
 			user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, String.Empty, ctx);
 			return RedirectToAction("dashboard", userFinal);
 		}
-		public IActionResult insertUser(UserFinalView user)
+
+        public IActionResult modifyEmployee(UserFinalView user, string id)
+        {
+            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+            temp = user;
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult postModifyEmployee(UserFinalView user)
+        {
+            user.Password = temp.Password;
+            user.FiscalCode = temp.FiscalCode;
+            user.Type = temp.Type;
+            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+                user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+        public IActionResult deleteEmployee(UserFinalView user, string id)
+        {
+            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+            DataQueries.DeleteUser(user.FiscalCode, ctx);
+            return RedirectToAction("dashboard", userFinal);
+        }
+
+        public IActionResult insertUser(UserFinalView user)
 		{
 			try
 			{

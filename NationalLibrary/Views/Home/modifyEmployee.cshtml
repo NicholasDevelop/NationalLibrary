@@ -16,7 +16,7 @@
             </a>
 
             <div>
-                <h2>Inserimento dipendenti</h2>
+                <h2>Modifica Dipendente</h2>
             </div>
             <a class="dashboard" asp-action="router" asp-controller="Home">Torna alla Dashboard</a>
         </div>
@@ -28,21 +28,31 @@
             <div class="container-left">
                 <img class="mainBackground" src="~/img/librarianBackground.svg" alt="">
             </div>
-
             <div class="container-right">
-                <form asp-action="insertEmployee" asp-controller="Home" method="post">
+                <form asp-action="insertUser" asp-controller="Home" method="post">
                     <div class="form-data">
-                        <!-- Nome -->
+                        <!-- Codice Fiscale -->
                         <div class="inputContainer">
                             <label for="name">Codice Fiscale</label>
                             <div>
                                 <input required minlength="16" maxlength="16" placeholder="Codice Fiscale" asp-for="@Model.FiscalCode" type="text" name="fiscalCode">
+                                <span asp-validation-for="@Model.FiscalCode" class="text-red"></span>
                             </div>
                         </div>
+                        <!-- Codice Fiscale Tutore -->
                         <div class="inputContainer">
-                            <label for="name">Nome </label>
+                            <label for="name">Codice Fiscale Tutore</label>
+                            <div>
+                                <input minlength="16" maxlength="16" placeholder="Codice Fiscale" asp-for="@Model.FCRelatedTO" type="text" name="FCRelatedTO">
+                                <span asp-validation-for="@Model.FCRelatedTO" class="text-red"></span>
+                            </div>
+                        </div>
+                        <!-- Nome -->
+                        <div class="inputContainer">
+                            <label for="name">Nome</label>
                             <div>
                                 <input required minlength="2" maxlength="20" placeholder="Nome" asp-for="@Model.Name" type="text" name="name">
+                                <span asp-validation-for="@Model.Name" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Cognome -->
@@ -50,13 +60,15 @@
                             <label for="surname">Cognome </label>
                             <div>
                                 <input required minlength="2" maxlength="25" asp-for="@Model.Surname" placeholder="Cognome" type="text" name="surname">
+                                <span asp-validation-for="@Model.Surname" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Data Nascita -->
                         <div class="inputContainer">
                             <label for="name">Data Nascita</label>
                             <div>
-                                <input type="date" asp-for="@Model.BirthDate" name="birthdate">
+                                <input type="date" asp-for="@Model.BirthDate" onchange="checkBirthDate(this.value)" name="birthdate">
+                                <span asp-validation-for="@Model.BirthDate" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Città Di Residenza -->
@@ -64,6 +76,7 @@
                             <label for="surname">Città Di Residenza</label>
                             <div>
                                 <input required minlength="2" maxlength="25" asp-for="@Model.City" placeholder="Ciità Di Residenza" type="text" name="city">
+                                <span asp-validation-for="@Model.City" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Indirizzo Di Residenza -->
@@ -71,6 +84,7 @@
                             <label for="surname">Indirizzo Di Residenza</label>
                             <div>
                                 <input required minlength="2" maxlength="25" asp-for="@Model.Street" placeholder="Indrizzo Di Residenza" type="text" name="street">
+                                <span asp-validation-for="@Model.Street" class="text-red"></span>
                             </div>
                         </div>
                         <!-- CAP Di Residenza -->
@@ -78,6 +92,7 @@
                             <label for="surname">CAP</label>
                             <div>
                                 <input required maxlength="5" minlength="5" asp-for="@Model.CAP" placeholder="CAP" type="text" name="cap">
+                                <span asp-validation-for="@Model.CAP" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Provincia Di Residenza -->
@@ -85,6 +100,7 @@
                             <label for="surname">Provincia</label>
                             <div>
                                 <input required minlength="2" maxlength="2" placeholder="Provincia" asp-for="@Model.Province" type="text" name="province">
+                                <span asp-validation-for="@Model.Province" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Numero Documento -->
@@ -92,27 +108,31 @@
                             <label for="surname">Numero Documento</label>
                             <div>
                                 <input required maxlength="9" minlength="9" placeholder="Numero Documento" asp-for="@Model.DocumentNumber" type="text" name="documentNumber">
+                                <span asp-validation-for="@Model.DocumentNumber" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Tipo Di Documento -->
                         <div class="inputContainer">
                             <label for="surname">Tipo Di Documento</label>
                             <div>
-                                <input required minlength="10" maxlength="40" placeholder="Tipo Di Documento" asp-for="@Model.DocumentType" type="text" name="documentType">
+                                <input required minlength="5" maxlength="40" placeholder="Tipo Di Documento" asp-for="@Model.DocumentType" type="text" name="documentType">
+                                <span asp-validation-for="@Model.DocumentType" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Rilasciato Da -->
                         <div class="inputContainer">
                             <label for="surname">Rilasciato Da</label>
                             <div>
-                                <input required minlength="10" maxlength="25" placeholder="Rilasciato Da" asp-for="@Model.ReleasedBy" type="text" name="releasedBy">
+                                <input required minlength="4" maxlength="25" placeholder="Rilasciato Da" asp-for="@Model.ReleasedBy" type="text" name="releasedBy">
+                                <span asp-validation-for="@Model.ReleasedBy" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Scadenza -->
                         <div class="inputContainer">
                             <label for="surname">Scadenza</label>
                             <div>
-                                <input required type="date" asp-for="@Model.ExpiredOn" name="expireOn">
+                                <input required type="date" asp-for="@Model.ExpiredOn" name="expiredOn">
+                                <span asp-validation-for="@Model.ExpiredOn" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Numero Di Telefono -->
@@ -120,6 +140,7 @@
                             <label for="surname">Numero Di Telefono</label>
                             <div>
                                 <input required maxlength="15" minlength="11" asp-for="@Model.MobilePhone" placeholder="Numero Di Telefono" type="text" name="mobilePhone">
+                                <span asp-validation-for="@Model.MobilePhone" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Email -->
@@ -127,6 +148,7 @@
                             <label for="surname">Email</label>
                             <div>
                                 <input required placeholder="Email" type="email" asp-for="@Model.Email" name="email">
+                                <span asp-validation-for="@Model.Email" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Default Username -->
@@ -134,18 +156,20 @@
                             <label for="surname">Default Username</label>
                             <div>
                                 <input required placeholder="Username" type="text" asp-for="@Model.Username" name="Username">
+                                <span asp-validation-for="@Model.Username" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Default Password -->
                         <div class="inputContainer">
                             <label for="surname">Default Password</label>
                             <div>
-                                <input required minlength="8" placeholder="Password" type="password" asp-for="@Model.Password" name="Password">
+                                <input required minlength="8" placeholder="Password" asp-for="@Model.Password" name="Password">
+                                <span asp-validation-for="@Model.Password" class="text-red"></span>
                             </div>
                         </div>
                         <!-- Submit -->
                         <div class="inputContainer item-center">
-                            <Button class="special-button" type="submit" name="submitEmployee">Aggiungi</Button>
+                            <button class="special-button" type="submit" asp-action="postModifyEmployee" asp-controller="Home">Conferma Modifica</button>
                         </div>
                     </div>
                     <img src="~/img/Librarian.svg" />
