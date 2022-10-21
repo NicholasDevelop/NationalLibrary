@@ -410,35 +410,35 @@ td {
             height: 43px;
         }
 
-in-line nav {
-    position: fixed;
-    justify-self: center;
-    align-self: center;
-    top: 10px;
-    #admin-line nav ul
-
-{
-    position: absolute;
-}
-
-#admin-line nav .drop-down li {
-    border-bottom: 5px solid;
-    border-color: rgb(164, 164, 164);
-}
-
-    #admin-line nav .drop-down li a {
-        display: block;
-        color: black;
-        text-decoration: none;
-        padding: 10px; /* Larger touch target area */
+    #admin-line nav {
+        position: fixed;
+        justify-self: center;
+        align-self: center;
+        top: 10px;
     }
 
-    #admin-line nav .drop-down li:first-child a:after {
-        content: "\25BC";
-        float: right;
-        margin-left: -30px; /* Excessive -margin to bring link text back to center */
-        margin-right: 5px;
-    }
+        #admin-line nav ul {
+            position: absolute;
+        }
+
+        #admin-line nav .drop-down li {
+            border-bottom: 5px solid;
+            border-color: rgb(164, 164, 164);
+        }
+
+            #admin-line nav .drop-down li a {
+                display: block;
+                color: black;
+                text-decoration: none;
+                padding: 10px; /* Larger touch target area */
+            }
+
+            #admin-line nav .drop-down li:first-child a:after {
+                content: "\25BC";
+                float: right;
+                margin-left: -30px; /* Excessive -margin to bring link text back to center */
+                margin-right: 5px;
+            }
 
 .card-container {
     overflow-y: scroll;
@@ -493,12 +493,7 @@ in-line nav {
     row-gap: 5%;
     overflow-y: scroll;
 }
-.bookToAdd{
-    padding: 10px;
-    display: grid;
-    grid-template-rows: 10% 40% 20%;
-    grid-row-gap: 5%;
-}
+
 .transition {
     padding: 20px;
     display: grid;
@@ -511,6 +506,14 @@ in-line nav {
         display: grid;
         grid-template-rows: 80% 20%;
     }
+
+.bookToAdd{
+    display: grid;
+    grid-template-rows: 10% auto auto;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
 
 ::-webkit-scrollbar {
     width: 5px;
