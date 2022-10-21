@@ -12,6 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/dashboard.css">
+
+
     <link href="~/fontawesome/font-awesome/css/fontawesome.css" rel="stylesheet">
     <link href="~/fontawesome/font-awesome/css/brands.css" rel="stylesheet">
     <link href="~/fontawesome/font-awesome/css/solid.css" rel="stylesheet">
@@ -19,9 +21,6 @@
 </head>
 
 <body>
-
-
-
 
     <div id="container">
         <div id="navbar">
@@ -122,13 +121,19 @@
                 <nav>
                     <ul id="slowdown-menu" class="drop-down closed">
                         <li><img style="width: 32px" class="nav-button" onclick="openMenu()" src="~/img/admin.svg" alt=""></li>
-                        <li><a>Dettagli</a></li>
+                        <li>
+                            <a href="#" id="detailsLink">Details</a>
+                        </li>
                         <li><a asp-controller="Home" asp-action="logout">Logout</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
+
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model);
+    
+    
     <script>
         var books = document.getElementById("popupBooks");
         var users = document.getElementById("popupUsers");
@@ -163,4 +168,5 @@
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
     </script>
+    
 </body>
