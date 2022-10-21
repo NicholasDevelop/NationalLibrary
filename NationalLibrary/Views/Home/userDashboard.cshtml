@@ -150,17 +150,28 @@
                         la tua richiesta e cercheremo di accontentarla!
                     </p>
                     <div>
-                        <form asp-action="dashboard" asp-controller="Home" method="post">
+                        <form asp-action="askForBook" asp-controller="Home" method="post">
                             <div style="display: grid;
                             grid-template-columns: 50% 80% !important;
                             width: 20%;
                             column-gap: 50%;">
                                 <img src="~/fontawesome/svgs/solid/book.svg" style="border-top: 29px solid transparent;" width="24px" alt="">
                                 <label style="width: 200px;" class="custom-field">
-                                    <input asp-for="@Model.Name" style="width: 100%;" type="text" placeholder=" " />
-                                    <span class="placeholder">Inserisci Username</span>
+                                    <input name="title" style="width: 100%;" type="text" placeholder=" " />
+                                    <span class="placeholder">Inserisci Titolo</span>
+                                </label>
+                                <img src="~/fontawesome/svgs/solid/user.svg" style="border-top: 29px solid transparent;" width="24px" alt="">
+                                <label style="width: 200px;" class="custom-field">
+                                    <input name="author" style="width: 100%;" type="text" placeholder=" " />
+                                    <span class="placeholder">Inserisci Autore</span>
+                                </label>
+                                <img src="~/fontawesome/svgs/solid/comment.svg" style="border-top: 29px solid transparent;" width="24px" alt="">
+                                <label style="width: 200px;" class="custom-field">
+                                    <input name="comment" style="width: 100%;" type="text" placeholder=" " />
+                                    <span class="placeholder">Inserisci Una Richiesta In Particolare</span>
                                 </label>
                             </div>
+                                <button class="special-button" type="submit">Invia Richiesta</button>
                         </form>
                     </div>
                 </div>

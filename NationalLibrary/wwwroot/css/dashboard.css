@@ -532,9 +532,63 @@ td {
     align-items: center;
     grid-row-gap: 30%;
     justify-content: center;
-    padding: 10px;
     margin-top: 30px;
+    width: 100%;
 }
+
+.special-button {
+    border-color: #cccccc;
+    width: 200px;
+    display: inline-block;
+    padding: .5rem 0.6rem;
+    border-radius: 8px;
+    color: black;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: .15rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+}
+
+    .special-button::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F8F7F7;
+        border-radius: 8px;
+        z-index: -2;
+    }
+
+    .special-button::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #aacbe9;
+        transition: all .3s;
+        border-radius: 8px;
+        z-index: -1;
+    }
+
+    .special-button.red::before {
+        background-color: #c33b32;
+    }
+
+    .special-button:hover {
+        color: black;
+    }
+
+        .special-button:hover::before {
+            width: 100%;
+        }
 
 ::-webkit-scrollbar {
     width: 5px;
