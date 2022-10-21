@@ -486,12 +486,28 @@ td {
     align-self: center;
     background-color: lightgray;
     transition: 0.3s all;
+    position: relative;
 }
 
-    .card:hover {
-        scale: 1.1;
-        box-shadow: 5px 5px 5px #BFBFBF;
-    }
+incoming {
+    padding: 4px;
+    width: 100%;
+    height: 8%;
+    top: 13px;
+    position: absolute;
+    z-index: 10;
+    color: white;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card:hover {
+    scale: 1.1;
+    box-shadow: 5px 5px 5px #BFBFBF;
+}
 
 .card-description {
     display: flex;
