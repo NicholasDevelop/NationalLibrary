@@ -99,17 +99,6 @@ namespace NationalLibrary.Metodi
 
             return check;
         }
-		public static Person GetUser(string FiscalCode, LibraryContext ctx)
-		{
-            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
-            List<Residence> b = ctx.Residences.Where(u => a.AddressGuidFK == u.AddressGuid).ToList();
-            List<Document> c = ctx.Documents.Where(u => a.DocumentNumberFK == u.DocumentNumber).ToList();
-            List<User> d = ctx.Users.Where(u => a.FiscalCode == u.FiscalCode).ToList();
-
-
-
-
-        }
 
         //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
