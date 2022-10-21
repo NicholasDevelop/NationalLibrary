@@ -139,7 +139,7 @@ namespace NationalLibrary.Metodi
                                 //ReceivedOn = d.ReceivedOn,
 
                                 //RequestGuid = e.RequestGuid,
-                                //Title = e.Title,
+                                Title = x.Title,
                                 //Author = e.Author,
                                 //Comment = e.Comment,
                                 //State = e.State,

@@ -257,10 +257,7 @@ namespace NationalLibrary.Controllers
 				result2.Add(item);
 			ViewData["Books"] = result2;
 			ViewData["Images"] = getImages();
-			List<RentRequestFinalView> rentedBooks = new List<RentRequestFinalView>();
-			foreach (RentRequestFinalView item in ViewsLoaders.RentRequestFinalViewList(ctx))
-				rentedBooks.Add(item);
-			ViewData["RentedBook"] = rentedBooks;
+			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 
 			return View(user);
 		}
@@ -291,9 +288,7 @@ namespace NationalLibrary.Controllers
 						List<BookFinalView> lastBuyedBooks = ViewsLoaders.MonthBookBought(ctx);
 						ViewData["LastBuyedBooks"] = lastBuyedBooks;
 						ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
-						List<UserFinalView> lastSignedUsers = new List<UserFinalView>();
-						lastSignedUsers = DataQueries.getLastMonthRegisteredUsers(ctx);
-						ViewData["LastSignedUsers"] = lastSignedUsers;
+						ViewData["LastSignedUsers"] = DataQueries.getLastMonthRegisteredUsers(ctx);
 						return View(type);
 					case "User":
 						userFinal = type;
