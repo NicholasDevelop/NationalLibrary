@@ -133,6 +133,11 @@ namespace NationalLibrary.Controllers
 			DataQueries.BookDeliveredFromRent(id, ctx);
 			return RedirectToAction("dashboard", userFinal);
 		}
+		public IActionResult bookReturned(Guid id)
+		{
+			DataQueries.ReturnRent(id, ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 		public IActionResult modifyBook(BookFinalView book, Guid id)
 		{
 			book = DataQueries.getBookByGuid(id, ctx);
@@ -288,13 +293,6 @@ namespace NationalLibrary.Controllers
             book.BookGuid = tmp.BookGuid;
             book.CoverImg = tmp.CoverImg;
             DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
-            return RedirectToAction("dashboard", userFinal);
-        }
-
-        public IActionResult deleteBook(BookFinalView book, Guid id)
-        {
-            book = DataQueries.getBookByGuid(id, ctx);
-            DataQueries.DeleteBook(book.BookGuid, ctx);
             return RedirectToAction("dashboard", userFinal);
         }
 
