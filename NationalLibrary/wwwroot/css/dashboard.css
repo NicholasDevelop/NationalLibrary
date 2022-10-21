@@ -352,7 +352,7 @@ tr {
 }
 
 td {
-    color: lightgray;
+    color: gray;
     font-size: 14px;
 }
 
@@ -507,12 +507,14 @@ td {
         grid-template-rows: 80% 20%;
     }
 
-.bookToAdd{
+.bookToAdd {
     display: grid;
     grid-template-rows: 10% auto auto;
     align-items: center;
+    grid-row-gap: 30%;
     justify-content: center;
     padding: 10px;
+    margin-top: 30px;
 }
 
 ::-webkit-scrollbar {
