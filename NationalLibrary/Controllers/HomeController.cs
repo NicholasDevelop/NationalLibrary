@@ -267,29 +267,18 @@ namespace NationalLibrary.Controllers
         }
 
         [HttpPost]
-        public IActionResult postModifyUser(BookFinalView book)
+        public IActionResult postModifyUser(UserFinalView user)
         {
-            foreach (var file in Request.Form.Files)
-            {
-                IFormFile img = file;
-                byte[] p1 = null;
-                using (var ms1 = new MemoryStream())
-                {
-                    img.CopyTo(ms1);
-                    p1 = ms1.ToArray();
-                }
-                tmp.CoverImg = p1;
-            }
-            book.BookGuid = tmp.BookGuid;
-            book.CoverImg = tmp.CoverImg;
-            DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
+            user.FiscalCode = temp.FiscalCode;
+            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
             return RedirectToAction("dashboard", userFinal);
         }
 
-        public IActionResult deleteBook(BookFinalView book, Guid id)
+        public IActionResult deleteUser(UserFinalView user, string id)
         {
-            book = DataQueries.getBookByGuid(id, ctx);
-            DataQueries.DeleteBook(book.BookGuid, ctx);
+            user = ViewsLoaders.getUserByFiscalCode(id, ctx);
+            DataQueries.DeleteUser(user.FiscalCode, ctx);
             return RedirectToAction("dashboard", userFinal);
         }
 
