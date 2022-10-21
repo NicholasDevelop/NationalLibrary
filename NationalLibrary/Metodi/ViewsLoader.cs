@@ -278,6 +278,12 @@ namespace NationalLibrary.Metodi
         }
 
 		// Restituisce lista libri con un group for ISBN
+		public static List<BookFinalView> BookGroupISBN2(LibraryContext ctx)
+		{
+			var pippo =  BookFinalViewList(ctx).GroupBy(x => x.ISBN).Select(y => y.FirstOrDefault());
+
+			return pippo.ToList();
+        }
 		public static List<BookFinalView> BookGroupISBN(LibraryContext ctx)
 		{
 
