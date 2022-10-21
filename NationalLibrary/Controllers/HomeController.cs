@@ -104,6 +104,11 @@ namespace NationalLibrary.Controllers
 			requestTmp = ViewsLoaders.getRequestById(id, ctx);
 			return RedirectToAction("newBook");
 		}
+		public IActionResult discardBook(Guid id)
+		{
+			DataQueries.UpdateRequestStateReject(id, "Rifiutata", ctx);
+			return RedirectToAction("dashboard", userFinal);
+		}
 		#endregion
 		//Controller per la gestione dei Libri
 		#region BookRent

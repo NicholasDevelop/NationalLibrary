@@ -213,7 +213,7 @@
                                     </div>
                                 </a>
                             }
-                            else if(item.Room != null)
+                            else if (item.Room != null)
                             {
                                 count++;
                                 <a style="opacity: 35%" class="card">
@@ -322,8 +322,18 @@
                                 <td>@item.Title</td>
                                 <td>@item.Author</td>
                                 <td>@item.RequestDate.Day/@item.RequestDate.Month/@item.RequestDate.Year</td>
-                                <td><a asp-controller="Home" asp-action="acceptBook" asp-route-id="@item.RequestGuid"><img class="edit-book" src="~/fontawesome/svgs/solid/check.svg"></a></td>
-                                <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.RequestGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
+                                @if (item.State == "In Lavorazione")
+                                {
+                                    <td><a asp-controller="Home" asp-action="acceptBook" asp-route-id="@item.RequestGuid"><img class="edit-book" src="~/fontawesome/svgs/solid/check.svg"></a></td>
+                                    <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.RequestGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
+                                }
+                                else if(item.State == "Accettata"){
+                                    <td>Accettata</td>
+                                }
+                                else
+                                {
+                                    <td>Rifiutata</td>
+                                }
                             </tr>
                         }
                     </table>
@@ -402,7 +412,7 @@
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
-        var users = document.getElementById("popupUsers"); 
+        var users = document.getElementById("popupUsers");
         var popupbuyedBooks = document.getElementById("popupBuyedBooks");
         function addClass(navItem) {
             if (navItem == "magazine") {

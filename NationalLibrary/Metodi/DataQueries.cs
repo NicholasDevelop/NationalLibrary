@@ -363,9 +363,15 @@ namespace NationalLibrary.Metodi
 			}
 		}
 
+        public static void UpdateRequestStateReject(Guid RequestGuid, string StateUpdate, LibraryContext ctx)
+        {
+                Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+                a.State = StateUpdate;
+                ctx.SaveChanges();    
+        }
 
-		//////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
-		public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
+        //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
 		{
 			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN };
 			ctx.WaitingLists.Add(newwaiting);
