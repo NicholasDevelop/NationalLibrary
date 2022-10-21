@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using NationalLibrary.Data;
 using NationalLibrary.FinalViews;
 using System;
@@ -11,8 +12,9 @@ namespace NationalLibrary.Metodi
 {
 	public class DataQueries
 	{
-		//////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
-		public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string City, string Street, int? CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
+	
+        //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
+        public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string City, string Street, int? CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
 		{
 			// ctx = new LibraryContext();
 			var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now };
@@ -29,19 +31,19 @@ namespace NationalLibrary.Metodi
 			ctx.Residences.Add(newuser.Residence);
 			ctx.SaveChanges();
 		}
-		public static void InsertTutorUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string DocumentNumber, string FCRelatedTO, LibraryContext ctx)
+		//public static void InsertTutorUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string DocumentNumber, string FCRelatedTO, LibraryContext ctx)
 
-		{
-			var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, SignUpDate = DateTime.Now, FCRelatedTO = FCRelatedTO };
-			newuser.Document = new Document() { DocumentNumber = DocumentNumber };
-			newuser.Residence = new Residence() { AddressGuid = Guid.NewGuid() };
+		//{
+		//	var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, MobilePhone = MobilePhone, BirthDate = BirthDate, SignUpDate = DateTime.Now, FCRelatedTO = FCRelatedTO };
+		//	newuser.Document = new Document() { DocumentNumber = DocumentNumber };
+		//	newuser.Residence = new Residence() { AddressGuid = Guid.NewGuid() };
 
-			// DA TESTARE !!!
-			ctx.People.Add(newuser);
-			ctx.Residences.Add(newuser.Residence);
-			ctx.Documents.Add(newuser.Document);
-			ctx.SaveChanges();
-		}
+		//	// DA TESTARE !!!
+		//	ctx.People.Add(newuser);
+		//	ctx.Residences.Add(newuser.Residence);
+		//	ctx.Documents.Add(newuser.Document);
+		//	ctx.SaveChanges();
+		//}
 		public static void DeleteUser(string FiscalCode, LibraryContext ctx)
 		{
 			//Seleziono tutti quelli che ci sono nei contatti e la trasformo nella lista
@@ -97,8 +99,17 @@ namespace NationalLibrary.Metodi
 
             return check;
         }
+		public static Person GetUser(string FiscalCode, LibraryContext ctx)
+		{
+            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+            List<Residence> b = ctx.Residences.Where(u => a.AddressGuidFK == u.AddressGuid).ToList();
+            List<Document> c = ctx.Documents.Where(u => a.DocumentNumberFK == u.DocumentNumber).ToList();
+            List<User> d = ctx.Users.Where(u => a.FiscalCode == u.FiscalCode).ToList();
 
 
+
+
+        }
 
         //////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, DateTime BuyDate, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
@@ -297,7 +308,7 @@ namespace NationalLibrary.Metodi
 		public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
 		{
 			// Inserisco nuovo affitto
-			var newrent = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode, WithdrawnOn = DateTime.Now };
+			var newrent = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode };
 			ctx.Rents.Add(newrent);
 
 			// Modifico Available del libro
@@ -369,7 +380,7 @@ namespace NationalLibrary.Metodi
 			ctx.SaveChanges();
 
 		}
-		public static void BookDelivered(Guid WaitingGuid, LibraryContext ctx)
+		public static void BookDeliveredFromWaiting(Guid WaitingGuid, LibraryContext ctx)
 		{
 			WaitingList a = ctx.WaitingLists.Where(u => u.WaitingGuid == WaitingGuid).ToList()[0];
 			ISBNList b = ctx.ISBNLists.Where(u => u.ISBN == a.ISBNFK).ToList()[0];
@@ -385,9 +396,17 @@ namespace NationalLibrary.Metodi
 			InsertRent(BookGuid, FiscalCode, ctx);
 		}
 
+        public static void BookDeliveredFromRent(Guid BookGuid, LibraryContext ctx)
+        {
+            Rent a = ctx.Rents.Where(u => u.BookGuidFK == BookGuid).ToList()[0];
 
-		////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
-		public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
+            a.WithdrawnOn = DateTime.Now;
+
+        }
+
+
+        ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
+        public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
 		{
 			List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
 
