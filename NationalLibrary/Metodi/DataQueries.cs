@@ -305,7 +305,15 @@ namespace NationalLibrary.Metodi
 			a.Available = false;
 			ctx.SaveChanges();
 		}
-		public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
+        public static void BookDeliveredFromRent(Guid BookGuid, LibraryContext ctx)
+        {
+            Rent a = ctx.Rents.Where(u => u.BookGuidFK == BookGuid).ToList()[0];
+
+            a.WithdrawnOn = DateTime.Now;
+
+			ctx.SaveChanges();
+        }
+        public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
 		{
 
 			Rent a = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
@@ -384,14 +392,6 @@ namespace NationalLibrary.Metodi
 
 			InsertRent(BookGuid, FiscalCode, ctx);
 		}
-
-        public static void BookDeliveredFromRent(Guid BookGuid, LibraryContext ctx)
-        {
-            Rent a = ctx.Rents.Where(u => u.BookGuidFK == BookGuid).ToList()[0];
-
-            a.WithdrawnOn = DateTime.Now;
-
-        }
 
 
         ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
