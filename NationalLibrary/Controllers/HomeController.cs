@@ -282,8 +282,10 @@ namespace NationalLibrary.Controllers
 		[HttpPost]
 		public IActionResult postModifyUser(UserFinalView user)
 		{
+			user.Password = temp.Password;
 			user.FiscalCode = temp.FiscalCode;
-			DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
+			user.Type = temp.Type;
+            DataQueries.EditUser(user.FiscalCode, user.Type, user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.FCRelatedTO, user.City, user.Street, user.CAP, user.Province, user.DocumentNumber,
 				user.DocumentType, user.ReleasedBy, user.ExpiredOn, user.Email, user.Username, user.Password, ctx);
             return RedirectToAction("employeeDashboard", userFinal);
         }
