@@ -55,6 +55,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" id="requestBookAnchor" href="#RequestList" onclick="addClass('requestList')">
+                                <img src="~/fontawesome/svgs/regular/store.svg" style="margin-right: 4px;" width="24px" alt=""
+                                     srcset="">
+                                Libri Richiesti
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#Employee" id="employeeAnchor" onclick="addClass('employee')">
                                 <img class="icons" style="margin-right: 4px; width: 24px; height: 24px;"
                                      src="~/fontawesome/svgs/regular/user-plus.svg" alt="" srcset="">
@@ -118,6 +125,27 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" onclick="showData('buyedBooks')">&times;</span>
+                        <div class="table-container" style="overflow-y: hidden; height: 100%;">
+                            <h2 id="waiting-list">Libri In Attesa</h2>
+                            <table style="margin-top:0px; max-height: 570px;">
+                                <tr>
+                                    <th>ISBN</th>
+                                    <th>Autore</th>
+                                    <th>Titolo Libro</th>
+                                    <th>Richiesto Il</th>
+                                    <th>Arrivato Il</th>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal content -->
+                <div id="popupBookToBuy" class="modal hidden">
+
+                    <div class="modal-content">
+                        <span class="close" onclick="showData('booksToBuy')">&times;</span>
                         <div class="table-container" style="overflow-y: hidden; height: 100%;">
                             <h2 id="waiting-list">Libri In Attesa</h2>
                             <table style="margin-top:0px; max-height: 570px;">
@@ -251,6 +279,55 @@
                     </table>
                 </main>
             </div>
+            <!-- Richiesta Acquisto Nuovi Libri -->
+            <div id="RequestList" class="hidden">
+                <!-- Popup -->
+                <!-- Inizio Main -->
+                <main style="grid-template-rows: 5% 5% 60% 5% auto;">
+                    <h1 style="margin-top: 2px;">Richieste di Acquisto Nuovi Libri</h1>
+
+                    <h2 id="date" style="width:20%">
+                        @today.Day/@today.Month/@today.Year<img class="icons" style="margin: 4px;" src="~/fontawesome/svgs/solid/calendar-days.svg"
+                                                                alt="" srcset="">
+                    </h2>
+                    <table style="margin-top:0px; max-height: 570px;">
+                        <tr>
+                            <th>Nome Utente</th>
+                            <th>Cognome Utente</th>
+                            <th>Numero</th>
+                            <th>Email Utente</th>
+                            <th>Titolo Libro</th>
+                            <th>Autore</th>
+                            <th>Richiesto Il</th>
+                            <th>Arrivato Il</th>
+                            <th>Accetta</th>
+                            <th>Rifiuta</th>
+                        </tr>
+                        @foreach (NationalLibrary.FinalViews.RentRequestFinalView item in @rentedBooks)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Surname</td>
+                                <td>@item.MobilePhone</td>
+                                <td>@item.Email</td>
+                                <td>@item.Title</td>
+                                <td>@item.Author</td>
+                                @if (item.WithdrawnOn.Value.Year == 1)
+                                {
+                                    <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                }
+                                else
+                                {
+                                    <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
+                                }
+                                <td>@item.ReceivedOn</td>
+                                <td><a asp-controller="Home" asp-action="buyBook" asp-route-id="@item.FiscalCode"><img class="edit-book" src="~/img/edit.svg" /></a></td>
+                                <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.FiscalCode"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
+                            </tr>
+                        }
+                    </table>
+                </main>
+            </div>
             <!-- Users -->
             <div id="Employee" class="hidden">
                 <!-- Popup -->
@@ -323,11 +400,12 @@
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
-        var users = document.getElementById("popupUsers");
+        var users = document.getElementById("popupUsers"); 
         var popupbuyedBooks = document.getElementById("popupBuyedBooks");
         function addClass(navItem) {
             if (navItem == "magazine") {
                 dashboardAnchor.classList.remove("active");
+                requestBookAnchor.classList.remove("active");
                 employeeAnchor.classList.remove("active");
                 rentAnchor.classList.remove("active");
                 magazineAnchor.classList.add("active");
@@ -335,36 +413,55 @@
                 document.getElementById("Magazine").classList.remove("hidden");
                 document.getElementById("RentList").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
+                document.getElementById("RequestList").classList.add("hidden");
             }
             else if (navItem == "dashboard") {
                 magazineAnchor.classList.remove("active");
                 dashboardAnchor.classList.add("active");
                 employeeAnchor.classList.remove("active");
                 rentAnchor.classList.remove("active");
+                requestBookAnchor.classList.remove("active");
                 document.getElementById("Dashboard").classList.remove("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
                 document.getElementById("RentList").classList.add("hidden");
+                document.getElementById("RequestList").classList.add("hidden");
             }
             else if (navItem == "employee") {
                 employeeAnchor.classList.add("active");
                 dashboardAnchor.classList.remove("active");
                 magazineAnchor.classList.remove("active");
                 rentAnchor.classList.remove("active");
+                requestBookAnchor.classList.remove("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.remove("hidden");
                 document.getElementById("RentList").classList.add("hidden");
+                document.getElementById("RequestList").classList.add("hidden");
+            }
+            else if (navItem == "requestList") {
+                employeeAnchor.classList.remove("active");
+                dashboardAnchor.classList.remove("active");
+                magazineAnchor.classList.remove("active");
+                rentAnchor.classList.remove("active");
+                requestBookAnchor.classList.add("active");
+                document.getElementById("Dashboard").classList.add("hidden");
+                document.getElementById("Magazine").classList.add("hidden");
+                document.getElementById("Employee").classList.add("hidden");
+                document.getElementById("RentList").classList.add("hidden");
+                document.getElementById("RequestList").classList.remove("hidden");
             }
             else {
                 employeeAnchor.classList.remove("active");
                 dashboardAnchor.classList.remove("active");
                 magazineAnchor.classList.remove("active");
+                requestBookAnchor.classList.remove("active");
                 rentAnchor.classList.add("active");
                 document.getElementById("Dashboard").classList.add("hidden");
                 document.getElementById("Magazine").classList.add("hidden");
                 document.getElementById("Employee").classList.add("hidden");
                 document.getElementById("RentList").classList.remove("hidden");
+                document.getElementById("RequestList").classList.add("hidden");
             }
         }
         function hideData(dataToHide) {
