@@ -342,7 +342,7 @@ namespace NationalLibrary.Controllers
 			ViewData["Books"] = result2;
 			ViewData["Images"] = getImages();
 			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
-
+			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
 			return View(user);
 		}
 		public IActionResult dashboard(UserFinalView user)

@@ -6,6 +6,7 @@
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
+    List<NationalLibrary.FinalViews.UserRequestFinalView> requestFinalView = ViewData["RequestFinalView"] as List<NationalLibrary.FinalViews.UserRequestFinalView>;
 }
 <head>
     <meta charset="UTF-8">
@@ -299,11 +300,8 @@
                             <th>Titolo Libro</th>
                             <th>Autore</th>
                             <th>Richiesto Il</th>
-                            <th>Arrivato Il</th>
-                            <th>Accetta</th>
-                            <th>Rifiuta</th>
                         </tr>
-                        @foreach (NationalLibrary.FinalViews.RentRequestFinalView item in @rentedBooks)
+                        @foreach (NationalLibrary.FinalViews.UserRequestFinalView item in @requestFinalView)
                         {
                             <tr>
                                 <td>@item.Name</td>
@@ -312,15 +310,7 @@
                                 <td>@item.Email</td>
                                 <td>@item.Title</td>
                                 <td>@item.Author</td>
-                                @if (item.WithdrawnOn.Value.Year == 1)
-                                {
-                                    <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
-                                }
-                                else
-                                {
-                                    <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
-                                }
-                                <td>@item.ReceivedOn</td>
+                                <td>@item.RequestDate.Day/@item.RequestDate.Month/@item.RequestDate.Year</td>
                                 <td><a asp-controller="Home" asp-action="buyBook" asp-route-id="@item.FiscalCode"><img class="edit-book" src="~/img/edit.svg" /></a></td>
                                 <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.FiscalCode"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                             </tr>
