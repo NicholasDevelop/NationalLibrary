@@ -309,5 +309,17 @@ namespace NationalLibrary.Metodi
 			return check;
 
 		}
+
+        public static List<Request> FC_to_Request(string FiscalCode, LibraryContext ctx)
+        {
+            List<Request> a = ctx.Requests.Where(u => u.FiscalCodeFK == FiscalCode).ToList();
+            return a;
+        }
+
+        public static List<Request> RequestList (LibraryContext ctx)
+        {
+			List <Request> a = ctx.Requests.ToList();
+            return a;
+        }
     }
 }
