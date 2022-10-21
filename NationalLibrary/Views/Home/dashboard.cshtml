@@ -403,12 +403,11 @@
                         </div>
                         <img width="32px" style="align-self: center; justify-self:center; margin-bottom: 10px;" src="~/img/graphDown.svg" alt="">
                     </div>
-
                 }
             </div>
         </div>
     </div>
-    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model);
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
         var users = document.getElementById("popupUsers");

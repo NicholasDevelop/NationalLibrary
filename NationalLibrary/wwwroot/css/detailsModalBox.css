@@ -5,8 +5,8 @@
     --close-x-color-onfocus: #000;
 }
 
-/* The Modal (background) */
-.modal {
+/* The modal-box (background) */
+.modal-box {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 100; /* Sit on top */
@@ -20,8 +20,8 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content */
-.modal-content {
+/* modal-box Content */
+.modal-box-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -58,7 +58,7 @@
     animation: rotatex 1s linear infinite;
 }
 
-.modal-header {
+.modal-box-header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -69,11 +69,11 @@
     color: var(--text-color);
 }
 
-.modal-body {
+.modal-box-body {
     padding: 10px 16px;
 }
 
-.modal-footer {
+.modal-box-footer {
     padding: 8px 16px;
     background-color: var(--background-color);
     color: var(--text-color);
