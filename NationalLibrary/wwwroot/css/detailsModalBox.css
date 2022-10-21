@@ -1,6 +1,8 @@
 ﻿:root {
     --text-color: purple;
     --background-color: yellow;
+    --close-x-color: grey;
+    --close-x-color-onfocus: #000;
 }
 
 /* The Modal (background) */
@@ -40,16 +42,20 @@
     order: 2;
     flex-basis: content;
     margin-left: auto;
-    color: white;
+    color: var(--close-x-color);
     font-size: 28px;
     font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: var(--close-x-color-onfocus);
     text-decoration: none;
     cursor: pointer;
+    font-size: 30px;
+    -webkit-animation: rotatex 1s linear infinite;
+    -moz-animation: rotatex 1s linear infinite;
+    animation: rotatex 1s linear infinite;
 }
 
 .modal-header {
@@ -95,5 +101,23 @@
     to {
         top: 0;
         opacity: 1
+    }
+}
+
+@-webkit-keyframes rotatex {
+    100% {
+        transform: rotate(365deg);
+    }
+}
+
+@-moz-keyframes rotatex {
+    100% {
+        transform: rotate(365deg);
+    }
+}
+
+@keyframes rotatex {
+    100% {
+        transform: rotate(365deg);
     }
 }
