@@ -127,7 +127,7 @@ li {
 
     #Dashboard.hidden {
         position: relative;
-        transform: translateX(-1300px);
+        transform: translateX(-150%);
         z-index: -100;
     }
 /*~*/
@@ -137,7 +137,7 @@ li {
     /* top: unset; */
     /* left: 88px; */
     float: left;
-    transform: translateX(1470px);
+    transform: translateX(150%);
 }
 
 #Magazine {
@@ -155,7 +155,7 @@ li {
     /* top: unset; */
     /* left: 88px; */
     float: left;
-    transform: translateX(1470px);
+    transform: translateX(150%);
 }
 
 #Employee {
@@ -169,7 +169,7 @@ li {
 
     #Employee:not(.hidden) ~ #Magazine.hidden {
         position: absolute;
-        transform: translateX(-1470px);
+        transform: translateX(-150%);
     }
 
 main {
