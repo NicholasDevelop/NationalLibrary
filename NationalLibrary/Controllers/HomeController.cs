@@ -22,7 +22,6 @@ namespace NationalLibrary.Controllers
 		private static BookFinalView tmp;
 		private static UserFinalView temp;
 		private static UserRequestFinalView requestTmp;
-
 		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
@@ -104,6 +103,13 @@ namespace NationalLibrary.Controllers
 			requestTmp = ViewsLoaders.getRequestById(id, ctx);
 			return RedirectToAction("newBook");
 		}
+		public IActionResult bookArrived(Dictionary<string, string> ids)
+		{
+			Guid bookGuid;
+			bookGuid = Guid.Parse(ids.Values.ToList()[0]);
+			DataQueries.UpdateBookAvailable(bookGuid, true, ctx);
+			return RedirectToAction("modifyBook", (DataQueries.getBookByGuid(bookGuid, ctx), bookGuid));
+		}
 		public IActionResult discardBook(Guid id)
 		{
 			DataQueries.UpdateRequestStateReject(id, "Rifiutata", ctx);
@@ -183,6 +189,14 @@ namespace NationalLibrary.Controllers
 			book.BookGuid = tmp.BookGuid;
 			book.CoverImg = tmp.CoverImg;
 			DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
+			if (requestGuid != null)
+			{
+				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Arrivato", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
+				book.Genre, book.CoverImg,
+				book.Price, null, null, null, null, book.ISBN, ctx);
+				requestTmp = null;
+			}
+
 			return RedirectToAction("dashboard", userFinal);
 		}
 
@@ -225,9 +239,9 @@ namespace NationalLibrary.Controllers
 				}
 				book.CoverImg = p1;
 			}
-			if (requestTmp != null)
+			if (requestTmp != null && requestGuid == null)
 			{
-				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Accettata", book.Title, book.Author, book.PublishingHouse, true, book.Presentation,
+				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Accettata", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
 				book.Genre, book.CoverImg,
 				book.Price, null, null, null, null, book.ISBN, ctx);
 				requestTmp = null;
