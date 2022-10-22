@@ -96,7 +96,7 @@
                         @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
                         {
                             //tutto apposto
-                            @if (item.Available && countBook <= 3)
+                            @if (item.Available && countBook < 3)
                             {
                                 count++;
                                 <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
