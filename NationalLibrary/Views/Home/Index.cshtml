@@ -2,11 +2,12 @@
 @{
     NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
     List<NationalLibrary.FinalViews.BookFinalView> bookFinalViews = ViewData["Books"] as List<NationalLibrary.FinalViews.BookFinalView>;
-    
+
     IEnumerable<NationalLibrary.FinalViews.BookFinalView> last5InsertedBooks = ViewData["Last5Books"] as IEnumerable<NationalLibrary.FinalViews.BookFinalView>;
-    
+
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
+    List<string> last5images = ViewData["Last5Images"] as List<string>;
     Console.WriteLine(image.Count);
 }
 <head>
@@ -26,7 +27,14 @@
     <header>
         <div class="header-container">
             <div class="first-header-container">
-                <img src="~/img/LogoFinale.svg" alt="">
+                @if(@user != null){
+
+                    <a asp-controller="Home" asp-action="dashboard" asp-route-id="@user"><img src="~/img/LogoFinale.svg" alt=""></a>
+                }
+                else
+                {
+                    <img src="~/img/LogoFinale.svg" alt="">
+                }
                 @if (@user == null)
                 {
                     <div class="login">
@@ -161,7 +169,7 @@
                     {
                         count++;
                         <a class="card" asp-action="viewBook" asp-controller="Home" asp-route-id="@book.BookGuid">
-                            <img src="@image[count-1]" alt="">
+                            <img src="@last5images[count-1]" alt="">
                             <div class="card-description">
                                 <h3>@book.Title</h3>
                             </div>

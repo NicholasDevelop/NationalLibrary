@@ -54,11 +54,22 @@ namespace NationalLibrary.Controllers
 
 			return bytes;
 		}
+		private List<string> getLast5Images()
+		{
+			List<string> bytes = new List<string>();
+
+			foreach (BookFinalView item in ViewsLoaders.getLastFiveInsertedBooks(ctx))
+			{
+				bytes.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.CoverImg)));
+			}
+			return bytes;
+		}
 		#endregion
 		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
 			ViewData["Images"] = getImages();
+			ViewData["Last5Images"] = getLast5Images();
 			ViewData["Last5Books"] = Metodi.ViewsLoaders.getLastFiveInsertedBooks(ctx);
 			//Console.WriteLine(ViewData["Last5Books"]);
 			return View();
