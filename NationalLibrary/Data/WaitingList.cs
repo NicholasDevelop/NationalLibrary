@@ -16,6 +16,7 @@ namespace NationalLibrary.Data
 
         public DateTime RequestedOn { get; set; }
         public DateTime? ReceivedOn { get; set; }
+        public bool IsFromRequest { get; set; }
 
 
         // Relation WaitingList(FK) N-1 ISBNList

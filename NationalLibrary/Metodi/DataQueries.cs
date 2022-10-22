@@ -343,14 +343,14 @@ namespace NationalLibrary.Metodi
 		{
 			if (StateUpdate == "Accettata")
 			{
-
+				bool IFR = true;
 				InsertBook(Title, Author, PublishingHouse, Available, Presentation, Genre, Coverimg, Price, Room, Scaffhold, Position, Shelf, ISBN, ctx);
 
 				Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
 				string FC = a.FiscalCodeFK;
 				a.State = StateUpdate;
 
-				InsertWaiting(FC, ISBN, ctx);
+				InsertWaiting(FC, ISBN, IFR, ctx);
 				ctx.SaveChanges();
 
 			}
@@ -371,9 +371,9 @@ namespace NationalLibrary.Metodi
         }
 
         //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
+        public static void InsertWaiting(string FiscalCode, string ISBN, bool IsFromRequest, LibraryContext ctx)
 		{
-			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN };
+			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN, IsFromRequest = IsFromRequest };
 			ctx.WaitingLists.Add(newwaiting);
 			ctx.SaveChanges();
 
