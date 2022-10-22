@@ -10,7 +10,7 @@
     List<NationalLibrary.Data.WaitingList> waitingList = ViewData["WaitingList"] as List<NationalLibrary.Data.WaitingList>;
     var tutor = new NationalLibrary.FinalViews.UserFinalView();
 
-    
+
 }
 
 <head>
@@ -193,24 +193,25 @@
                             </tr>
                             @foreach (NationalLibrary.Data.WaitingList item in @waitingList)
                             {
-                            <tr>
-                                <td>@item.FiscalCodeFK</td>
-                                <td>@item.ISBNFK</td>
-                                <td>@item.RequestedOn</td>
-                                <td>@item.ReceivedOn</td>
-                                <td>
-                                @{
-                                    var a = new Dictionary<string, string>();
-                                    a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
-                                }
-                                    @if (true)
-                                    {
-                                        <a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a>
+                                <tr>
+                                    <td>@item.FiscalCodeFK</td>
+                                    <td>@item.ISBNFK</td>
+                                    <td>@item.RequestedOn</td>
+                                        @{
+                                            var a = new Dictionary<string, string>();
+                                            a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
                                         }
-                                </td>
-                            </tr>
+                                        @if (item.ReceivedOn == null)
+                                        {
+                                            <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.ReceivedOn</td>
+                                        }
+                                </tr>
                             }
-                         </table>
+                        </table>
 
                     </div>
                 </main>
@@ -354,7 +355,8 @@
                                     <td><a asp-controller="Home" asp-action="acceptBook" asp-route-id="@item.RequestGuid"><img class="edit-book" src="~/fontawesome/svgs/solid/check.svg"></a></td>
                                     <td><a asp-controller="Home" asp-action="discardBook" asp-route-id="@item.RequestGuid"><img class="delete-book" src="~/fontawesome/svgs/solid/delete-left.svg" /></a></td>
                                 }
-                                else if(item.State == "Accettata"){
+                                else if (item.State == "Accettata")
+                                {
                                     <td>Accettata</td>
                                 }
                                 else
@@ -396,16 +398,19 @@
                             {
                                 @*Console.WriteLine("CTX"+ViewData["LibraryContext"]);*@
                                 <tr>
-                                    @if(item.FCRelatedTO != String.Empty){
+                                    @if (item.FCRelatedTO != String.Empty)
+                                    {
                                         tutor = NationalLibrary.Metodi.DataQueries.getUserByFK(item.FCRelatedTO, ViewData["LibraryContext"] as LibraryContext);
                                         <td>
-                                            <a id="tutorLink" 
-                                                title="Utente Minorenne! Clicca per i dettagli del tutor"
-                                                style="cursor: pointer;"
-                                            >
-                                                <u><i>@item.Name</i></u></a>
-                                            </td>
-                                    } else {
+                                            <a id="tutorLink"
+                                       title="Utente Minorenne! Clicca per i dettagli del tutor"
+                                       style="cursor: pointer;">
+                                                <u><i>@item.Name</i></u>
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
                                         <td>@item.Name</td>
                                     }
                                     <td>@item.Surname</td>
@@ -448,7 +453,7 @@
             </div>
         </div>
     </div>
-   
+
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/tutorModal.cshtml", tutor);
     @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model);
 

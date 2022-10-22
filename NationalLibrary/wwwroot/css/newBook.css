@@ -12,11 +12,11 @@
 body{
     background-image: url(/img/bkg-new-book.jpg);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100%;
 }
 
 img {
-    max-width: 100%;
+    max-width: 100px;
 }
 
 ul, ol {

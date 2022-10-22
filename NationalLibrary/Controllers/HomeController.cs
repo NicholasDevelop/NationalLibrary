@@ -22,6 +22,9 @@ namespace NationalLibrary.Controllers
 		private static BookFinalView tmp;
 		private static UserFinalView temp;
 		private static UserRequestFinalView requestTmp;
+		private static string userIsWaitingForNewBook;
+		public static string isbnFromWaiting;
+		private static BookFinalView bookFromWaiting;
 		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
@@ -105,10 +108,15 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult bookArrived(Dictionary<string, string> ids)
 		{
-			Guid bookGuid;
-			bookGuid = Guid.Parse(ids.Values.ToList()[0]);
-			DataQueries.UpdateBookAvailable(bookGuid, true, ctx);
-			return RedirectToAction("modifyBook", (DataQueries.getBookByGuid(bookGuid, ctx), bookGuid));
+			string fiscalCode;
+			string isbn;
+			fiscalCode = ids.Keys.ToList()[0];
+			isbn = ids.Values.ToList()[0];
+			BookFinalView book = DataQueries.BookWaitingbyCFISBN(isbn, fiscalCode, ctx);
+			userIsWaitingForNewBook = fiscalCode;
+			isbnFromWaiting = isbn;
+			bookFromWaiting = book;
+			return RedirectToAction("modifyBook");
 		}
 		public IActionResult discardBook(Guid id)
 		{
@@ -166,10 +174,21 @@ namespace NationalLibrary.Controllers
 		#region Book
 		public IActionResult modifyBook(BookFinalView book, Guid id)
 		{
-			book = DataQueries.getBookByGuid(id, ctx);
-			tmp = book;
-			ViewData["Image"] = getImage(book);
-			return View(book);
+			if (bookFromWaiting != null)
+			{
+				book = bookFromWaiting;
+				tmp = book;
+				ViewData["Image"] = getImage(book);
+				return View(book);
+				bookFromWaiting = null;
+			}
+			else
+			{
+				book = DataQueries.getBookByGuid(id, ctx);
+				tmp = book;
+				ViewData["Image"] = getImage(book);
+				return View(book);
+			}
 		}
 
 		[HttpPost]
@@ -189,13 +208,19 @@ namespace NationalLibrary.Controllers
 			book.BookGuid = tmp.BookGuid;
 			book.CoverImg = tmp.CoverImg;
 			DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
-			//if (requestGuid != null)
-			//{
-			//	DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Arrivato", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
-			//	book.Genre, book.CoverImg,
-			//	book.Price, null, null, null, null, book.ISBN, ctx);
-			//	requestTmp = null;
-			//}
+			if (!string.IsNullOrEmpty(userIsWaitingForNewBook))
+			{
+				List<WaitingList> w = DataQueries.SelectAllFromWL(ctx);
+				foreach (var item in w)
+				{
+					if (item.FiscalCodeFK == userIsWaitingForNewBook && item.ISBNFK == isbnFromWaiting)
+					{
+						DataQueries.BookDeliveredFromWaiting(item.WaitingGuid, ctx);
+						userIsWaitingForNewBook = null;
+						isbnFromWaiting = null;
+					}
+				}
+			}
 
 			return RedirectToAction("dashboard", userFinal);
 		}
@@ -302,10 +327,10 @@ namespace NationalLibrary.Controllers
 			ViewData["Images"] = getImages();
 			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
-            ViewData["WaitingList"] = ViewsLoaders.wai;
-            ViewData["LibraryContext"] = ctx;
-            //Console.WriteLine("CTX" + ViewData["LibraryContext"]);
-            return View(user);
+			ViewData["WaitingList"] = DataQueries.SelectAllFromWL(ctx);
+			ViewData["LibraryContext"] = ctx;
+			//Console.WriteLine("CTX" + ViewData["LibraryContext"]);
+			return View(user);
 		}
 
 		public IActionResult deleteEmployee(UserFinalView user, string id)
@@ -404,7 +429,7 @@ namespace NationalLibrary.Controllers
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
 			//Console.WriteLine(type.Type);
-            try
+			try
 			{
 				if (string.IsNullOrEmpty(type.Type))
 				{
@@ -435,7 +460,7 @@ namespace NationalLibrary.Controllers
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
 						userFinal = type;
-                        return RedirectToAction("employeeDashboard", type);
+						return RedirectToAction("employeeDashboard", type);
 				}
 			}
 			catch (Exception ex)
