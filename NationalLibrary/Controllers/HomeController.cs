@@ -79,9 +79,10 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 		#region AddSomePerson
-		[HttpPost]
+		
 		public IActionResult addUser()
 		{
+			Console.WriteLine("test");
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
 				return RedirectToAction("Error");
 			return View();
