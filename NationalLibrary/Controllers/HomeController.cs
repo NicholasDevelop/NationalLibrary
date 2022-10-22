@@ -288,7 +288,9 @@ namespace NationalLibrary.Controllers
 			ViewData["Images"] = getImages();
 			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
-			return View(user);
+            ViewData["LibraryContext"] = ctx;
+            //Console.WriteLine("CTX" + ViewData["LibraryContext"]);
+            return View(user);
 		}
 
 		public IActionResult deleteEmployee(UserFinalView user, string id)
@@ -386,7 +388,8 @@ namespace NationalLibrary.Controllers
 		public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
-			try
+			//Console.WriteLine(type.Type);
+            try
 			{
 				if (string.IsNullOrEmpty(type.Type))
 				{
@@ -417,7 +420,7 @@ namespace NationalLibrary.Controllers
 						return RedirectToAction("userDashboard", type);
 					case "Librarian":
 						userFinal = type;
-						return RedirectToAction("employeeDashboard", type);
+                        return RedirectToAction("employeeDashboard", type);
 				}
 			}
 			catch (Exception ex)

@@ -85,10 +85,6 @@ namespace NationalLibrary.Metodi
 			d[0].Password = Password;
 
 			ctx.SaveChanges();
-
-
-
-
 		}
         public static bool CheckFCExsist(string FiscalCode, LibraryContext ctx)
         {
@@ -99,6 +95,12 @@ namespace NationalLibrary.Metodi
 
             return check;
         }
+
+		public static UserFinalView getUserByFK (string FiscalCode, LibraryContext ctx)
+		{
+			UserFinalView user = ViewsLoaders.UserFinalViewList(ctx).Where(x => x.FiscalCode == FiscalCode).FirstOrDefault();
+			return user;
+		}
 
 		//////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
 		public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
