@@ -353,10 +353,14 @@ namespace NationalLibrary.Controllers
 			List<WaitingBookStatusFinalView> wlist = DataQueries.CheckIfBookArrived(user.FiscalCode, ctx);
 			int countRentedBook = 0;
 			foreach(var item in ViewsLoaders.RentRequestFinalViewList(ctx))
-			{
 				if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
 					countRentedBook++;
-			}
+			List<WaitingList> w = DataQueries.SelectAllFromRL(ctx);
+			List<WaitingList> wl = new List<WaitingList>();
+			foreach (var item in w)
+				if (item.FiscalCodeFK == user.FiscalCode)
+					wl.Add(item);
+			ViewData["AllRequests"] = wl;
 			ViewData["CountRentedBook"] = countRentedBook;
 			ViewData["wlist"] = wlist;
 			return View(user);
