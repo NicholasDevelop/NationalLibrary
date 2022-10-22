@@ -12,9 +12,9 @@ namespace NationalLibrary.Metodi
 {
 	public class DataQueries
 	{
-	
-        //////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
-        public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string City, string Street, int? CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
+
+		//////////////////  QUERY MANIPOLAZIONE UTENTI   \\\\\\\\\\\\\\\\\\\\\
+		public static void InsertUser(string FiscalCode, string Type, string Name, string Surname, string MobilePhone, DateTime BirthDate, string City, string Street, int? CAP, string Province, string DocumentNumber, string DocumentType, string ReleasedBy, DateTime ExpireOn, string Email, string Username, string Password, string FCRelatedTO, LibraryContext ctx)
 		{
 			// ctx = new LibraryContext();
 			var newuser = new Person() { FiscalCode = FiscalCode, Name = Name, Surname = Surname, Type = Type, MobilePhone = MobilePhone, BirthDate = BirthDate, FCRelatedTO = FCRelatedTO, SignUpDate = DateTime.Now };
@@ -66,7 +66,7 @@ namespace NationalLibrary.Metodi
 
 			a.FiscalCode = FiscalCode;
 			a.Type = Type;
-			
+
 			a.Name = Name;
 			a.Surname = Surname;
 			a.MobilePhone = MobilePhone;
@@ -86,17 +86,17 @@ namespace NationalLibrary.Metodi
 
 			ctx.SaveChanges();
 		}
-        public static bool CheckFCExsist(string FiscalCode, LibraryContext ctx)
-        {
-            bool check = false;
+		public static bool CheckFCExsist(string FiscalCode, LibraryContext ctx)
+		{
+			bool check = false;
 
-            Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
-            if (a != null) { check = true; }
+			Person a = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
+			if (a != null) { check = true; }
 
-            return check;
-        }
+			return check;
+		}
 
-		public static UserFinalView getUserByFK (string FiscalCode, LibraryContext ctx)
+		public static UserFinalView getUserByFK(string FiscalCode, LibraryContext ctx)
 		{
 			UserFinalView user = ViewsLoaders.UserFinalViewList(ctx).Where(x => x.FiscalCode == FiscalCode).FirstOrDefault();
 			return user;
@@ -119,8 +119,8 @@ namespace NationalLibrary.Metodi
 				ctx.Locations.Add(newbook.Location);
 				ctx.SaveChanges();
 			}
-			else 
-			{ 
+			else
+			{
 				ctx.Books.Add(newbook);
 				ctx.Locations.Add(newbook.Location);
 				ctx.SaveChanges();
@@ -140,7 +140,7 @@ namespace NationalLibrary.Metodi
 			ctx.SaveChanges();
 
 		}
-		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position, string ISBN,string Price, LibraryContext ctx)
+		public static void EditBook(Guid BookGuid, string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Room, string Scaffhold, string Shelf, int? Position, string ISBN, string Price, LibraryContext ctx)
 		{
 
 			Book a = ctx.Books.Where(u => u.BookGuid == BookGuid).ToList()[0];
@@ -180,9 +180,9 @@ namespace NationalLibrary.Metodi
 
 
 				a.ISBNFK = ISBN;
-                ctx.SaveChanges();
+				ctx.SaveChanges();
 
-                if (!ISBNLeft(oldisbn, ctx))
+				if (!ISBNLeft(oldisbn, ctx))
 				{
 					if (w.Count > 0)
 					{
@@ -250,20 +250,20 @@ namespace NationalLibrary.Metodi
 		public static bool ISBNLeft(string ISBN, LibraryContext ctx)
 		{
 			bool check = false;
-			if (CheckISBNExsist(ISBN, ctx)) 
-			{ 
+			if (CheckISBNExsist(ISBN, ctx))
+			{
 
-					ISBNList i = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
-					List<Book> b = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList();
-					
-					if (b.Count > 0) { check = true; }
-            }
+				ISBNList i = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+				List<Book> b = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList();
 
-            // false = L'ISBN è presente in lista ma non ci sono libri associati
-            // true = L'ISBN è presente in lista ma ci sono ancora libri associati
+				if (b.Count > 0) { check = true; }
+			}
+
+			// false = L'ISBN è presente in lista ma non ci sono libri associati
+			// true = L'ISBN è presente in lista ma ci sono ancora libri associati
 
 
-            return check;
+			return check;
 
 		}
 		public static void TryISBNDelete(string ISBN, LibraryContext ctx)
@@ -281,10 +281,10 @@ namespace NationalLibrary.Metodi
 		}
 		public static void EditISBNFromISBNList(string ISBN, LibraryContext ctx)
 		{
-            ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
+			ISBNList a = ctx.ISBNLists.Where(u => u.ISBN == ISBN).ToList()[0];
 			a.ISBN = ISBN;
 			ctx.SaveChanges();
-        }
+		}
 		public static BookFinalView getBookByGuid(Guid BookGuid, LibraryContext ctx)
 		{
 			BookFinalView book = new BookFinalView();
@@ -303,10 +303,10 @@ namespace NationalLibrary.Metodi
 			List<BookFinalView> lista = new List<BookFinalView>();
 
 
-            List<WaitingList>	b = ctx.WaitingLists.Where(u => u.FiscalCodeFK == FiscalCode && u.ISBNFK == ISBN).ToList();
-			ISBNList			i = ctx.ISBNLists.Where(u => u.ISBN == b[0].ISBNFK).ToList()[0];
-			Book				o = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList()[0];
-			Location			l = ctx.Locations.Where(u => u.LocationGuid == o.LocationGuidFK).ToList()[0];
+			List<WaitingList> b = ctx.WaitingLists.Where(u => u.FiscalCodeFK == FiscalCode && u.ISBNFK == ISBN).ToList();
+			ISBNList i = ctx.ISBNLists.Where(u => u.ISBN == b[0].ISBNFK).ToList()[0];
+			Book o = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList()[0];
+			Location l = ctx.Locations.Where(u => u.LocationGuid == o.LocationGuidFK).ToList()[0];
 
 			BookFinalView pippo = new BookFinalView()
 			{
@@ -325,10 +325,10 @@ namespace NationalLibrary.Metodi
 				Scaffhold = l.Schaffold,
 				Position = l.Position,
 				Shelf = l.Shelf,
-                ISBN = o.ISBNFK
+				ISBN = o.ISBNFK
 
 
-            };
+			};
 
 			return pippo;
 
@@ -340,14 +340,14 @@ namespace NationalLibrary.Metodi
 
 
 
-        }
+		}
 		public static List<WaitingList> SelectAllFromWL(LibraryContext ctx)
 		{
 			var wlview = from x in ctx.WaitingLists
 						 select x;
 
-            return wlview.ToList();
-        }
+			return wlview.ToList();
+		}
 
 		//////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
 		public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
@@ -361,15 +361,15 @@ namespace NationalLibrary.Metodi
 			a.Available = false;
 			ctx.SaveChanges();
 		}
-        public static void BookDeliveredFromRent(Guid BookGuid, LibraryContext ctx)
-        {
-            Rent a = ctx.Rents.Where(u => u.BookGuidFK == BookGuid).ToList()[0];
+		public static void BookDeliveredFromRent(Guid BookGuid, LibraryContext ctx)
+		{
+			Rent a = ctx.Rents.Where(u => u.BookGuidFK == BookGuid).ToList()[0];
 
-            a.WithdrawnOn = DateTime.Now;
+			a.WithdrawnOn = DateTime.Now;
 
 			ctx.SaveChanges();
-        }
-        public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
+		}
+		public static void ReturnRent(Guid RentGuid, LibraryContext ctx)
 		{
 
 			Rent a = ctx.Rents.Where(u => u.RentGuid == RentGuid).ToList()[0];
@@ -415,15 +415,15 @@ namespace NationalLibrary.Metodi
 			}
 		}
 
-        public static void UpdateRequestStateReject(Guid RequestGuid, string StateUpdate, LibraryContext ctx)
-        {
-                Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
-                a.State = StateUpdate;
-                ctx.SaveChanges();    
-        }
+		public static void UpdateRequestStateReject(Guid RequestGuid, string StateUpdate, LibraryContext ctx)
+		{
+			Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
+			a.State = StateUpdate;
+			ctx.SaveChanges();
+		}
 
-        //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertWaiting(string FiscalCode, string ISBN, bool IsFromRequest, LibraryContext ctx)
+		//////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
+		public static void InsertWaiting(string FiscalCode, string ISBN, bool IsFromRequest, LibraryContext ctx)
 		{
 			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN, IsFromRequest = IsFromRequest };
 			ctx.WaitingLists.Add(newwaiting);
@@ -447,15 +447,14 @@ namespace NationalLibrary.Metodi
 		}
 
 
-        ////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
-        public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
+		////////////////       QUERY AVVISI  UTENTE       \\\\\\\\\\\\\\\\\\\\\\
+		public static List<WaitingBookStatusFinalView> CheckIfBookArrived(string FiscalCode, LibraryContext ctx)
 		{
 			List<WaitingBookStatusFinalView> lista = new List<WaitingBookStatusFinalView>();
 
 
 			Person p = ctx.People.Where(u => u.FiscalCode == FiscalCode).ToList()[0];
 			List<WaitingList> w = ctx.WaitingLists.Where(u => u.FiscalCodeFK == p.FiscalCode).ToList();
-			//Rent r = ctx.Rents.Where(u => u.FiscalCodeFK == FiscalCode).ToList()[0];
 
 
 
@@ -467,17 +466,28 @@ namespace NationalLibrary.Metodi
 				List<Book> b = ctx.Books.Where(u => u.ISBNFK == l.ISBN).ToList();
 				foreach (var item in b)
 				{
-					if (item.Available)
+					var r = from a in ctx.Rents
+							where a.FiscalCodeFK == FiscalCode
+							join book in ctx.Books on a.BookGuidFK equals book.BookGuid
+							select new Rent
+							{
+								BookGuidFK = book.BookGuid,
+								WithdrawnOn = a.WithdrawnOn
+							};
+					foreach (var i in r)
 					{
+						if (w[e].ReceivedOn != null && i.WithdrawnOn.Year == 1 && i.BookGuidFK == item.BookGuid)
+						{
 
-						string Title = item.Title;
-						lista.Add(new WaitingBookStatusFinalView(Name, Title));
+							string Title = item.Title;
+							lista.Add(new WaitingBookStatusFinalView(Name, Title));
+						}
 					}
 				}
 
 			}
 
-            return lista;
+			return lista;
 
 		}
 
