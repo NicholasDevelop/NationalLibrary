@@ -47,16 +47,16 @@
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: var(--close-x-color-onfocus);
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 30px;
-    -webkit-animation: rotatex 1s linear infinite;
-    -moz-animation: rotatex 1s linear infinite;
-    animation: rotatex 1s linear infinite;
-}
+    .close:hover,
+    .close:focus {
+        color: var(--close-x-color-onfocus);
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 30px;
+        -webkit-animation: rotatex 1s linear infinite;
+        -moz-animation: rotatex 1s linear infinite;
+        animation: rotatex 1s linear infinite;
+    }
 
 .modal-box-header {
     display: flex;

@@ -1,0 +1,48 @@
+﻿@model NationalLibrary.FinalViews.UserFinalView
+
+<link rel="stylesheet" href="~/css/detailsModalBox.css" />
+
+<div id="detailsModal" class="modal-box">
+    <!-- Modal content -->
+    <div class="modal-box-content">
+        <div class="modal-box-header">
+            <span id="closeDetailsModal" class="close">&times</span>
+            <h2>Dettagli di <i>@Model.Name @Model.Surname</i></h2>
+        </div>
+        <div class="modal-box-body">
+            <ul>
+                <li>Username: @Model.Username</li>
+                <li>Email: @Model.Email</li>
+                <li>Numero di telefono: @Model.MobilePhone</li>
+                <li>Data di nascita: @Model.BirthDate</li>
+                <li>FC del tutore: @Model.FCRelatedTO</li>
+                <li></li>
+
+            </ul>
+            <br />
+            <dl>
+                <dt>Dati residenza</dt>
+                <dd>- Città: @Model.City</dd>
+                <dd>- Via: @Model.Street</dd>
+                <dd>- Cap: @Model.CAP</dd>
+                <dd>- Provincia: @Model.Province</dd>
+            </dl>
+            <br />
+
+
+            <dl>
+                <dt>Dati documento d'identità</dt>
+                <dd>- Numero: @Model.DocumentNumber</dd>
+                <dd>- Tipo: @Model.DocumentType</dd>
+                <dd>- Data di scadenza: @Model.ExpiredOn</dd>
+            </dl>
+
+        </div>
+        <div class="modal-box-footer">
+            <h5>Data di registrazione (DD/MM/YYYY hh:mm): <u><b>@Model.SignUpDate</b></u></h5>
+            <h5>Grado nella libreria: <u><b>@Model.Type</b></u></h5>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/modalBoxes.js"></script>

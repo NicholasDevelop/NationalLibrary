@@ -85,10 +85,6 @@ namespace NationalLibrary.Metodi
 			d[0].Password = Password;
 
 			ctx.SaveChanges();
-
-
-
-
 		}
         public static bool CheckFCExsist(string FiscalCode, LibraryContext ctx)
         {
@@ -99,6 +95,12 @@ namespace NationalLibrary.Metodi
 
             return check;
         }
+
+		public static UserFinalView getUserByFK (string FiscalCode, LibraryContext ctx)
+		{
+			UserFinalView user = ViewsLoaders.UserFinalViewList(ctx).Where(x => x.FiscalCode == FiscalCode).FirstOrDefault();
+			return user;
+		}
 
 		//////////////////  QUERY MANIPOLAZIONE LIBRI   \\\\\\\\\\\\\\\\\\\\\\
 		public static void InsertBook(string Title, string Author, string PublishingHouse, bool Available, string Presentation, string Genre, byte[] Coverimg, string Price, string Room, string Scaffhold, int? Position, string Shelf, string ISBN, LibraryContext ctx)
@@ -343,14 +345,14 @@ namespace NationalLibrary.Metodi
 		{
 			if (StateUpdate == "Accettata")
 			{
-
+				bool IFR = true;
 				InsertBook(Title, Author, PublishingHouse, Available, Presentation, Genre, Coverimg, Price, Room, Scaffhold, Position, Shelf, ISBN, ctx);
 
 				Request a = ctx.Requests.Where(u => u.RequestGuid == RequestGuid).ToList()[0];
 				string FC = a.FiscalCodeFK;
 				a.State = StateUpdate;
 
-				InsertWaiting(FC, ISBN, ctx);
+				InsertWaiting(FC, ISBN, IFR, ctx);
 				ctx.SaveChanges();
 
 			}
@@ -371,9 +373,9 @@ namespace NationalLibrary.Metodi
         }
 
         //////////////////   QUERY MANIPOLAZIONE ATTESE    \\\\\\\\\\\\\\\\\\\\\\
-        public static void InsertWaiting(string FiscalCode, string ISBN, LibraryContext ctx)
+        public static void InsertWaiting(string FiscalCode, string ISBN, bool IsFromRequest, LibraryContext ctx)
 		{
-			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN };
+			var newwaiting = new WaitingList() { WaitingGuid = Guid.NewGuid(), FiscalCodeFK = FiscalCode, RequestedOn = DateTime.Now, ISBNFK = ISBN, IsFromRequest = IsFromRequest };
 			ctx.WaitingLists.Add(newwaiting);
 			ctx.SaveChanges();
 

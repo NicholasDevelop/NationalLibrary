@@ -7,6 +7,7 @@
     List<string> image = ViewData["Images"] as List<string>;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
     List<NationalLibrary.FinalViews.UserRequestFinalView> requestFinalView = ViewData["RequestFinalView"] as List<NationalLibrary.FinalViews.UserRequestFinalView>;
+    var tutor = new NationalLibrary.FinalViews.UserFinalView();
 }
 <head>
     <meta charset="UTF-8">
@@ -227,6 +228,7 @@
                             {
                                 count++;
                                 <a style="opacity: 35%" class="card">
+                                    <p class="incoming">In Arrivo</p>
                                     <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
                                     <div class="card-description">
                                         <p>@item.Title</p>
@@ -366,8 +368,20 @@
                             </tr>
                             @foreach (var item in userFinalViews)
                             {
+                                @*Console.WriteLine("CTX"+ViewData["LibraryContext"]);*@
                                 <tr>
-                                    <td>@item.Name</td>
+                                    @if(item.FCRelatedTO != String.Empty){
+                                        tutor = NationalLibrary.Metodi.DataQueries.getUserByFK(item.FCRelatedTO, ViewData["LibraryContext"] as LibraryContext);
+                                        <td>
+                                            <a id="tutorLink" 
+                                                title="Utente Minorenne! Clicca per i dettagli del tutor"
+                                                style="cursor: pointer;"
+                                            >
+                                                <u><i>@item.Name</i></u></a>
+                                            </td>
+                                    } else {
+                                        <td>@item.Name</td>
+                                    }
                                     <td>@item.Surname</td>
                                     <td>@item.MobilePhone</td>
                                     <td>@item.Email</td>
@@ -408,7 +422,10 @@
             </div>
         </div>
     </div>
-    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModel.cshtml", Model)
+   
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/tutorModal.cshtml", tutor);
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model);
+
     <script>
         var books = document.getElementById("popupBooks");
         var users = document.getElementById("popupUsers");
