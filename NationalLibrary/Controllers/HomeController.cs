@@ -91,7 +91,7 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult loginPage()
 		{
-			return View();
+            return View();
 		}
 		#endregion
 
@@ -437,10 +437,10 @@ namespace NationalLibrary.Controllers
 		#endregion
 		public IActionResult dashboard(UserFinalView user)
 		{
-			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
-			//Console.WriteLine(type.Type);
 			try
 			{
+				UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
+				//Console.WriteLine(type.Type);
 				if (string.IsNullOrEmpty(type.Type))
 				{
 					throw new Exception("Utente non esistente");
@@ -476,11 +476,12 @@ namespace NationalLibrary.Controllers
 			}
 			catch (Exception ex)
 			{
-				return RedirectToAction("Error");
+				ViewData["Message"] = "Login non valido. Riprovare!";
+                return View("loginPage");
 			}
 			return View("Index");
 		}
-		public IActionResult Privacy()
+        public IActionResult Privacy()
 		{
 			return View();
 		}
