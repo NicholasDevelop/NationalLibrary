@@ -1,20 +1,22 @@
 // Tutor modal box
 
 var tutorModal = document.getElementById("tutorModal");
+if (tutorModal != null) {
+    // Get the button that opens the modal
+    var openTutorLink = document.getElementById("tutorLink");
 
-// Get the button that opens the modal
-var openTutorLink = document.getElementById("tutorLink");
+    // Get the <span> element that closes the modal
+    var closeTutorLink = document.getElementById("closeTutorModal");
 
-// Get the <span> element that closes the modal
-var closeTutorLink = document.getElementById("closeTutorModal");
+    // When the user clicks the button, open the modal 
 
-// When the user clicks the button, open the modal 
-openTutorLink.onclick = function () {
-    tutorModal.style.display = "block";
-}
+    openTutorLink.onclick = function () {
+        tutorModal.style.display = "block";
+    }
 
-closeTutorLink.onclick = function () {
-    tutorModal.style.display = "none";
+    closeTutorLink.onclick = function () {
+        tutorModal.style.display = "none";
+    }
 }
 
 // Details Modal Box
