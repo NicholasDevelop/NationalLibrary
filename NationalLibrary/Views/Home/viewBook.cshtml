@@ -87,7 +87,7 @@
                     <p class="story">Trama: <span>@Model.Presentation</span></p>
                     @if (user != null)
                     {
-                        <a href="#">Prenota ora*</a>
+                        <a asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@Model.BookGuid">Prenota Ora*</a>
                     }
                 </div>
             </div>

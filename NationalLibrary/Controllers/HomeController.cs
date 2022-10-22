@@ -355,12 +355,12 @@ namespace NationalLibrary.Controllers
 			foreach(var item in ViewsLoaders.RentRequestFinalViewList(ctx))
 				if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
 					countRentedBook++;
-			List<WaitingList> w = DataQueries.SelectAllFromRL(ctx);
-			List<WaitingList> wl = new List<WaitingList>();
+			List<Request> w = DataQueries.SelectAllFromRL(ctx);
+			List<Request> rl = new List<Request>();
 			foreach (var item in w)
 				if (item.FiscalCodeFK == user.FiscalCode)
-					wl.Add(item);
-			ViewData["AllRequests"] = wl;
+					rl.Add(item);
+			ViewData["AllRequests"] = rl;
 			ViewData["CountRentedBook"] = countRentedBook;
 			ViewData["wlist"] = wlist;
 			return View(user);
@@ -464,6 +464,7 @@ namespace NationalLibrary.Controllers
 						ViewData["LastBuyedBooks"] = lastBuyedBooks;
 						ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 						ViewData["LastSignedUsers"] = DataQueries.getLastMonthRegisteredUsers(ctx);
+						ViewData["WaitingList"] = DataQueries.SelectAllFromWL(ctx);
 						return View(type);
 					case "User":
 						userFinal = type;

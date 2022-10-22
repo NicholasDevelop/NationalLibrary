@@ -196,19 +196,19 @@
                                 <tr>
                                     <td>@item.FiscalCodeFK</td>
                                     <td>@item.ISBNFK</td>
-                                    <td>@item.RequestedOn</td>
-                                        @{
-                                            var a = new Dictionary<string, string>();
-                                            a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
-                                        }
-                                        @if (item.ReceivedOn == null)
-                                        {
-                                            <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@item.ReceivedOn</td>
-                                        }
+                                    <td>@item.RequestedOn.Day/@item.RequestedOn.Month/@item.RequestedOn.Year</td>
+                                    @{
+                                        var a = new Dictionary<string, string>();
+                                        a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
+                                    }
+                                    @if (item.ReceivedOn == null)
+                                    {
+                                        <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ReceivedOn.Value.Day/@item.ReceivedOn.Value.Month/@item.ReceivedOn.Value.Year</td>
+                                    }
                                 </tr>
                             }
                         </table>
@@ -454,8 +454,8 @@
         </div>
     </div>
 
-    @await Html.PartialAsync("~/wwwroot/partial-cshtml/tutorModal.cshtml", tutor);
-    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model);
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/tutorModal.cshtml", tutor)
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model)
 
     <script>
         var books = document.getElementById("popupBooks");

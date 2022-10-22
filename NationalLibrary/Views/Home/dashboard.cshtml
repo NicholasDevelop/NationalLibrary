@@ -7,7 +7,7 @@
     List<NationalLibrary.FinalViews.BookFinalView> lastBuyedBooks = ViewData["LastBuyedBooks"] as List<NationalLibrary.FinalViews.BookFinalView>;
     int percentaceLastBuyedBooks = lastBuyedBooks.Count * 100 / 50;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
-
+    List<NationalLibrary.Data.WaitingList> waitingList = ViewData["WaitingList"] as List<NationalLibrary.Data.WaitingList>;
 }
 <head>
     <meta charset="UTF-8">
@@ -47,11 +47,11 @@
                             </a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link" href="#RentList" id="rentAnchor" onclick="addClass('rentList')">
-                                <img width="24px" style="margin-right: 4px;" height="24px" src="~/fontawesome/svgs/regular/house.svg"
-                                     alt="" srcset="">
-                                Lista Affitti <span class="sr-only"></span>
-                            </a>
+                        <a class="nav-link" href="#RentList" id="rentAnchor" onclick="addClass('rentList')">
+                        <img width="24px" style="margin-right: 4px;" height="24px" src="~/fontawesome/svgs/regular/house.svg"
+                        alt="" srcset="">
+                        Lista Affitti <span class="sr-only"></span>
+                        </a>
                         </li>*@
                         <li class="nav-item">
                             <a class="nav-link" id="magazineAnchor" href="#Magazine" onclick="addClass('magazine')">
@@ -268,14 +268,32 @@
                         <table>
                             <tr>
                                 <th>Codice Fiscale</th>
-                                <th>Nome Utente</th>
-                                <th>Cognome Utente</th>
-                                <th>Numero</th>
-                                <th>Email Utente</th>
                                 <th>ISBN</th>
-                                <th>Titolo Libro</th>
                                 <th>Richiesto Il</th>
+                                <th>Ricevuto Il</th>
+                                <th></th>
+                                <th></th>
                             </tr>
+                            @foreach (NationalLibrary.Data.WaitingList item in @waitingList)
+                            {
+                                <tr>
+                                    <td>@item.FiscalCodeFK</td>
+                                    <td>@item.ISBNFK</td>
+                                    <td>@item.RequestedOn.Day/@item.RequestedOn.Month/@item.RequestedOn.Year</td>
+                                    @{
+                                        var a = new Dictionary<string, string>();
+                                        a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
+                                    }
+                                    @if (item.ReceivedOn == null)
+                                    {
+                                        <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ReceivedOn.Value.Day/@item.ReceivedOn.Value.Month/@item.ReceivedOn.Value.Year</td>
+                                    }
+                                </tr>
+                            }
                         </table>
 
                     </div>
@@ -409,7 +427,7 @@
         </div>
     </div>
 
-    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model);
+    @await Html.PartialAsync("~/wwwroot/partial-cshtml/detailsModal.cshtml", Model)
     <script>
         var books = document.getElementById("popupBooks");
         var users = document.getElementById("popupUsers");
@@ -502,7 +520,7 @@
         function openMenu() {
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                                                                                                                                                                       // }
+                                                                                                                                                                               // }
     </script>
-    
+
 </body>
