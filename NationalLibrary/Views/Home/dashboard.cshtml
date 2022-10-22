@@ -87,7 +87,6 @@
                                     <th>Cognome Utente</th>
                                     <th>Numero</th>
                                     <th>Email Utente</th>
-                                    <th>ISBN</th>
                                     <th>Titolo Libro</th>
                                     <th>Richiesto Il</th>
                                     <th>Restituito Il</th>
@@ -99,10 +98,23 @@
                                         <td>@item.Surname</td>
                                         <td>@item.MobilePhone</td>
                                         <td>@item.Email</td>
-                                        <td>@item.ISBN</td>
                                         <td>@item.Title</td>
-                                        <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
-                                        <td>@item.ReturnedOn</td>
+                                        @if (item.WithdrawnOn.Value.Year == 1)
+                                        {
+                                            <td><a asp-action="bookWithdrawned" asp-controller="Home" asp-route-id="@item.BookGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.WithdrawnOn.Value.Day/@item.WithdrawnOn.Value.Month/@item.WithdrawnOn.Value.Year</td>
+                                        }
+                                        @if (item.ReturnedOn == null)
+                                        {
+                                            <td><a asp-action="bookReturned" asp-controller="Home" asp-route-id="@item.RentGuid"><img style="cursor: pointer;" width="24px" src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.ReturnedOn.Value.Day/@item.ReturnedOn.Value.Month/@item.ReturnedOn.Value.Year</td>
+                                        }
                                     </tr>
                                 }
                             </table>
@@ -284,13 +296,17 @@
                                         var a = new Dictionary<string, string>();
                                         a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
                                     }
-                                    @if (item.ReceivedOn == null)
+                                    @if (item.ReceivedOn == null && item.IsFromRequest == true)
                                     {
-                                        <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                        <td style="width: 24px"><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
                                     }
-                                    else
+                                    else if (item.ReceivedOn != null && item.IsFromRequest == true)
                                     {
                                         <td>@item.ReceivedOn.Value.Day/@item.ReceivedOn.Value.Month/@item.ReceivedOn.Value.Year</td>
+                                    }
+                                    else if ((item.ReceivedOn == null || item.ReceivedOn.Value.Year == 1900) && item.IsFromRequest == false)
+                                    {
+                                        <td>Prenotato</td>
                                     }
                                 </tr>
                             }
@@ -520,7 +536,7 @@
         function openMenu() {
             document.getElementById("slowdown-menu").classList.toggle('closed');
         }
-                                                                                                                                                                               // }
+                                                                                                                                                                                       // }
     </script>
 
 </body>
