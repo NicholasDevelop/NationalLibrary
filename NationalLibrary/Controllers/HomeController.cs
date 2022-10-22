@@ -25,7 +25,9 @@ namespace NationalLibrary.Controllers
 		private static string userIsWaitingForNewBook;
 		public static string isbnFromWaiting;
 		private static BookFinalView bookFromWaiting;
-		public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
+		private static RentRequestFinalView rentRequestTmp;
+
+        public HomeController(ILogger<HomeController> logger, LibraryContext ctx)
 		{
 			_logger = logger;
 			this.ctx = ctx;
@@ -101,6 +103,12 @@ namespace NationalLibrary.Controllers
 			DataQueries.InsertRequest(userFinal.FiscalCode, form["title"], form["author"], form["comment"], null, ctx);
 			return RedirectToAction("router", userFinal);
 		}
+		public IActionResult insertWaitingForBook(RentRequestFinalView request, string isbn)
+		{
+			DataQueries.InsertWaiting(userFinal.FiscalCode, rentRequestTmp.ISBN, true, ctx);
+			rentRequestTmp = null;
+			return RedirectToAction("dashboard", userFinal);
+        }
 		public IActionResult acceptBook(Guid id)
 		{
 			requestTmp = ViewsLoaders.getRequestById(id, ctx);
@@ -129,17 +137,24 @@ namespace NationalLibrary.Controllers
 		public IActionResult viewBookFromUser(UserFinalView user, Guid id)
 		{
 			BookFinalView book = DataQueries.getBookByGuid(id, ctx);
-			if (DataQueries.IsBookAvaiable(book.ISBN, ctx))
+			
+			ViewData["UserLogged"] = userFinal;
+			ViewData["Image"] = getImage(book);
+			ViewData["BookToRent"] = book;
+            List<BookFinalView> l = ViewsLoaders.BookFinalViewList(ctx);
+            ViewData["Books"] = l;
+
+            int countRentedBook = 0;
+            foreach (var item in ViewsLoaders.RentRequestFinalViewList(ctx))
+                if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
+                    countRentedBook++;
+            ViewData["CountRentedBook"] = countRentedBook;
+			rentRequestTmp = new RentRequestFinalView()
 			{
-				ViewData["UserLogged"] = userFinal;
-				ViewData["Image"] = getImage(book);
-				ViewData["BookToRent"] = book;
-				return View(user);
-			}
-			else
-			{
-				return RedirectToAction("userDashboard", userFinal);
-			}
+				FiscalCode = user.FiscalCode,
+				ISBN = book.ISBN
+			};
+            return View(user);
 		}
 		public IActionResult viewBook(BookFinalView book, Guid id)
 		{
@@ -355,8 +370,8 @@ namespace NationalLibrary.Controllers
 			foreach(var item in ViewsLoaders.RentRequestFinalViewList(ctx))
 				if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
 					countRentedBook++;
-			List<WaitingList> w = DataQueries.SelectAllFromRL(ctx);
-			List<WaitingList> wl = new List<WaitingList>();
+			List<Request> w = DataQueries.SelectAllFromRL(ctx);
+			List<Request> wl = new List<Request>();
 			foreach (var item in w)
 				if (item.FiscalCodeFK == user.FiscalCode)
 					wl.Add(item);

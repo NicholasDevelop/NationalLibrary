@@ -5,6 +5,8 @@
     string image = ViewData["Image"] as string;
     NationalLibrary.FinalViews.UserFinalView user = ViewData["UserLogged"] as NationalLibrary.FinalViews.UserFinalView;
     NationalLibrary.FinalViews.BookFinalView book = ViewData["BookToRent"] as NationalLibrary.FinalViews.BookFinalView;
+    int countBook = int.Parse(ViewData["CountRentedBook"].ToString());
+    NationalLibrary.FinalViews.RentRequestFinalView rentBook = ViewData["CountRentedBook"] as NationalLibrary.FinalViews.RentRequestFinalView;
 }
 
 
@@ -47,7 +49,15 @@
                         {
                             <input type="text" asp-for="@Model.FiscalCode" />
                         }
-                        <button asp-action="rentBook" asp-route-id="@book.BookGuid" asp-controller="Home">Prenota ora</button>
+
+                        @if (!book.Available && countBook <= 3)
+                        {
+                            <button asp-action="insertWaitingForBook" asp-route-id="@book.ISBN" asp-controller="Home">Prenota ora</button>
+                        }
+                        else if (book.Available && countBook <= 3)
+                        {
+                            <button asp-action="rentBook" asp-route-id="@book.BookGuid" asp-controller="Home">Prenota ora</button>
+                        }
                     </form>
                 </div>
             </div>
