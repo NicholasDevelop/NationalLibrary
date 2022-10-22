@@ -351,6 +351,13 @@ namespace NationalLibrary.Controllers
 			ViewData["Books"] = l;
 
 			List<WaitingBookStatusFinalView> wlist = DataQueries.CheckIfBookArrived(user.FiscalCode, ctx);
+			int countRentedBook = 0;
+			foreach(var item in ViewsLoaders.RentRequestFinalViewList(ctx))
+			{
+				if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
+					countRentedBook++;
+			}
+			ViewData["CountRentedBook"] = countRentedBook;
 			ViewData["wlist"] = wlist;
 			return View(user);
 		}
@@ -424,7 +431,6 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("employeeDashboard", userFinal);
 		}
 		#endregion
-
 		public IActionResult dashboard(UserFinalView user)
 		{
 			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);

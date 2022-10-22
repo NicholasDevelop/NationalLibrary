@@ -6,7 +6,7 @@
     int count = 0;
     List<string> image = ViewData["Images"] as List<string>;
     List<NationalLibrary.FinalViews.WaitingBookStatusFinalView> wlist = ViewData["wlist"] as List<NationalLibrary.FinalViews.WaitingBookStatusFinalView>;
-
+    int countBook = int.Parse(ViewData["CountRentedBook"].ToString());
 }
 
 <head>
@@ -81,8 +81,6 @@
 
                     </div>
                 </main>
-
-
             </div>
             <div id="Magazine" class="hidden">
                 <!-- Popup -->
@@ -97,7 +95,8 @@
                     <div class="card-container">
                         @foreach (NationalLibrary.FinalViews.BookFinalView item in bookFinalViews)
                         {
-                            @if (item.Available)
+                            //tutto apposto
+                            @if (item.Available && countBook <= 3)
                             {
                                 count++;
                                 <a class="card" asp-controller="Home" asp-action="viewBookFromUser" asp-route-id="@item.BookGuid">
@@ -106,8 +105,18 @@
                                         <p>@item.Title</p>
                                     </div>
                                 </a>
-                            }
-                            else
+                            }//se ho preso 3 libri
+                            else if (item.Available && countBook >= 3)
+                            {
+                                count++;
+                                <a style="opacity: 35%" class="card">
+                                    <img style="border-start-end-radius: 20px" src="@image[count - 1]" alt="">
+                                    <div class="card-description">
+                                        <p>@item.Title</p>
+                                    </div>
+                                </a>
+                            }//per prenotazione libro
+                            else if (!item.Available && countBook <= 3)
                             {
                                 count++;
                                 <a style="opacity: 35%" class="card">
@@ -173,7 +182,7 @@
                                     <span class="placeholder">Inserisci Una Richiesta In Particolare</span>
                                 </label>
                             </div>
-                                <button class="special-button" type="submit">Invia Richiesta</button>
+                            <button class="special-button" type="submit">Invia Richiesta</button>
                         </form>
                     </div>
                 </div>
@@ -226,7 +235,14 @@
             {
                 @:_books.push("@item.Title");
             }
-            swal("Ciao @Model.Name i seguenti libri sono ora disponibili e da ritirare in biblioteca: " + _books.join(", "));
+                swal("Ciao @Model.Name i seguenti libri sono ora disponibili e da ritirare in biblioteca: " + _books.join(", "));
+        </script>
+    }
+    @if (@countBook > 0)
+    {
+        int bookAvailables = 3 - countBook;
+        <script>
+            swal("Ciao @Model.Name, hai noleggiato @countBook libro/i. Puoi noleggiarne ancora: @bookAvailables, altrimenti dovrai prima restituirne uno");
         </script>
     }
 
