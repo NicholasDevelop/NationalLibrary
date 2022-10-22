@@ -348,9 +348,16 @@ namespace NationalLibrary.Metodi
 
 			return wlview.ToList();
 		}
+        public static List<Request> SelectAllFromRL(LibraryContext ctx)
+        {
+            var wlview = from x in ctx.Requests
+                         select x;
 
-		//////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
-		public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
+            return wlview.ToList();
+        }
+
+        //////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
+        public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
 		{
 			// Inserisco nuovo affitto
 			var newrent = new Rent() { RentGuid = Guid.NewGuid(), BookGuidFK = BookGuid, FiscalCodeFK = FiscalCode };
