@@ -288,6 +288,7 @@ namespace NationalLibrary.Controllers
 			ViewData["Images"] = getImages();
 			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
+            ViewData["WaitingList"] = ViewsLoaders.UserRequestFinalViewList(ctx);
             ViewData["LibraryContext"] = ctx;
             //Console.WriteLine("CTX" + ViewData["LibraryContext"]);
             return View(user);

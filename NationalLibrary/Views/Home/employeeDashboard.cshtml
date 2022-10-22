@@ -7,8 +7,12 @@
     List<string> image = ViewData["Images"] as List<string>;
     List<NationalLibrary.FinalViews.RentRequestFinalView> rentedBooks = ViewData["RentedBooks"] as List<NationalLibrary.FinalViews.RentRequestFinalView>;
     List<NationalLibrary.FinalViews.UserRequestFinalView> requestFinalView = ViewData["RequestFinalView"] as List<NationalLibrary.FinalViews.UserRequestFinalView>;
+    List<NationalLibrary.Data.WaitingList> waitingList = ViewData["WaitingList"] as List<NationalLibrary.Data.WaitingList>;
     var tutor = new NationalLibrary.FinalViews.UserFinalView();
+
+    
 }
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -163,7 +167,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- Inizio Main -->
+
+
+
+
+                <!-- Inizio Vero Main -->
+                <!-- Dashboard -->
                 <main>
                     <h1 style="margin-top: 2px;">Dashboard</h1>
 
@@ -176,15 +185,32 @@
                         <table>
                             <tr>
                                 <th>Codice Fiscale</th>
-                                <th>Nome Utente</th>
-                                <th>Cognome Utente</th>
-                                <th>Numero</th>
-                                <th>Email Utente</th>
                                 <th>ISBN</th>
-                                <th>Titolo Libro</th>
                                 <th>Richiesto Il</th>
+                                <th>Ricevuto Il</th>
+                                <th></th>
+                                <th></th>
                             </tr>
-                        </table>
+                            @foreach (NationalLibrary.Data.WaitingList item in @waitingList)
+                            {
+                            <tr>
+                                <td>@item.FiscalCodeFK</td>
+                                <td>@item.ISBNFK</td>
+                                <td>@item.RequestedOn</td>
+                                <td>@item.ReceivedOn</td>
+                                <td>
+                                @{
+                                    var a = new Dictionary<string, string>();
+                                    a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
+                                }
+                                    @if (true)
+                                    {
+                                        <a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a>
+                                        }
+                                </td>
+                            </tr>
+                            }
+                         </table>
 
                     </div>
                 </main>
