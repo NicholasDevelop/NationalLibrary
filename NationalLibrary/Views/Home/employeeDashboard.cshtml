@@ -189,7 +189,6 @@
                                 <th>Richiesto Il</th>
                                 <th>Ricevuto Il</th>
                                 <th></th>
-                                <th></th>
                             </tr>
                             @foreach (NationalLibrary.Data.WaitingList item in @waitingList)
                             {
@@ -201,13 +200,17 @@
                                         var a = new Dictionary<string, string>();
                                         a.Add(item.FiscalCodeFK.ToString(), item.ISBNFK.ToString());
                                     }
-                                    @if (item.ReceivedOn == null)
+                                    @if (item.ReceivedOn == null && item.IsFromRequest == true)
                                     {
-                                        <td><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
+                                        <td style="width: 24px"><a asp-controller="Home" asp-action="bookArrived" asp-all-route-data="@a"><img src="~/fontawesome/svgs/solid/check.svg" /></a></td>
                                     }
-                                    else
+                                    else if(item.ReceivedOn == null && item.IsFromRequest == true)
                                     {
                                         <td>@item.ReceivedOn.Value.Day/@item.ReceivedOn.Value.Month/@item.ReceivedOn.Value.Year</td>
+                                    }
+                                    else if ((item.ReceivedOn == null || item.ReceivedOn.Value.Year == 1900 ) && item.IsFromRequest == false)
+                                    {
+                                        <td>Prenotato</td>
                                     }
                                 </tr>
                             }

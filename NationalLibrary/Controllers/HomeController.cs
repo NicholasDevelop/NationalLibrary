@@ -117,7 +117,7 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult insertWaitingForBook(RentRequestFinalView request, string isbn)
 		{
-			DataQueries.InsertWaiting(userFinal.FiscalCode, rentRequestTmp.ISBN, true, ctx);
+			DataQueries.InsertWaiting(userFinal.FiscalCode, rentRequestTmp.ISBN, false, ctx);
 			rentRequestTmp = null;
 			return RedirectToAction("dashboard", userFinal);
         }
