@@ -355,6 +355,13 @@ namespace NationalLibrary.Metodi
 
             return wlview.ToList();
         }
+        public static List<Rent> SelectAllFromReL(LibraryContext ctx)
+        {
+            var wlview = from x in ctx.Rents
+                         select x;
+
+            return wlview.ToList();
+        }
 
         //////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
         public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
