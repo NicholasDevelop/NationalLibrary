@@ -56,11 +56,22 @@ namespace NationalLibrary.Controllers
 
 			return bytes;
 		}
+		private List<string> getLast5Images()
+		{
+			List<string> bytes = new List<string>();
+
+			foreach (BookFinalView item in ViewsLoaders.getLastFiveInsertedBooks(ctx))
+			{
+				bytes.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.CoverImg)));
+			}
+			return bytes;
+		}
 		#endregion
 		public IActionResult Index()
 		{
 			ViewData["UserLogged"] = userFinal;
 			ViewData["Images"] = getImages();
+			ViewData["Last5Images"] = getLast5Images();
 			ViewData["Last5Books"] = Metodi.ViewsLoaders.getLastFiveInsertedBooks(ctx);
 			//Console.WriteLine(ViewData["Last5Books"]);
 			return View();
@@ -70,9 +81,10 @@ namespace NationalLibrary.Controllers
 			return RedirectToAction("dashboard", userFinal);
 		}
 		#region AddSomePerson
-		[HttpPost]
+		
 		public IActionResult addUser()
 		{
+			Console.WriteLine("test");
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
 				return RedirectToAction("Error");
 			return View();
@@ -93,7 +105,7 @@ namespace NationalLibrary.Controllers
 		}
 		public IActionResult loginPage()
 		{
-			return View();
+            return View();
 		}
 		#endregion
 
@@ -371,11 +383,11 @@ namespace NationalLibrary.Controllers
 				if (item.FiscalCode == user.FiscalCode && item.ReturnedOn == null)
 					countRentedBook++;
 			List<Request> w = DataQueries.SelectAllFromRL(ctx);
-			List<Request> wl = new List<Request>();
+			List<Request> rl = new List<Request>();
 			foreach (var item in w)
 				if (item.FiscalCodeFK == user.FiscalCode)
-					wl.Add(item);
-			ViewData["AllRequests"] = wl;
+					rl.Add(item);
+			ViewData["AllRequests"] = rl;
 			ViewData["CountRentedBook"] = countRentedBook;
 			ViewData["wlist"] = wlist;
 			return View(user);
@@ -452,10 +464,10 @@ namespace NationalLibrary.Controllers
 		#endregion
 		public IActionResult dashboard(UserFinalView user)
 		{
-			UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
-			//Console.WriteLine(type.Type);
 			try
 			{
+				UserFinalView type = ViewsLoaders.getUserType(user.Username, user.Password, ctx);
+				//Console.WriteLine(type.Type);
 				if (string.IsNullOrEmpty(type.Type))
 				{
 					throw new Exception("Utente non esistente");
@@ -479,6 +491,7 @@ namespace NationalLibrary.Controllers
 						ViewData["LastBuyedBooks"] = lastBuyedBooks;
 						ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 						ViewData["LastSignedUsers"] = DataQueries.getLastMonthRegisteredUsers(ctx);
+						ViewData["WaitingList"] = DataQueries.SelectAllFromWL(ctx);
 						return View(type);
 					case "User":
 						userFinal = type;
@@ -490,11 +503,12 @@ namespace NationalLibrary.Controllers
 			}
 			catch (Exception ex)
 			{
-				return RedirectToAction("Error");
+				ViewData["Message"] = "Login non valido. Riprovare!";
+                return View("loginPage");
 			}
 			return View("Index");
 		}
-		public IActionResult Privacy()
+        public IActionResult Privacy()
 		{
 			return View();
 		}

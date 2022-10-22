@@ -23,7 +23,25 @@
                     <span class="placeholder">Inserisci Password</span>
                 </label>
                 <Button class="special-button" type="submit" name="submitEmployee">Accedi</Button>
+                @if (ViewData["Message"] != null)
+                {
+                    <div id="popupdiv" style="border: none; display: none;">
+                        @ViewData["Message"]
+                    </div>
+                }
             </form>
         </div>
     </div>
+    
+    <script type="text/javascript">
+        window.onload = async () => {
+            var popup = document.getElementById("popupdiv");
+            if (popup.innerHTML != '') {
+                 popup.style.display = 'block';
+                 await setTimeout(() => {
+                    popup.style.display = 'none';
+                 }, 5000);
+            }
+        }
+    </script>
 </body>

@@ -7,7 +7,7 @@
     List<string> image = ViewData["Images"] as List<string>;
     List<NationalLibrary.FinalViews.WaitingBookStatusFinalView> wlist = ViewData["wlist"] as List<NationalLibrary.FinalViews.WaitingBookStatusFinalView>;
     int countBook = int.Parse(ViewData["CountRentedBook"].ToString());
-    List<NationalLibrary.Data.WaitingList> wl = ViewData["AllRequests"] as List<NationalLibrary.Data.WaitingList>;
+    List<NationalLibrary.Data.Request> rl = ViewData["AllRequests"] as List<NationalLibrary.Data.Request>;
 }
 
 <head>
@@ -71,13 +71,22 @@
                         <h2 id="waiting-list">Lista D'Attesa</h2>
                         <table>
                             <tr>
-                                <th>ISBN</th>
                                 <th>Titolo Libro</th>
                                 <th>Autore Libro</th>
                                 <th>Genere Libro</th>
-                                <th>Casa Editrice</th>
                                 <th>Richiesto Il</th>
+                                <th>Stato Richiesta</th>
                             </tr>
+                            @foreach (var item in rl)
+                            {
+                                <tr>
+                                    <td>@item.Title</td>
+                                    <td>@item.Author</td>
+                                    <td>@item.RequestDate.Day/@item.RequestDate.Month/@item.RequestDate.Year</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.State</td>
+                                </tr>
+                            }
                         </table>
 
                     </div>
