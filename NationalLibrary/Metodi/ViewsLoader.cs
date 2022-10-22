@@ -91,18 +91,18 @@ namespace NationalLibrary.Metodi
 							// Creo un nuovo oggetto FinalView dove metto dentro tutti i risultati della query
 							select new UserRequestFinalView
 							{
-								BookGuid = x.BookGuid,
+								//BookGuid = x.BookGuid,
 
-								ISBN = b.ISBN,
+								//ISBN = b.ISBN,
 
-								WaitingGuid = d.WaitingGuid,
+								//WaitingGuid = d.WaitingGuid,
 
 								RequestGuid = e.RequestGuid,
 								Title = e.Title,
 								Author = e.Author,
-								Comment = e.Comment,
+								//Comment = e.Comment,
 								State = e.State,
-								ISBNRequest = e.ISBN,
+								//ISBNRequest = e.ISBN,
 								RequestDate = e.RequestDate,
 
 								FiscalCode = c.FiscalCode,

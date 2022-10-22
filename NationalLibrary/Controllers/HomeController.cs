@@ -189,13 +189,13 @@ namespace NationalLibrary.Controllers
 			book.BookGuid = tmp.BookGuid;
 			book.CoverImg = tmp.CoverImg;
 			DataQueries.EditBook(book.BookGuid, book.Title, book.Author, book.PublishingHouse, true, book.Presentation, book.Genre, book.CoverImg, book.Room, book.Scaffhold, book.Shelf, book.Position, book.ISBN, book.Price, ctx);
-			if (requestGuid != null)
-			{
-				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Arrivato", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
-				book.Genre, book.CoverImg,
-				book.Price, null, null, null, null, book.ISBN, ctx);
-				requestTmp = null;
-			}
+			//if (requestGuid != null)
+			//{
+			//	DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Arrivato", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
+			//	book.Genre, book.CoverImg,
+			//	book.Price, null, null, null, null, book.ISBN, ctx);
+			//	requestTmp = null;
+			//}
 
 			return RedirectToAction("dashboard", userFinal);
 		}
@@ -239,7 +239,7 @@ namespace NationalLibrary.Controllers
 				}
 				book.CoverImg = p1;
 			}
-			if (requestTmp != null && requestGuid == null)
+			if (requestTmp != null /*&& requestGuid == null*/)
 			{
 				DataQueries.UpdateRequestState(requestTmp.RequestGuid, "Accettata", book.Title, book.Author, book.PublishingHouse, false, book.Presentation,
 				book.Genre, book.CoverImg,
@@ -302,7 +302,7 @@ namespace NationalLibrary.Controllers
 			ViewData["Images"] = getImages();
 			ViewData["RentedBooks"] = ViewsLoaders.RentRequestFinalViewList(ctx);
 			ViewData["RequestFinalView"] = ViewsLoaders.UserRequestFinalViewList(ctx);
-            ViewData["WaitingList"] = ViewsLoaders.UserRequestFinalViewList(ctx);
+            ViewData["WaitingList"] = ViewsLoaders.wai;
             ViewData["LibraryContext"] = ctx;
             //Console.WriteLine("CTX" + ViewData["LibraryContext"]);
             return View(user);
