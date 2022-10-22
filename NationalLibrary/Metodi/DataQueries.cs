@@ -298,6 +298,56 @@ namespace NationalLibrary.Metodi
 			}
 			return book;
 		}
+		public static BookFinalView BookWaitingbyCFISBN(string ISBN, string FiscalCode, LibraryContext ctx)
+		{
+			List<BookFinalView> lista = new List<BookFinalView>();
+
+
+            List<WaitingList>	b = ctx.WaitingLists.Where(u => u.FiscalCodeFK == FiscalCode && u.ISBNFK == ISBN).ToList();
+			ISBNList			i = ctx.ISBNLists.Where(u => u.ISBN == b[0].ISBNFK).ToList()[0];
+			Book				o = ctx.Books.Where(u => u.ISBNFK == i.ISBN).ToList()[0];
+			Location			l = ctx.Locations.Where(u => u.LocationGuid == o.LocationGuidFK).ToList()[0];
+
+			BookFinalView pippo = new BookFinalView()
+			{
+
+				BookGuid = o.BookGuid,
+				Title = o.Title,
+				Author = o.Author,
+				PublishingHouse = o.PublishingHouse,
+				Available = o.Available,
+				Presentation = o.Presentation,
+				Genre = o.Genre,
+				BuyDate = o.BuyDate,
+				Price = o.Price,
+				CoverImg = o.CoverImg,
+				Room = l.Room,
+				Scaffhold = l.Schaffold,
+				Position = l.Position,
+				Shelf = l.Shelf,
+                ISBN = o.ISBNFK
+
+
+            };
+
+			return pippo;
+
+
+
+
+
+
+
+
+
+        }
+		public static List<WaitingList> SelectAllFromWL(LibraryContext ctx)
+		{
+			var wlview = from x in ctx.WaitingLists
+						 select x;
+
+            return wlview.ToList();
+        }
 
 		//////////////////  QUERY MANIPOLAZIONE AFFITTI   \\\\\\\\\\\\\\\\\\\\\\
 		public static void InsertRent(Guid BookGuid, string FiscalCode, LibraryContext ctx)
