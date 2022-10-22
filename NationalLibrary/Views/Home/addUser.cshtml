@@ -44,6 +44,17 @@
                                 <input minlength="16" maxlength="16" placeholder="Codice Fiscale" asp-for="@Model.FCRelatedTO" type="text" name="FCRelatedTO">
                             </div>
                         </div>
+                        @if (ViewData["Message"] != null)
+                        {
+                            <div id="popuptutordiv" 
+                                style="border: none; 
+                                       display: none;
+                                       color: red;
+                                       font-size: 13px;">
+                                @ViewData["Message"]
+                            </div>
+                            <br />
+                        }
                         <div class="inputContainer">
                             <label for="name">Nome</label>
                             <div>
@@ -158,4 +169,16 @@
             </div>
         </div>
     </main>
+
+    <script type="text/javascript">
+        window.onload = async () => {
+            var tutorpopup = document.getElementById("popuptutordiv");
+            if (tutorpopup.innerHTML != '') {
+                tutorpopup.style.display = 'block';
+                await setTimeout(() => {
+                    tutorpopup.style.display = 'none';
+                }, 5000);
+            }
+        }
+    </script>
 </body>

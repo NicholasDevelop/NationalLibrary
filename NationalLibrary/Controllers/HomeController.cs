@@ -84,9 +84,11 @@ namespace NationalLibrary.Controllers
 		
 		public IActionResult addUser()
 		{
-			Console.WriteLine("test");
 			if (userFinal == null || userFinal.Type.ToLower() == "user")
-				return RedirectToAction("Error");
+			{
+                return RedirectToAction("Error");
+            }
+
 			return View();
 		}
 
@@ -396,7 +398,6 @@ namespace NationalLibrary.Controllers
 		{
 			try
 			{
-
 				if (string.IsNullOrEmpty(user.FCRelatedTO) && (DateTime.Now - user.BirthDate).TotalDays > 6570)
 				{
 					DataQueries.InsertUser(user.FiscalCode, "User", user.Name, user.Surname, user.MobilePhone, user.BirthDate, user.City, user.Street,
@@ -414,14 +415,16 @@ namespace NationalLibrary.Controllers
 					}
 					else
 					{
-						return RedirectToAction("addUser");
+                        return RedirectToAction("addUser");
 					}
 					return RedirectToAction("dashboard", userFinal);
 				}
 			}
 			catch (Exception ex)
 			{
-				return Error();
+                ViewData["Message"] = "Il Tutore non esiste, devi prima crearlo";
+                return View("addUser");
+                //return Error();
 			}
 		}
 		//public static UserFinalView getUserByFiscalCode(string FiscalCode, LibraryContext ctx)
