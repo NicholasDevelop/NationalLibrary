@@ -1,6 +1,6 @@
 # NationalLibrary Project
-NationalLibrary WebSite
-WebSite made using C#-MVC (with html, css and javascript) for a learning course made by an Italian Coompany
+NationalLibrary WebSite 
+made using C#-MVC (with html, css and javascript) for a learning course created by an Italian Coompany (Blazar Group)
 
 ## Team
 https://github.com/NicholasDevelop - FrontEnd <br/>
